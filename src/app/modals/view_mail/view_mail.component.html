@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="card col-md-12">
+        <div class="card-header card-header-warning card-header-icon ">
+            <div class="card-icon" style="padding:5px;">
+            <i class="material-icons ">mail_outline</i>
+            </div>
+            <h4 class="card-title fbold " style="margin-top: 0px; float: left;">Anteprima Mail</h4>
+            <label style="float: right; padding-right: 0px;">
+                <span style="cursor: pointer" class="material-icons" (click)="close()">
+                    close
+                </span>
+            </label>
+        </div>
+        <div class="card-body " style="padding-top: 16px; padding-bottom: 0;">
+            <div class="col-md-12 form-group bmd-form-group is-focused">
+                <label for="destinatariMail" class="bmd-label-floating">Destinatari</label>
+                <input type="text" class="form-control second-line" id="destinatariMail" required="true" name="destinatariMail" aria-required="true" [value]="emailMessage.destinatari"
+                [disabled]="defDisabled">
+            </div>
+            <div class="col-md-12 form-group bmd-form-group is-focused">
+                <label for="oggettoMail" class="bmd-label-floating">Oggetto</label>
+                <input type="text" class="form-control second-line" id="oggettoMail" required="true" name="oggettoMail" aria-required="true" [value]="emailMessage.oggetto"
+                [disabled]="defDisabled">
+            </div>
+            <div class="col-md-12 form-group bmd-form-group is-focused">
+                <label for="testoMail" class="bmd-label-floating">Testo Email</label>
+                <div id="testoEmailPrint" class="textMailDiv"></div>
+                <!--<textarea class="form-control " required="true" name="testoMail" aria-required="true" [(ngModel)]="emailMessage.testo" [ngModelOptions]="{standalone: true}" style="text-align: left;" rows="13" >
+                    {{this.emailMessage.testo}}
+                </textarea>-->
+            </div>
+            <div class="col-md-12 form-group bmd-form-group is-focused">
+                <div class="attachLabel">
+                    <label class="bmd-label-floating">Allegati</label>
+                </div>
+                <ul class="attachList">
+                    <li class="attachItem" *ngFor="let item of this.emailMessage.allegati">
+                        <img src="./assets/img/{{item.type}}.png" alt="{{item.type}}" title="{{item.document_name}}" (click)="openDocument(item)">
+                    </li>
+                </ul>
+                <div class="dataInvioText">
+                    <span *ngIf="this.emailMessage.dataInvio != null">Inviata {{this.emailMessage.dataInvio | timeAgo}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,307 @@
+/* Nicolò Mura */
+wi-radio-icon-list {
+  display: inherit !important;
+  width: 100% !important;
+}
+
+::ng-deep .wizard-header {
+  text-align: left !important;
+  padding: 5px 26px 35px !important;
+}
+
+::ng-deep .moving-tab {
+  height: 50px !important;
+}
+
+::ng-deep .wizard-title {
+  font-size: 1.3em;
+}
+
+::ng-deep .timeline>li>.timeline-badge.danger {
+  background-color: #f44336;
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(244 67 54 / 40%);
+}
+::ng-deep .timeline.timeline-simple>li>.timeline-badge {
+  left: 5%;
+}
+::ng-deep .timeline>li>.timeline-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 51px;
+  font-size: 1.4em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  margin-left: -24px;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+::ng-deep .timeline>li>.timeline-badge [class*=" ti-"], .timeline>li>.timeline-badge [class=material-icons], .timeline>li>.timeline-badge [class^=ti-] {
+  line-height: inherit;
+}
+
+::ng-deep .timeline>li {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+::ng-deep .form-group {
+  margin: 8px 0 0 0px !important;
+  padding: 0px 10px 7px 0px !important;
+  float: left;
+}
+::ng-deep .form-group > input {
+  padding: 0;
+}
+::ng-deep .form-group.is-focused .form-control {
+ 
+  background-size: 0 2px, 100% 1px !important;
+}
+::ng-deep form-control {
+  height: 28px !important;
+}
+
+::ng-deep .is-focused .bmd-label-floating, .is-filled .bmd-label-floating 
+{
+  top: -0.5rem !important;
+}
+::ng-deep .doc-label{
+  float: left;
+  width: 100%;
+}
+::ng-deep .doc-small2{
+    float: left;
+    margin-top: -13px;
+    width: auto;
+}
+::ng-deep .right{
+  margin-left: 15px;
+  margin-top: -13px;
+}
+::ng-deep td.document {
+  padding-top: 3px !important;;
+  padding-bottom: 3px !important;
+}
+
+::ng-deep .checkbox label, .radio label, label {
+  color: #495057;
+}
+::ng-deep .gar_progr {
+  width: 100%;
+    height: 2px;
+    margin-top: -5px;
+    float: left;
+}
+::ng-deep .progress{
+  box-shadow: none !important;
+  }
+
+::ng-deep .progress.progress-line-info {
+  background: rgba(0,188,212,.2);
+}
+::ng-deep.progress .progress-bar.progress-bar-info {
+  background: #00bcd4;
+}
+
+::ng-deep .progress.progress-line-primary {
+  background: rgba(156,39,176,.2);
+}
+::ng-deep .progress .progress-bar.progress-bar-primary {
+  background: #9c27b0!important;
+}
+
+
+::ng-deep.progress .progress-bar.progress-bar-warning {
+  background: #ff9800;
+}
+::ng-deep .progress.progress-line-warning{background:rgba(255,152,0,.2)}
+::ng-deep .progress.progress-line-danger{background:rgba(244,67,54,.2)}
+::ng-deep .progress .progress-bar.progress-bar-danger {
+  background: #f44336;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-warning {
+  background-color: #ff9800 !important;
+}
+.togglebutton label input[type=checkbox]:checked+.text-info {
+  background-color: #00bcd4 !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-danger {
+  background-color: #f44336 !important;
+}
+.togglebutton label input[type=checkbox]:checked+.text-rose {
+  background-color: #ec407a !important;
+}
+
+.togglebutton label .toggle, .togglebutton label input[type=checkbox][disabled]+.toggle {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 15px;
+  background-color: rgba(80,80,80,.7);
+  border-radius: 15px;
+  margin-right: 15px;
+  transition: background .3s ease;
+  vertical-align: middle;
+  font-size: 14px !important;
+}
+.togglebutton label .toggle {
+  text-align: left;
+  margin-left: 10px !important;
+  font-size: 14px !important;
+  line-height: 30px !important;
+}
+.togglebutton label .toggle, .togglebutton label input[type=checkbox][disabled] + .toggle {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 15px;
+  background-color: rgba(80, 80, 80, 0.7);
+  border-radius: 15px;
+  margin-right: 15px;
+  transition: background 0.3s ease;
+  vertical-align: middle;
+  font-size: 14px !important;
+}
+
+::ng-deep .gar-label{
+  float: left;
+  width: 100%;
+}
+::ng-deep .gar-small{
+    float: left;
+    margin-top: -10px;
+}
+::ng-deep .gar-right{
+  margin-left: 15px;
+  margin-top: -10px;
+}
+::ng-deep .al_center{
+  text-align: center !important;
+}
+::ng-deep .al_left{
+  text-align: left !important;
+}
+
+
+::ng-deep.timeline>li>.timeline-badge.danger {
+  background-color: #f44336;
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(244 67 54 / 40%);
+}
+::ng-deep.timeline.timeline-simple>li>.timeline-badge {
+  left: 5%;
+}
+::ng-deep.timeline>li>.timeline-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 51px;
+  font-size: 1.4em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  margin-left: -24px;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+::ng-deep .timeline>li>.timeline-badge [class*=" ti-"], .timeline>li>.timeline-badge [class=material-icons], .timeline>li>.timeline-badge [class^=ti-] {
+  line-height: inherit;
+  margin-top: 12px;
+}
+
+::ng-deep .timeline>li>.timeline-badge i {
+  margin-top: 12px !important;
+}
+::ng-deep .timeline>li.timeline-inverted>.timeline-panel {
+  float: right;
+  background-color: #f4f4f4;
+  padding-bottom: 0;
+}
+::ng-deep .timeline>li>.timeline-panel:after {
+  position: absolute;
+  top: 27px;
+  right: -14px;
+  display: inline-block;
+  border-top: 14px solid transparent;
+  border-left: 14px solid #f4f4f4;
+  border-right: 0 solid #f4f4f4;
+  border-bottom: 14px solid transparent;
+  content: " ";
+}
+
+::ng-deep .fbold
+{
+  font-weight: 800 !important;
+  margin-top: 10px !important;
+}
+
+::ng-deep .second-line
+{
+  margin-top: 10px !important;
+}
+
+::ng-deep .label {
+  display: inline;
+  padding: 0.3em 0.7em 0.4em;
+  font-size: 95%;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25em;
+}
+::ng-deep .label-info {
+  background: linear-gradient(
+60deg, #26c6da, #00acc1);
+  box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(0 188 212 / 40%);
+}
+
+
+::ng-deep .collector
+{
+  padding-top: 5px;
+    padding-left: 10px;
+    font-size: 14px;
+  }
+  ::ng-deep .wiz_info
+  {
+  background-color: #eeeeee78;
+    border-radius: 5px;
+    padding-top: 15px;
+  }
+/* 
+  ::ng-deep wi-step > .card-icon
+  {
+    padding-top: 5px !important;
+  }
+ 
+  ::ng-deep .wizard-card .wizard-header {
+    display: none !important
+}
+
+::ng-deep .wizard-card
+{
+  padding-top: 0px !important ;
+} 
+
+::ng-deep .wizard-card .nav-pills
+{
+  margin-top: 10px;
+}*/
+
+::ng-deep .wizard-card .nav-pills > li {
+  padding: 6px 15px!important;
+}

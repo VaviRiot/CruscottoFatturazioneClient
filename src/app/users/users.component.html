@@ -1,0 +1,99 @@
+<div class="main-content">
+    <div class="container-fluid">
+  
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-primary">
+                      <h4 class="card-title">Gestione Utenti</h4>
+                      <a href="javascript:;" [routerLink]="['/detail_user', 'create', -1]" class="new-user-toggle">
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <dx-data-grid id="PCUT" [dataSource]="dataSource" [remoteOperations]="{ paging: true, filtering: true, sorting: true }"
+                            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [columnAutoWidth]="true" [showBorders]="true"
+                            (onContentReady)="contentReady($event)" (onToolbarPreparing)="onToolbarPreparing($event)"
+                            (onExporting)="onExporting($event)">
+
+                            <dxo-selection mode="multiple" [allowSelectAll]="true" [selectAllMode]="'page'" [showCheckBoxesMode]="'never'">
+                            </dxo-selection>
+                            <dxo-sorting mode="multiple"></dxo-sorting>
+                            <dxo-header-filter [visible]="true"></dxo-header-filter>
+                            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                            <dxo-state-storing [enabled]="true" type="custom" [customLoad]="tableStateLoad" [customSave]="tableStateSave">
+                            </dxo-state-storing>
+                            <dxo-filter-row [visible]="true"></dxo-filter-row>
+                            <dxo-paging [pageSize]="25"></dxo-paging>
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[25, 50, 75, 'all']" [visible]="true"></dxo-pager>
+
+                            <dxi-column dataField="name" caption="Nome" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="true" [allowSorting]="true" [visibleIndex]="1"
+                                [cssClass]="hasFilter('name') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="email" caption="Email" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="true" [allowSorting]="true" [visibleIndex]="2"
+                                [cssClass]="hasFilter('email') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="username" caption="Username" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="true" [allowSorting]="true" [visibleIndex]="3"
+                                [cssClass]="hasFilter('username') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="ruoloUtente.name" caption="Ruolo" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="true" [allowSorting]="true" [visibleIndex]="4"
+                                [cssClass]="hasFilter('ruoloUtente.name') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="status" caption="Stato" alignment="center" [allowHeaderFiltering]="true"
+                                [allowSorting]="true" cellTemplate="open" [visibleIndex]="5" [allowFiltering]="false"
+                                [cssClass]="hasFilter('validTo') == true ? 'cell-highlight' : ''">
+                                <dxo-header-filter [dataSource]="validToListFilter" ></dxo-header-filter>
+                                <div *dxTemplate="let row of 'open'">
+                                    <span *ngIf="utenteAttivo(row.data.validTo)" class="label label-success">Attivo</span>
+                                    <span *ngIf="!utenteAttivo(row.data.validTo)" class="label label-danger">Disattivato</span>
+                                </div>
+                            </dxi-column>
+
+                            <dxi-column dataField="lastModString" caption="Ultima mod" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="false" [allowSorting]="true" [visibleIndex]="6" [cssClass]="hasFilter('lastModString') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column caption="" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="false" [allowSorting]="false" cellTemplate="tool" [visibleIndex]="7"
+                                [cssClass]="hasFilter('id') == true ? 'cell-highlight' : ''">
+                                <div *dxTemplate="let row of 'tool'" class="app-comandi" style="text-align: center;">
+                                    <a href="javascript:;" [routerLink]="['/detail_user', 'edit', row.data.id]">
+                                        <span class="fa fa-pencil"></span>
+                                    </a>
+                                    <a href="javascript:;" (click)="deleteUser(row.data.id)">
+                                        <span class="fa fa-trash"></span>
+                                    </a>
+                                    <a href="javascript:;" [routerLink]="['/detail_user', 'view', row.data.id]">
+                                        <span class="fa fa-binoculars"></span>
+                                    </a>
+                                </div>
+                            </dxi-column>
+                            
+                            <div *dxTemplate="let data of 'totalCount'">
+                                <div class="informer text-left pt-3 pb-3" style="float: left;">
+                                    <div class="name">{{ utentiListOverview.totalCount }} Risultati trovati</div>
+                                </div>
+                                <div style="float: right;">
+                                    <div class="dx-widget dx-button dx-button-mode-outlined dx-button-normal dx-button-has-icon dx-item dx-buttongroup-item dx-item-content dx-buttongroup-item-content dx-buttongroup-first-item dx-buttongroup-last-item dx-shape-standard dx-dropdownbutton-action dx-buttongroup-item-has-width"
+                                    role="button" (click)="resetGrid()" title="Rimuovi filtri">
+                                        <div class="dx-button-content my-dx-button">
+                                            <i class="material-icons">layers_clear</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dx-data-grid>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>

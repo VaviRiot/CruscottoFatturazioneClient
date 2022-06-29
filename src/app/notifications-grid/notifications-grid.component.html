@@ -1,0 +1,51 @@
+<div class="main-content">
+    <div class="container-fluid">  
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-primary">
+                      <h4 class="card-title">Gestione Notifiche</h4>
+                      <a href="javascript:;" [routerLink]="['/detail_notification', 'create', -1]" class="new-user-toggle">
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <table class="table table-hover">
+                          <thead class="text-warning">
+                              <th class="al_left">Nome</th>
+                              <th class="al_center">Tipologia</th>
+                              <th class="al_center">Workflow Step</th>
+                              <th class="al_center">Business</th>
+                              <th class="al_center">Ultima mod</th>
+                              <th style="width: 110px;"></th>
+                          </thead>
+                          <tbody>
+                                <tr *ngFor="let item of listNotifications">
+                                    <td class="al_left">{{item.nome}}</td>
+                                    <td class="al_center">{{item.tipologiaNotifica.nome}}</td>
+                                    <td class="al_center">{{item.workflowStepNotifiche.nomeStep}}</td>
+                                    <td class="al_center" *ngIf="item.workflowStepNotifiche.workflow != null">{{item.workflowStepNotifiche.workflow.business}}</td>
+                                    <td class="al_center" *ngIf="item.workflowStepNotifiche.workflow == null">{{item.workflowStepNotifiche.workflow.business}}</td>
+                                    <td class="al_center" *ngIf="item.last_mod_date != null">{{item.last_mod_date | date:'dd/MM/YYYY HH:mm'}}</td>
+                                    <td class="al_center" *ngIf="item.last_mod_date == null">-</td>
+                                    <td class="app-comandi" style="text-align: center;">
+                                        <a href="javascript:;" [routerLink]="['/detail_notification', 'edit', item.id]">
+                                            <span class="fa fa-pencil"></span>
+                                        </a>
+                                        <a href="javascript:;" (click)="deleteNotification(item.id)">
+                                            <span class="fa fa-trash"></span>
+                                        </a>
+                                        <a href="javascript:;" [routerLink]="['/detail_notification', 'view', item.id]">
+                                            <span class="fa fa-binoculars"></span>
+                                        </a>
+                                        
+                                    </td>
+                                </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>  

@@ -1,0 +1,22 @@
+<mgl-timeline [toggle]="toggle" [focusOnOpen]="focusOnOpen" [alternate]="alternate" mobileWidthThreshold="0">
+    <mgl-timeline-entry *ngFor="let entry of entries; let i = index;" (expand)="onExpandEntry($event, i)">
+      <mgl-timeline-entry-header [expanded]="false" (click)="onHeaderClick($event)">
+        <div class="timeline-header">{{entry.titolo}}</div>
+        <div class="timeline-content" [innerHTML]="entry.messaggio">
+            {{entry.messaggio}}
+        </div>
+        <div class="timeline-date" *ngIf="entry.dayUntilNow < dayMaxCompleteDate || entry.dayUntilNow == dayMaxCompleteDate">{{entry.createDate | timeAgo}} da {{entry.createUser}}</div>
+        <div class="timeline-date" *ngIf="entry.dayUntilNow > dayMaxCompleteDate">{{entry.createUser}} il {{entry.createDate | date:'dd/MM/YYYY HH:mm' }}</div>
+        <hr *ngIf="entry.allegati && entry.allegati.length > 0">        
+        <ul class="attachList" *ngIf="entry.allegati && entry.allegati.length > 0">
+            <li class="attachItem" *ngFor="let item of entry.allegati">
+                <img src="./assets/img/{{item.type}}.png" alt="{{item.type}}" title="{{item.document_name}}" (click)="openDocument(item, entry)">
+            </li>
+        </ul>
+      </mgl-timeline-entry-header>
+      <mgl-timeline-entry-dot [expanded]="false" [class]="entry.colorClass" [size]="size" (click)="onDotClick($event)"
+        [expandAnimationTiming]="dotAnimation ? '200ms ease' : '0ms'" [collapseAnimationTiming]="dotAnimation ? '100ms ease' : '0ms'">
+        <i class="material-icons">{{entry.icon}}</i>
+      </mgl-timeline-entry-dot>
+    </mgl-timeline-entry>
+  </mgl-timeline>

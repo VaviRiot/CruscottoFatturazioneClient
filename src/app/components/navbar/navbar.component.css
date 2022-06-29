@@ -1,0 +1,214 @@
+.notifica-button
+{
+    color: #555;
+    font-size: 1.4rem;
+    width: 1rem;
+}
+
+.notifica-item:hover
+{
+    box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(156 39 176 / 40%);
+    background-color: #9c27b0;
+    color: #fff;
+}
+
+.notifiche-menu, .business-menu
+{
+    position: absolute;
+    background-color: #fff;
+    right: 0;
+    left: auto;
+    top: 100%;
+    z-index: 1000;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    
+    white-space: nowrap;
+    transform-origin: 100% 0;
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+    max-width: 60rem;
+}
+
+.notifica-item
+{
+    cursor: pointer;
+    position: relative;
+    padding: .625rem 1.25rem;
+    overflow: hidden;
+    color: #333;
+    font-weight: 400;
+    line-height: 1.428571;
+    text-overflow: ellipsis;
+    align-items: center;
+    text-decoration: none;
+    font-size: .8125rem;
+    border-radius: .125rem;
+    width: auto;
+    margin: 0 .3125rem;
+    transition: all .15s linear;
+    word-wrap: break-word;
+    display: flex;
+    flex-flow: nowrap;
+    min-width: 30rem;
+}
+
+.navbar .notification {
+    right: 12px;
+    top: 10px;
+}
+
+.navbar .collapse .navbar-nav .nav-item .nav-link {
+    padding: 10px 5px;
+    cursor: pointer;
+}
+
+.business-menu
+{
+    min-width: 10rem;
+    background-color: white;
+    padding: 15px;
+}
+
+.businessTitle
+{
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.businessItem
+{
+    width: 100%;
+}
+
+.businessItem .togglebutton
+{
+    float: left;
+    width: 100%;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgb(192 192 192 / 60%);
+}
+
+.businessItem .toggleLabel
+{
+    float: left;
+    padding-left: 2.4rem;
+    width: 100%;
+    padding-top: 0.3rem;
+    color: #3c4858;
+    font-weight: 500;
+    padding-bottom: 0.2rem;
+}
+
+.businessItem .toggle
+{
+    float: right;
+    margin-top: 1px;
+}
+
+.togglebutton label input[type=checkbox]
+{
+    margin-left: 25px;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-info {
+    background-color: #00cae3 !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-info:after {
+    border-color: #00cae3 !important;
+}
+    
+.togglebutton label input[type=checkbox]:checked+.text-success {
+    background-color: #55b559 !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-success:after {
+    border-color: #55b559 !important;
+}
+    
+.togglebutton label input[type=checkbox]:checked+.text-warning {
+    background-color: #ff9e0f !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-warning:after {
+    border-color: #ff9e0f !important;
+}
+    
+.togglebutton label input[type=checkbox]:checked+.text-danger {
+   background-color: #f55145 !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-danger:after {
+    border-color: #f55145 !important;
+}
+    
+.togglebutton label input[type=checkbox]:checked+.text-primary {
+   background-color: #a72abd !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-primary:after {
+    border-color: #a72abd !important;
+}
+    
+.togglebutton label input[type=checkbox]:checked+.text-rose {
+    background-color: #ec407a !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-rose:after {
+    border-color: #ec407a !important;
+}
+
+.compactSidebar .visible-on-sidebar-regular
+{
+    display: none !important;
+}
+
+.compactSidebar .visible-on-sidebar-mini
+{
+    display: block !important;
+}
+
+.headerNotifyRow
+{
+    padding-right: 0rem;
+    padding-left: 0.4rem;
+    border-bottom: 1px solid #a8a8aa;
+    float: left;
+    width: calc(100% - 0.6rem);
+    margin-left: 0.3rem;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.headerNotifyTitle
+{
+    font-weight: 700;
+    color: #373737;
+    font-size: 0.9rem;
+    float: left;
+    cursor: default;
+}
+
+.clearAllText
+{
+    font-size: 0.7rem;
+    float: right;
+    margin-right: 0.5rem;
+    font-weight: 500;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color: cornflowerblue;
+    cursor: pointer;
+}

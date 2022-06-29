@@ -1,0 +1,15 @@
+<div class="row largest" style="text-align: center;">
+    <div class="col-md-3">
+        <i class="material-icons alertIcon">warning</i>
+    </div>
+    <div class="col-md-9">
+        <span class="spaninfo">
+            <p class="questionText" [innerHTML]="this.messageText"></p>
+        </span>
+    </div>
+    <br>
+    <div class="col-md-12" style="padding-top: 20px;">
+        <button (click)="close()" class="btn primary btnFooter">Annulla</button>
+        <button (click)="confirm()" class="btn primary btnFooter">Procedi</button>
+    </div>
+</div>

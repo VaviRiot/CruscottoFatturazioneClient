@@ -1,0 +1,120 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Dettaglio Notifica</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input [formControl]="nameCtrl" matInput placeholder="Nome" type="text" id="nome" name="nome" [(ngModel)]="notifica.nome">
+                                    <mat-error *ngIf="nameCtrl.invalid">{{getNameErrorMessage()}}</mat-error>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                  <mat-form-field appearance="fill" class="px-0">
+                                    <mat-label>Tipologia</mat-label>
+                                    <mat-select [formControl]="tipologiaCtrl" [(ngModel)]="defTipologiaId" name="tipologia">
+                                        <mat-option *ngFor="let item of listTipologieNotifiche" [value]="item.id">
+                                            {{item.nome}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="tipologiaCtrl.invalid">{{getTipologiaErrorMessage()}}</mat-error>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field appearance="fill" class="px-0">
+                                    <mat-label>Workflow Step</mat-label>
+                                    <mat-select [formControl]="workflowStepCtrl" [(ngModel)]="defWorkflowStepId" name="workflowStep" (selectionChange)="toggleWorkflow($event.value)">
+                                        <mat-option *ngFor="let item of listWorkflowStep" [value]="item.id">
+                                            {{item.workflow.business}} - {{item.nomeStep}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="workflowStepCtrl.invalid">{{getWorkflowStepErrorMessage()}}</mat-error>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="defSelectedWorkStepName == 'merito creditizio'">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Esito</mat-label>
+                                        <mat-select [formControl]="esitoMeritoCtrl" [(ngModel)]="defSelectedEsitoMeritoId">
+                                          <mat-option *ngFor="let stato of listStatiRichieste" [value]="stato.id" >{{stato.nome}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="defSelectedWorkStepName == 'valutazione garanzie'">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Esito</mat-label>
+                                        <mat-select [formControl]="esitoGaranzieCtrl" [(ngModel)]="defSelectedEsitoGaranzieId">
+                                          <mat-option *ngFor="let stato of listStatiGaranzie" [value]="stato.id" >{{stato.descrizione}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Utenti</mat-label>
+                                        <mat-select [formControl]="utentiCtrl" multiple [(ngModel)]="listSelectedUserId">
+                                          <mat-option *ngFor="let utente of listUsers" [value]="utente.id" >{{utente.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Gruppi</mat-label>
+                                        <mat-select [formControl]="gruppiCtrl" multiple [(ngModel)]="listSelectedGroupId">
+                                          <mat-option *ngFor="let gruppo of listGroups" [value]="gruppo.id">{{gruppo.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" *ngIf="defTipologiaId == defTipologiaAppId">
+                                  <mat-form-field class="example-full-width">
+                                    <input [formControl]="messaggioNotificaCtrl" matInput placeholder="Messaggio Notifica" type="text" id="messaggioNotifica" name="messaggioNotifica" [(ngModel)]="notifica.messaggioNotifica">
+                                    <mat-error *ngIf="messaggioNotificaCtrl.invalid">{{getMessaggioNotificaErrorMessage()}}</mat-error>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="defTipologiaId == defTipologiaEmailId">
+                                <div class="col-md-12">
+                                  <mat-form-field class="example-full-width">
+                                    <input [formControl]="oggettoEmailCtrl" matInput placeholder="Oggetto Email" type="text" id="oggettoEmail" name="oggettoEmail" [(ngModel)]="notifica.oggettoEmail">
+                                    <mat-error *ngIf="oggettoEmailCtrl.invalid">{{getOggettoEmailErrorMessage ()}}</mat-error>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="defTipologiaId == defTipologiaEmailId">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Testo Email</mat-label>
+                                        <textarea [formControl]="testoEmailCtrl" matInput class="form-control" rows="5" [(ngModel)]="notifica.testoEmail">
+                                            {{notifica.testoEmail}}
+                                        </textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="tagBox">
+                                <div class="tagBoxTitle">Elenco Tag</div>
+                                <ul class="tagBoxList">
+                                  <li *ngFor="let tag of tagsHtml;">
+                                    {{tag}}
+                                  </li>
+                                </ul>
+                            </div>
+                            <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right" (click)="salvaNotifica()">{{this.buttonTitle}}</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

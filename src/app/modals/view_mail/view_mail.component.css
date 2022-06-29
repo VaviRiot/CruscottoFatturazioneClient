@@ -1,0 +1,91 @@
+.container
+{
+    height: 100%;
+}
+
+.card
+{
+    margin-top: 0px;
+    height: 100%;
+}
+
+.attachLabel
+{
+    float: left;
+    width: 100%;
+}
+
+.attachList
+{
+    float: left;
+    height: 4rem;
+    width: 70%;
+    margin-top: 1rem;
+    padding-left: 0rem;
+}
+
+.attachItem
+{
+    float: left;
+    list-style: none;
+}
+
+.attachItem img
+{
+    height: 2.5rem;
+    width: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.textMailDiv
+{
+    height: 16rem;
+    overflow-y: scroll;
+    padding: 1rem;
+    border: solid 1px #D2D2D2;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.dataInvioText
+{
+    float: right;
+    color: #495057;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.7;
+    padding-top: 0.75rem;
+}
+
+.form-control[disabled], .form-group .form-control[disabled], fieldset[disabled] .form-control, fieldset[disabled] .form-group .form-control {
+    border-bottom: none;
+}
+
+.container
+{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.card-title
+{
+  float: left;
+  width: calc(100% - 10rem);
+}
+
+.close-toggle
+{
+  float: right;
+  color: #fff;
+  font-size: 1.4rem;
+  margin-top: 0.1rem;
+}
+
+::ng-deep #view-mail-modal {
+    box-shadow: none;
+    background: transparent;
+    overflow: hidden;
+}

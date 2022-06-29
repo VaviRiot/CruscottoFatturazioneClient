@@ -1,0 +1,46 @@
+
+::ng-deep .compactSidebar
+{
+    width: 5rem !important;
+}
+
+::ng-deep .compactSidebar .nav
+{
+    width: 5rem !important;
+}
+
+.compactSidebar .nav-item
+{
+    float: left;
+}
+
+.compactSidebar .nav-link
+{
+    height: 3rem;
+    width: 3rem;
+}
+
+.compactSidebar .menu-label
+{
+    display: none;
+}
+
+.compactSidebar .nav .nav-item .nav-link .sidebar-normal
+{
+    display: none;
+}
+
+.compactTitleSidebar .menu-header-label
+{
+    display: none;
+}
+
+.nav-link
+{
+    cursor: pointer;
+}
+
+.nav li.active>a {
+    background-color: #f44336;
+    box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(244 67 54 / 40%);
+}

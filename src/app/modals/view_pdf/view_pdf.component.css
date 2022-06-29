@@ -1,0 +1,26 @@
+.labelTitolo
+{
+    font-size: 2rem;
+    color: #323639;
+    opacity: 0.8;
+}
+
+.card-title
+{
+  float: left;
+  width: calc(100% - 1.5rem);
+}
+
+.close-toggle
+{
+  float: right;
+  color: #fff;
+  font-size: 1.4rem;
+  margin-top: 0.1rem;
+}
+
+::ng-deep #view-pdf-modal {
+    box-shadow: none;
+    background: transparent;
+    overflow: hidden;
+}

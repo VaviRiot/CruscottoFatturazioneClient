@@ -1,0 +1,186 @@
+.container-fluid {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.header-filter:before {
+    background: transparent !important;
+ }
+ .lgn_container_title
+ {
+   top: 30px;
+     float: left;
+     position: absolute;
+     margin-left: 50px;
+ }
+ 
+ .lgn_title
+ {
+   color: #fff;
+   font-weight: 500;
+ }
+ 
+ 
+ .label-default {
+     
+     background: linear-gradient( 60deg, rgb(163, 162, 162), #777);
+     box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(119 119 119 / 40%);
+ }
+ 
+ .label-primary
+ {
+     background: linear-gradient(60deg, #ab47bc, #8e24aa);
+     /* background: linear-gradient( 60deg, #007bff, #007bff); */
+     box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(156 39 176 / 40%);
+ }
+ 
+ .label-purple {
+     background: linear-gradient(60deg, #ab47bc, #8e24aa);
+     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
+   }
+   .label-info {
+     background: linear-gradient(60deg, #26c6da, #00acc1);
+     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
+   }
+   .label-success{
+    
+     background: linear-gradient(60deg, #66bb6a, #43a047);
+     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
+   }
+   .label-warning {
+     background: linear-gradient(60deg, #ffa726, #fb8c00);
+     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+   }
+   .label-danger {
+     background: linear-gradient(60deg, #ef5350, #e53935);
+     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+   }
+   .label-rose {
+     background: linear-gradient(60deg, #ec407a, #d81b60);
+     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4);
+   }
+ 
+ .label {
+     display: inline;
+     padding: 0.3em 0.7em 0.4em;
+     font-size: 95%;
+     line-height: 1;
+     color: #fff;
+     text-align: center;
+     white-space: nowrap;
+     vertical-align: baseline;
+     border-radius: 0.25em;
+ }
+ .table span.fa {
+   color: #AAAAAA;
+   opacity: 1;
+ }
+ td.app-comandi a span {
+   font-size: 16px;
+   margin-right: 10px;
+ }
+ th.al_center, td.al_center
+ {
+   text-align: center;
+ }
+ th.al_left, td.al_left
+ {
+   text-align: left;
+ }
+
+ th.al_right, td.al_right
+ {
+   text-align: right;
+ }
+
+ input:-webkit-autofill,
+ input:-webkit-autofill:hover, 
+ input:-webkit-autofill:focus,
+ textarea:-webkit-autofill,
+ textarea:-webkit-autofill:hover,
+ textarea:-webkit-autofill:focus,
+ select:-webkit-autofill,
+ select:-webkit-autofill:hover,
+ select:-webkit-autofill:focus {
+  border: none;
+  /*-webkit-text-fill-color: #003293;*/
+  box-shadow: 0 0 0px 1000px trasparent inset;
+  -webkit-box-shadow: 0 0 0px 1000px trasparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+ }
+
+ .login-title
+ {
+   text-align: center;
+   font-weight: 500 !important;
+   font-size: 1rem;
+   letter-spacing: 0.05rem;
+   color: #495057;
+ }
+
+ .login-field
+ {
+    border: 1px solid #dddddd;
+    margin: 0.5rem;
+    border-radius: 1.7rem;
+
+    .form-control, .is-focused .form-control {
+      background-image: none;
+    }
+ }
+
+ .login-button
+ {
+    padding: 0.5rem 1.8rem;
+    border-radius: 1rem;
+    background-color: #003293 !important;
+    color: #F0F0F0 !important;
+    text-transform: capitalize;
+    font-size: 0.8rem;
+ }
+
+ .container
+ {
+    height: 100vh;
+    flex-direction: column;
+    align-content: space-between;
+    align-self: auto;
+    display: flex;
+    justify-content: center;
+ }
+
+ .footer-row
+ {
+    position: absolute;
+    bottom: 5%;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+ }
+
+ @media screen and (max-width: 767px) {
+    .login-page .container {
+      padding-top: 0px!important;
+    }
+ }
+
+ .login-page .card-login .card-body .input-group .form-control
+ {
+  margin: 0.4rem 0 0;
+ }
+
+ .login-page .card-login .card-body .input-group .input-group-text
+ {
+  padding: 0.3rem 15px 0;
+}
+ 
+ @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .ie_margin
+  {
+    margin-top: 25%;
+  }
+}

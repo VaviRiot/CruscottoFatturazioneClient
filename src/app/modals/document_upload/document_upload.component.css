@@ -1,0 +1,92 @@
+.padding-top {
+    padding-top: 40px;
+}
+
+.labelTitolo{
+    font-size: 2rem;
+    text-align: left;
+}
+
+.mat-dialog-title {
+    margin: 0 0 10px;
+}
+
+/*label  cliente, modello telaio*/
+.label-property{
+    font-weight: 500;
+}
+
+/*label dei valori di cliente, modello telaio*/
+.label-field{
+    font-weight: 100;
+    font-size: medium;
+}
+
+.noLateralPadding{
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+.ico-downloadAttachment {
+    padding:3px;
+    margin: 3px;
+}
+
+.ico-downloadAttachment:hover {
+    color: #d9d9d9;
+}
+
+.card-title
+{
+  float: left;
+  width: calc(100% - 1.5rem);
+}
+
+.close-toggle
+{
+  float: right;
+  color: #fff;
+  font-size: 1.4rem;
+  margin-top: 0.1rem;
+}
+
+::ng-deep #document-upload-modal {
+    box-shadow: none;
+    background: transparent;
+    overflow: hidden;
+}
+
+.attachLabel
+{
+    float: left;
+    width: 100%;
+}
+
+.attachList
+{
+    float: left;
+    height: 4rem;
+    width: 70%;
+    margin-top: 1rem;
+    padding-left: 0rem;
+}
+
+.attachItem
+{
+    float: left;
+    list-style: none;
+}
+
+.attachItem img
+{
+    height: 2.5rem;
+    width: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+::ng-deep .my-text-area > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix
+{
+    border-top: 0rem;
+}

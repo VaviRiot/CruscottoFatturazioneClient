@@ -1,0 +1,783 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row detail_popup_header" *ngIf="data.modal == true">
+      <div _ngcontent-luq-c131="" class="col-md-12 ng-tns-c131-4">
+        <div _ngcontent-luq-c131="" class="card ng-tns-c131-4 bg-primary" style="cursor: default;">
+          <div _ngcontent-luq-c131="" class="card-header card-header-primary card-header-icon ng-tns-c131-4">
+              <h4 _ngcontent-luq-c131="" class="card-title ng-tns-c131-4" style="margin-top: 6px;color: #fff; font-size: 0.95rem; letter-spacing: 0.03rem;">
+                Dettaglio {{this.codiceCliente}} - {{this.business}}
+              </h4>
+              <a href="javascript:;" (click)="closeDetailProspect()" class="close-toggle">
+                <span class="fa fa-times-circle"></span>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats" style="padding-bottom: 0px;">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">content_copy</i>
+            </div>
+            <p class="card-category">Garanzie dovute</p>
+            <h3 class="card-title" style="font-weight: 400;">
+              {{this.defNumGaranziePrestate}}
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">sell</i> Totale Dovuto <small class="text-danger"
+                style="font-size: 11px;margin-left: 5px;">
+                  {{this.defTotaleGaranziePrestate|currency:'EUR':true}}
+                </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats" style="padding-bottom: 0px;">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">event</i>
+            </div>
+            <p class="card-category">Garanzie in scadenza</p>
+            <h3 class="card-title" style="font-weight: 400;">
+              {{this.defNumGaranzieScadenze}}
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">sell</i> Totale <small class="text-danger"
+                style="font-size: 11px;margin-left: 5px;">
+                {{this.defTotaleGaranzieScadenze|currency:'EUR':true}}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats" style="padding-bottom: 0px;">
+          <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">bookmark_added</i>
+            </div>
+            <p class="card-category">Garanzie con deroga</p>
+            <h3 class="card-title" style="font-weight: 400;">
+              {{this.defNumGaranzieDeroga}}
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">sell</i> Totale <small class="text-danger"
+                style="font-size: 11px;margin-left: 5px;">
+                {{this.defTotaleGaranzieDeroga|currency:'EUR':true}}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats" style="padding-bottom: 0px;">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">trending_up</i>
+            </div>
+            <p class="card-category">Prestato vs Dovuto</p>
+            <h3 class="card-title" style="font-weight: 400;">
+              {{this.defNumPrestatoDovuto}}%
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">sell</i> Prestato <small class="text-danger"
+                style="font-size: 11px;margin-left: 5px;">
+                {{this.defTotalePrestatoDovuto|currency:'EUR':true}}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="data.modal == false">
+      <div class="row" *ngFor="let item of this.prospectObj.listRichiesteAltriBusiness" (click)="openDetailProspect(item.business, 'view')">
+        <div _ngcontent-luq-c131="" class="col-md-12 ng-tns-c131-4">
+          <div _ngcontent-luq-c131="" class="card ng-tns-c131-4 bg-warning" style="cursor: pointer; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+            <div _ngcontent-luq-c131="" class="card-header card-header-warning card-header-icon ng-tns-c131-4">
+                <div _ngcontent-luq-c131="" class="card-icon ng-tns-c131-4" style="padding: 6px; background: #fff;">
+                  <i _ngcontent-luq-c131="" class="material-icons ng-tns-c131-4 text-warning">notifications</i>
+                </div>
+                <h4 _ngcontent-luq-c131="" class="card-title ng-tns-c131-4" style="margin-top: 6px;color: #fff; font-size: 0.95rem; letter-spacing: 0.03rem;">
+                  Prospect gi&agrave; presente in anagrafica con stato <small style="font-weight: 600;">{{item.statoRichiesta}}</small> su business <small style="font-weight: 600;">{{item.business}}</small>
+                </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card ">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">contacts</i>
+            </div>
+            <h4 class="card-title">Anagrafica</h4>
+            <div style="float: right; margin-top: -40px;" [ngSwitch]="this.defCategoriaRichiesta.id" >
+              <span *ngSwitchCase="1" class="label label-primary">Partner strategico</span>
+              <span *ngSwitchCase="2" class="label label-info">Società del gruppo</span>
+              <span *ngSwitchCase="3" class="label label-success">Services</span>
+              <span *ngSwitchDefault class="label label-white">&nbsp;</span>
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="row" style="padding-left: 16px;padding-right: 16px;">
+              <div class="col-md-5 form-group bmd-form-group is-focused">
+                <label for="cliente" class="bmd-label-floating">Cliente</label>
+                <input type="text" class="form-control " id="cliente" required="true" name="cliente"
+                  aria-required="true" [(ngModel)]="defCliente" [attr.title]="defCliente" disabled />
+              </div>
+              <div class="col-md-5 form-group bmd-form-group is-focused">
+                <label for="nome" class="bmd-label-floating">Nome </label>
+                <input type="text" class="form-control" id="nome" required="true" name="nome"
+                  aria-required="true" [(ngModel)]="defNome" [attr.title]="defNome" disabled />
+              </div>
+              <div class="col-md-2 form-group bmd-form-group is-focused">
+                <label class="bmd-label-floating">Business </label>
+                <div class="col-md-12" style="margin-top: 10px;" [ngSwitch]="defBusiness" [attr.title]="defBusiness">
+                  <span *ngSwitchCase="'AWP'" class="label label-info">AWP</span>
+                  <span *ngSwitchCase="'VLT'" class="label label-primary">VLT</span>
+                  <span *ngSwitchCase="'PAT'" class="label label-success">PAT</span>
+                  <span *ngSwitchCase="'ZA'" class="label label-warning">ZA</span>
+                  <span *ngSwitchCase="'ZC'" class="label label-default">ZC</span>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="padding-left: 16px;padding-right: 16px;">
+              <div class="col-md-6 form-group bmd-form-group is-focused">
+                <label for="codiceSAP" class="bmd-label-floating">Codice SAP</label>
+                <input type="text" class="form-control " id="codiceSAP" required="true" name="codiceSAP"
+                  aria-required="true" [(ngModel)]="defCodiceSAP" [attr.title]="defCodiceSAP" disabled />
+              </div>
+              <div class="col-md-6 form-group bmd-form-group is-focused">
+                <label for="descrizioneSocieta" class="bmd-label-floating">Denominazione Societa</label>
+                <input type="text" class="form-control" id="descrizioneSocieta" required="true" name="nome"
+                  aria-required="true" [(ngModel)]="defDescrizioneSocieta" [attr.title]="defDescrizioneSocieta" disabled />
+              </div>
+            </div>
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="numeroSale" class="bmd-label-floating"> Numero Sale </label>
+              <input type="number" class="form-control" id="numeroSale" required="true" name="numeroSale"
+                aria-required="true" [(ngModel)]="defNumeroSale" [attr.title]="defNumeroSale" disabled />
+            </div>
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="numeroTir" class="bmd-label-floating"> Numero Tir </label>
+              <input type="number" class="form-control" id="numeroTir" required="true" name="numeroTir"
+                aria-required="true" [(ngModel)]="defNumeroTir" [attr.title]="defNumeroTir" disabled />
+            </div>
+            <div class="col-md-3 form-group bmd-form-group is-focused">
+              <label for="numeroMacchine" class="bmd-label-floating"> Numero Macchine </label>
+              <input type="number" class="form-control " id="numeroMacchine" required="true" name="numeroMacchine"
+                aria-required="true" [(ngModel)]="defNumeroMacchine" [attr.title]="defNumeroMacchine" disabled />
+            </div>
+            <div class="col-md-1 form-group bmd-form-group is-focused">
+              <button style="float: right;" mat-raised-button="" mat-min-fab=""
+                  class="btn btn-warning btn-fab mat-raised-button mat-button-base btn-open-sale" (click)="openPopupSaleTir()">
+                    <span class="mat-button-wrapper">
+                      <i class="material-icons">launch</i>
+                    </span>
+              </button>
+            </div>
+
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="referenteArea" class="bmd-label-floating"> Referente </label>
+              <input type="text" class="form-control " id="referenteArea" required="true" name="referenteArea"
+                aria-required="true" [(ngModel)]="defReferenteArea" [attr.title]="defReferenteArea" disabled />
+            </div>
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="mailReferente" class="bmd-label-floating"> Mail Referente </label>
+              <input type="text" class="form-control" id="mailReferente" required="true" name="mailReferente"
+                aria-required="true" [(ngModel)]="defMailReferente" [attr.title]="defMailReferente" disabled />
+            </div>
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="indirizzo" class="bmd-label-floating"> Indirizzo </label>
+              <input type="text" class="form-control" id="indirizzo" required="true" name="indirizzo"
+                aria-required="true" [(ngModel)]="defIndirizzo" [attr.title]="defIndirizzo" disabled />
+            </div>
+
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="telefonoRefente" class="bmd-label-floating"> Telefono Referente</label>
+              <input type="text" class="form-control " id="telefonoRefente" required="true" name="telefonoRefente"
+                aria-required="true" [(ngModel)]="defTelefonoReferente" [attr.title]="defTelefonoReferente" disabled />
+            </div>
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="codiceFiscaleReferente" class="bmd-label-floating"> Codice Fiscale Referente </label>
+              <input type="text" class="form-control" id="codiceFiscaleReferente" required="true" name="codiceFiscaleReferente"
+                aria-required="true" [(ngModel)]="defCodiceFiscaleReferente" [attr.title]="defCodiceFiscaleReferente" disabled />
+            </div>
+            <div class="col-md-4 form-group bmd-form-group is-focused">
+              <label for="partitaIva" class="bmd-label-floating"> Partita IVA </label>
+              <input type="text" class="form-control" id="partitaIva" required="true" name="partitaIva"
+                aria-required="true" [(ngModel)]="defPartitaIva" [attr.title]="defPartitaIva" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card boxDocumenti">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Documenti</h4>
+            <form class="navbar-form">
+              <div class="input-group no-border"
+                style="width: 200px; margin-top: -50px;margin-left: 250px;padding-top: 7px;">
+                <input type="text" placeholder="Search..." class="form-control" name="searchDoc" [(ngModel)]="searchDocValue">
+                <button mat-raised-button="" type="submit" class="btn btn-info btn-just-icon" (click)="filtraDocumenti()">
+                  <i class="material-icons">search</i>
+                  <div class="ripple-container"></div>
+                </button>
+              </div>
+            </form>
+            <button  *ngIf="action == 'edit'" style="float: right;margin-top: -46px;" mat-raised-button="" mat-min-fab="" class="btn btn-info btn-fab mat-raised-button mat-button-base" (click)="showUploadDocument('docUpload')">
+              <span class="mat-button-wrapper"><i class="material-icons">note_add</i></span>
+              <div matripple="" class="mat-ripple mat-button-ripple"></div>
+              <div class="mat-button-focus-overlay"></div>
+            </button>
+          </div>
+          <div class="card-body " style="padding-top: 16px;padding-bottom: 0;">
+            <table class="table table-hover">
+              <tbody>
+                <tr *ngFor="let item of this.prospectObj.listDocumenti">
+                  <td class="al_left document">
+                    <label class="doc-label">{{item.docName}}</label>
+                    <small class="doc-small text-info">{{item.tipoDocumento}}</small>
+                    <small *ngIf="!item.is_edit" class="doc-small right text-gray">inserito il {{item.lastModeDate | date:'dd/MM/YYYY'}} da {{item.lastModeUser}}</small>
+                    <small *ngIf="item.is_edit" class="doc-small right text-gray">modificato il {{item.lastModeDate | date:'dd/MM/YYYY'}} da {{item.lastModeUser}}</small>
+                  </td>
+                  <td class="app-comandi document" style="text-align: center;">
+                    <a href="javascript:;" (click)="openDocument(item.documentId)">
+                      <span class="fa fa-binoculars"></span>
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">pending_actions</i>
+            </div>
+            <h4 class="card-title">Garanzie</h4>
+            <form class="navbar-form">
+              <div class="input-group no-border"
+                style="float:right;width: 200px; margin-top: -50px;margin-left: 250px;padding-top: 7px;">
+                <input type="text" value="" placeholder="Search..." class="form-control"  name="searchGaranzie" [(ngModel)]="searchGaranzieValue">
+                <button mat-raised-button="" type="submit" class="btn btn-warning btn-just-icon" (click)="filtraGaranzieValidate_Client()">
+                  <i class="material-icons">search</i>
+                  <div class="ripple-container"></div>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="card-body " style="padding-top: 16px;padding-bottom: 0;">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th class="al_center" style="width: 50px;"></th>
+                <th class="al_left" style="width: 60%;">Garanzia</th>
+                <th class="al_center">Dovuto</th>
+                <th class="al_center">Prestato</th>
+                <th class="al_center">Deroga</th>
+                <!-- <th class="al_center" style="width: 250px;">Note deroga</th> -->
+                <th class="al_center">Scadenza</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of this.listGaranzieValutate">
+                  <td class="al_center" style="text-align: center;" [ngSwitch]="item.idStato">
+                    <i *ngSwitchCase="1" class="fa fa-thumbs-up text-success" style="font-size:19px"></i>
+                    <i *ngSwitchCase="2" class="material-icons text-danger">notifications_none</i>
+                    <i *ngSwitchCase="3" class="fa fa-thumbs-down text-danger" style="font-size:19px"></i>
+                  </td>
+                  <td class="al_left document">
+                    <label class="al_center doc-label col-md-4">{{item.descrizione}}</label>
+                    <label class="al_center doc-label col-md-4 doc-label-rose">{{item.protocollo}}</label>
+                    <label class="al_center doc-label col-md-4 doc-label-info">{{item.diritto}}</label>
+                    <div [ngSwitch]="item.percStato">
+                      <div *ngSwitchCase="0" class="gar_progr progress progress-line-primary">
+                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                          <span class="sr-only">0% Complete</span>
+                        </div>
+                      </div>
+                      <div *ngSwitchCase="20" class="gar_progr progress progress-line-primary">
+                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+                          <span class="sr-only">20% Complete</span>
+                        </div>
+                      </div>
+                      <div *ngSwitchCase="40" class="gar_progr progress progress-line-primary">
+                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                          <span class="sr-only">40% Complete</span>
+                        </div>
+                      </div>
+                      <div *ngSwitchCase="60" class="gar_progr progress progress-line-info">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                            <span class="sr-only">60% Complete</span>
+                        </div>
+                      </div>
+                      <div *ngSwitchCase="80" class="gar_progr progress progress-line-warning">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+                          <span class="sr-only">80% Complete</span>
+                        </div>
+                      </div>
+                      <div *ngSwitchCase="100" class="gar_progr progress progress-line-danger">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                          <span class="sr-only">100% Complete</span>
+                        </div>
+                      </div>
+                    </div>
+                    <small class="al_center gar-small text-info col-md-4" style="padding-left: 0;">{{item.tipologia}}</small>
+                    <small class="al_center gar-small gar-right text-gray col-md-4">{{item.ente}}</small>
+                    <small class="al_center gar-small gar-right text-gray col-md-3" style="padding-right: 0;">del {{item.data}}</small>
+                  </td>
+                  <td class="al_center document"><label class="doc-label">{{item.dovuto|currency:'EUR':true}}</label></td>
+                  <td class="al_center document"><label class="doc-label">{{item.prestato|currency:'EUR':true}}</label></td>
+                  <td class="al_center" style="text-align: center;"><i *ngIf="item.deroga" class="material-icons text-success" style="cursor: pointer;" (click)="openPopupNoteDeroga(item.noteDeroga)">done</i></td>
+                  <td class="al_center document"><label class="doc-label">{{item.dataScadenza}}</label></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" [ngClass]="{'displayNone': (defClienteAttivo != true && data.modal == false) }">
+      <div class="col-lg-12 col-md-12">
+        <div class="timeline-container card" style="padding-top: 0px; min-height: 22rem;">
+          <h3 class="timeline-title">{{this.valutazioneTitle}}</h3>
+          <h5 class="timeline-subtitle">{{this.valutazioneSubTitle}}</h5>
+          <app-timeline></app-timeline>
+        </div>
+      </div>
+    </div>
+
+    <!-- WIZARD START -->
+    <div class="row" [ngClass]="{'displayNone': (defClienteAttivo == true || data.modal == true) }">
+      <div class="col-lg-12 col-md-12">
+        <div class="presaCaricoBox" [ngClass]="{'pointerClass': this.defUtenteIdPresaCarico == 0}" (click)="presaInCarico()" *ngIf="this.defUtenteIdPresaCarico == 0 || this.defUtenteIdPresaCarico != this.user.id">
+          <div class="presaCaricoText" *ngIf="this.defUtenteIdPresaCarico != 0">Preso in carico da {{this.defUtentePresaCarico}}</div>
+          <div class="presaCaricoCaption" *ngIf="this.defUtenteIdPresaCarico == 0">Prendi in carico</div>
+          <button mat-raised-button="" type="submit" class="btn btn-warning btn-just-icon btn-presa-carico"*ngIf="this.defUtenteIdPresaCarico == 0">
+            <i class="material-icons">done_outline</i>
+            <div class="ripple-container"></div>
+          </button>
+        </div>
+        <div class="wizard-container" style="padding-top: 0px;">
+          <wi-form (onPresaCarico)="onPresaCarico($event)" (onStepChanged)="onStepChanged($event)" class="card wizard-card" data-color="orange" title="{{this.valutazioneTitle}}"
+            subTitle="{{this.valutazioneSubTitle}}" [formGroup]="profileForm" (submit)="onValutazioneNext_5($event)" style="display: inline-block;">            
+            <!-- WIZARD STEP 1  -->
+            <wi-step (onNext)="onValutazioneNext_1($event)" (onPrev)="onValutazionePrev_1($event)" title="Prospect" formGroupName="type" class="tab-content">
+              <div class="card col-md-12" style="float: left;margin-right: 10px;">
+                <div class="card-header card-header-warning card-header-icon ">
+                  <div class="card-icon" style="padding:5px;"><i class="material-icons ">assignment_ind</i></div>
+                  <h4 class="card-title fbold " style="margin-top: -4px !important;">Dati anagrafici</h4>
+                  <div class="col-md-4" style="float: right; padding-right: 0px;">
+                    <div class="col-sm-8" style="float: right; padding-right: 0px;">
+                        <mat-form-field appearance="fill" class="px-0">
+                            <mat-label>Categoria Richiesta</mat-label>
+                            <mat-select [(ngModel)]="defCategoriaRichiesta.id" name="categoria" [ngModelOptions]="{standalone: true}" [disabled]="authStep1 != true || defWorkflowStepIndex > 1 || action != 'edit'">
+                                <mat-option *ngFor="let item of listCategorieRichieste" [value]="item.id">
+                                    {{item.nome}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body " style="padding-top: 16px; padding-bottom: 0;">
+                  <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2 form-group bmd-form-group is-focused">
+                      <label for="presenza_societa" class="bmd-label-floating">Presenza societ&agrave; collegate</label>
+                      <div class="togglebutton text-warning" style="margin-top: 10px;">
+                        <label>
+                          <input id="presenza_societa" type="checkbox" [checked]="defPresenzaSocietaCollegate" (change)="toggleChange($event.target.checked, 'societa')"
+                          [disabled]="authStep1 != true || defWorkflowStepIndex > 1 || action != 'edit'">
+                          <span class="toggle text-warning"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 form-group bmd-form-group is-focused">
+                      <label for="societa" class="bmd-label-floating">Società</label>
+                      <input type="text" class="form-control second-line" id="societaCollegate" required="true" (keyup)="bindInputStep1($event)"
+                        name="societaCollegate" aria-required="true" [value]="defSocietaCollegate" [disabled]="authStep1 != true || !defPresenzaSocietaCollegate || defWorkflowStepIndex > 1 || action != 'edit'">
+                    </div>
+                    <div class="col-md-2 form-group bmd-form-group is-focused"></div>
+                    <div class="col-md-2 form-group bmd-form-group is-focused">
+                      <label for="presenza_bilancio" class="bmd-label-floating">Presenza ultimo bilancio</label>
+                      <div class="togglebutton text-warning" style="margin-top: 10px;">
+                        <label>
+                          <input id="presenza_bilancio" type="checkbox" [checked]="defPresenzaUltimoBilancio" (change)="toggleChange($event.target.checked, 'bilancio')"
+                          [disabled]="authStep1 != true || defWorkflowStepIndex > 1 || action != 'edit'">
+                          <span class="toggle text-warning"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 form-group bmd-form-group is-focused">
+                      <label for="bilancio" class="bmd-label-floating">anno</label>
+                      <input type="number" class="form-control second-line" id="anniBilancio" required="true" (keyup)="bindInputStep1($event)"
+                        name="anniBilancio" aria-required="true" [value]="defAnniBilancio" [disabled]="authStep1 != true || !defPresenzaUltimoBilancio || defWorkflowStepIndex > 1 || action != 'edit'">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-2 form-group bmd-form-group is-focused">
+                      <label for="presenza_negativi" class="bmd-label-floating">Presenza eventi negativi</label>
+                      <div class="togglebutton text-warning" style="margin-top: 10px;">
+                        <label>
+                          <input id="presenza_negativi" type="checkbox" [checked]="defPresenzaEventiNegativi" (change)="toggleChange($event.target.checked, 'negativi')"
+                          [disabled]="authStep1 != true || defWorkflowStepIndex > 1 || action != 'edit'">
+                          <span class="toggle text-warning"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 form-group bmd-form-group is-focused">
+                      <label for="negativi" class="bmd-label-floating">Eventi negativi</label>
+                      <input type="text" class="form-control second-line" id="eventiNegativi" required="true" (keyup)="bindInputStep1($event)"
+                        name="eventiNegativi" aria-required="true" [value]="defEventiNegativi" [disabled]="authStep1 != true || !defPresenzaEventiNegativi || defWorkflowStepIndex > 1 || action != 'edit'">
+                    </div>
+                    <div class="col-md-2 form-group bmd-form-group is-focused"></div>
+                    <div class="col-md-2 form-group bmd-form-group is-focused">
+                      <label for="presenza_pregressi" class="bmd-label-floating">Presenza esiti pregressi</label>
+                      <div class="togglebutton text-warning" style="margin-top: 10px;">
+                        <label>
+                          <input id="presenza_pregressi" type="checkbox" [checked]="defPresenzaEsitiPregressi" (change)="toggleChange($event.target.checked, 'pregressi')"
+                          [disabled]="authStep1 != true || defWorkflowStepIndex > 1 || action != 'edit'">
+                          <span class="toggle text-warning"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </wi-step>
+            
+            <!-- WIZARD STEP 2 -->
+            <wi-step (onCustomSave)="onCustomSaveStep_2($event)" (onNext)="onValutazioneNext_2($event)" (onPrev)="onValutazionePrev_2($event)" title="Valutazione Merito" formGroupName="aboutPerson" class="tab-content">
+              <div class="card col-md-12" style="float: left; margin-right: 10px; width: 98%;">
+                <div class="card-header card-header-warning card-header-icon ">
+                  <div class="card-icon" style="padding:5px;"><i class="material-icons ">manage_search</i></div>
+                  <h4 class="card-title fbold " style="margin-top: -4px !important;">Esito valutazione</h4>
+                </div>
+                <div class="card-body " style="padding-top: 40px; padding-bottom: 0;">
+                  <div class="row ">
+                    <div class="col-md-1" style="margin-top: 2rem; min-width: 10%; margin-right: 1.5rem; margin-left: 1rem;">
+                      <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist"
+                        style="background-color: transparent; margin-bottom: 20px;">
+                        <li class="nav-item" [ngClass]="{'disabled_li': (!defValutazioneMeritoAttivo || defAfterCustomSave == true)}">
+                          <a class="nav-link show" [ngClass]="{'active': defStatoValutazioneMerito === 'Negativo'}" (click)="toggleValutazione('Negativo', 'Merito')" data-toggle="tab" role="tablist">
+                            <i class="fa fa-times-circle"></i> NEGATIVA
+                          </a>
+                        </li>
+                        <li class="nav-item" [ngClass]="{'disabled_li': (!defValutazioneMeritoAttivo || defAfterCustomSave == true)}">
+                          <a class="nav-link" [ngClass]="{'active': defStatoValutazioneMerito === 'Positivo'}" (click)="toggleValutazione('Positivo', 'Merito')" data-toggle="tab" role="tablist">
+                            <i class="fa fa-check"></i> POSITIVA
+                          </a>
+                        </li>
+                        <li class="nav-item" [ngClass]="{'disabled_li': (!defValutazioneMeritoAttivo || defAfterCustomSave == true)}">
+                          <a class="nav-link" [ngClass]="{'active': defStatoValutazioneMerito === 'Altra Documentazione'}" (click)="toggleValutazione('Altra Documentazione', 'Merito')" data-toggle="tab" href="#link9" role="tablist">
+                            <i class="fa fa-comments"></i> ALTRA DOC.
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card col-md-10" style="padding-left: 1rem; margin-left: 1rem; margin-right: 0rem;" *ngIf="defStatoValutazioneMerito != 'Altra Documentazione'">
+                      <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon" style="float:right; padding:5px; cursor: pointer;" (click)="showUploadDocument('derMerito')"
+                          *ngIf="defDerogaValutazioneMerito == true && (!defValutazioneMeritoAttivo || defAfterCustomSave == true) && defWorkflowStepIndex == 2 && action == 'edit'
+                                 && defStatoValutazioneMerito === 'Negativo' && (!this.defDerogaMeritoId || this.defDerogaMeritoId == -1) && !this.defDerogaMeritoDate && this.defDerogaMeritoUser == ''">
+                          <i class="material-icons" style="float: left;">assignment_turned_in</i>
+                          <div style="float: left; margin: 0.25rem;">Deroga</div>
+                        </div>
+                        <div class="card-icon" style="float:right; padding:5px; cursor: pointer;" *ngIf="this.defDerogaMeritoDate && this.defDerogaMeritoUser != ''"
+                          (click)="showDerogaMerito(this.id)">
+                          <div style="float: left; margin: 0.25rem;">Deroga inserita il {{this.defDerogaMeritoDate | date:'dd/MM/YYYY'}} da {{this.defDerogaMeritoUser}}</div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 form-group bmd-form-group is-focused" style="padding-top: 0.7rem !important; ">
+                        <label for="exampleEmails" class="bmd-label-floating"> Note </label>
+                        <textarea class="form-control " required="true" aria-required="true" style="text-align: left;" rows="20" [(ngModel)]="defNoteValutazioneMerito"
+                        name="noteValutazioneMerito" [ngModelOptions]="{standalone: true}" [disabled]="defValutazioneMeritoAttivo == false || defAfterCustomSave == true || defWorkflowStepIndex > 2 || action != 'edit'">
+                        {{this.defNoteValutazioneMerito}}
+                        </textarea>
+                      </div>
+                    </div>
+                    <div class="card col-md-10" style="padding-left: 1rem; margin-left: 1rem; margin-right: 0rem;" *ngIf="defStatoValutazioneMerito === 'Altra Documentazione'">
+                      <div class="card-header card-header-warning card-header-icon ">
+                        <div class="card-icon" style="padding:5px;">
+                          <i class="material-icons ">mail_outline</i>
+                        </div>
+                        <h4 class="card-title fbold " style="margin-top: -4px !important;">Mail Altra Doc.</h4>
+                      </div>
+                      <div class="card-body " style="padding-top: 16px; padding-bottom: 0;">
+                        <div class="col-md-12 form-group bmd-form-group is-focused">
+                          <label for="destinatariAltraDoc" class="bmd-label-floating">Destinatari</label>
+                          <input type="text" class="form-control second-line" id="destinatariAltraDoc" required="true" (keyup)="validaStep2($event)"
+                            name="destinatariAltraDoc" aria-required="true" [value]="defDestinatariAltraDoc" [disabled]="defAfterCustomSave == true || defStatoValutazioneMerito != 'Altra Documentazione' || defWorkflowStepIndex > 2 || action != 'edit'">
+                        </div>
+                        <div class="col-md-12 form-group bmd-form-group is-focused">
+                          <label for="oggettoAltraDoc" class="bmd-label-floating">Oggetto</label>
+                          <input type="text" class="form-control second-line" id="oggettoAltraDoc" required="true" (keyup)="validaStep2($event)"
+                            name="oggettoAltraDoc" aria-required="true" [value]="defOggettoAltraDoc" [disabled]="defAfterCustomSave == true || defStatoValutazioneMerito != 'Altra Documentazione' || defWorkflowStepIndex > 2 || action != 'edit'">
+                        </div>
+                        <div class="col-md-12 form-group bmd-form-group is-focused">
+                          <label for="testoAltraDoc" class="bmd-label-floating">Testo Email</label>
+                          <textarea class="form-control " required="true" name="testoAltraDoc" aria-required="true" [(ngModel)]="defTestoAltraDoc"
+                            [ngModelOptions]="{standalone: true}" [disabled]="defAfterCustomSave == true || defStatoValutazioneMerito != 'Altra Documentazione' || defWorkflowStepIndex > 2 || action != 'edit'"
+                            style="text-align: left;" rows="8" (keyup)="validaStep2($event)">
+                            {{this.defTestoAltraDoc}}
+                          </textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </wi-step>
+            
+            <!-- WIZARD STEP 3 -->
+            <wi-step (onNext)="onValutazioneNext_3($event)" (onPrev)="onValutazionePrev_3($event)" title="Contratto" formGroupName="aboutBusiness" class="tab-content">
+              <div class="col-md-1" style="float: left; margin-right: 0px;"></div>
+              <div class="card col-md-5" style="float: left; margin-right: 10px; margin-left: 0rem;">
+                <div class="card-header card-header-warning card-header-icon ">
+                  <div class="card-icon" style="padding:5px;"><i class="material-icons ">manage_search</i></div>
+                  <h4 class="card-title fbold " style="margin-top: -4px !important;">Deposito contratto</h4>
+                  <button style="float: right;margin-top: -46px;" mat-raised-button="" mat-min-fab=""
+                    class="btn btn-warning btn-fab mat-raised-button mat-button-base" (click)="showUploadDocument('valContratto')"
+                    *ngIf="authStep3 == true && defValutazioneContrattoId == null && defWorkflowStepIndex == 3 && action == 'edit'">
+                    <span class="mat-button-wrapper">
+                      <i class="material-icons">note_add</i>
+                    </span>
+                    <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                    <div class="mat-button-focus-overlay"></div>
+                  </button>
+                </div>
+                <div class="card-body " style="padding-top: 40px; padding-bottom: 0;">
+                  <div class="row ">
+                    <div class="w-100 p-3">
+                      <div class="w-100 p-3 form-group bmd-form-group is-focused" style="padding-top: 15px Important; ">
+                        <label for="valutazioneContrattoName" class="bmd-label-floating"> Contratto </label>
+                        <input type="text" class="form-control second-line inputContratto" id="valutazioneContrattoName" required="true"
+                          name="valutazioneContrattoName" aria-required="true" [value]="defValutazioneContrattoName" disabled>
+                          <a href="javascript:;" class="viewContratto" *ngIf="defValutazioneContrattoId != null" (click)="openDocument(defValutazioneContrattoId)">
+                              <span class="fa fa-binoculars"></span>
+                          </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-1" style="float: left;margin-right: 10px;"></div>
+              <div class="card col-md-5" style="float: left;margin-right: 10px;">
+                <div class="card-header card-header-rose card-header-icon ">
+                  <div class="card-icon" style="padding:5px;"><i class="material-icons ">assignment</i></div>
+                  <h4 class="card-title fbold " style="margin-top: -4px !important;">Deroga Contratto</h4>
+                  <button style="float: right;margin-top: -46px;" mat-raised-button="" mat-min-fab=""
+                    class="btn btn-rose btn-fab mat-raised-button mat-button-base" (click)="showUploadDocument('derContratto')"
+                    *ngIf="authStep3 == true && defDerogaContrattoId == null && defWorkflowStepIndex == 3 && action == 'edit'">
+                    <span class="mat-button-wrapper">
+                      <i class="material-icons">note_add</i>
+                    </span>
+                    <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                    <div class="mat-button-focus-overlay"></div>
+                  </button>
+                </div>
+                <div class="card-body " style="padding-top: 40px; padding-bottom: 0;">
+                  <div class="row ">
+                    <div class="w-100 p-3">
+                      <div class="w-100 p-3 form-group bmd-form-group is-focused" style="padding-top: 15px Important; ">
+                        <label for="derogaContrattoName" class="bmd-label-floating"> Deroga </label>
+                        <input type="text" class="form-control second-line inputContratto" id="derogaContrattoName" required="true"
+                          name="derogaContrattoName" aria-required="true" [value]="defDerogaContrattoName" disabled>
+                          <a href="javascript:;" class="viewContratto" *ngIf="defDerogaContrattoId != null" (click)="openDocument(defDerogaContrattoId)">
+                              <span class="fa fa-binoculars"></span>
+                          </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </wi-step>
+            
+            <!-- WIZARD STEP 4 -->
+            <wi-step (onNext)="onValutazioneNext_4($event)" (onPrev)="onValutazionePrev_4($event)" title="Sottoscrizione Garanzie" formGroupName="aboutDummy" class="tab-content" >
+              <div class="row" style="margin-left: 0px;">
+                <div class="col-md-2" style="float: left;margin-right: 10px;"></div>
+                <div class="card col-md-8" style="float: left;margin-right: 10px;">
+                  <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon" style="padding:5px;"><i class="material-icons ">manage_search</i></div>
+                    <h4 class="card-title fbold " style="margin-top: -4px !important;">Documentazione sottoscritta</h4>
+                    <button style="float: right; margin-right: 50px; margin-top: -46px;" mat-raised-button="" mat-min-fab=""
+                      class="btn btn-warning btn-fab mat-raised-button mat-button-base" (click)="showUploadDocument('sottGaranzie')"
+                      *ngIf="authStep4 == true && defWorkflowStepIndex == 4 && action == 'edit' && (business != 'PAT' && business != 'ZC')">
+                      <span class="mat-button-wrapper"><i class="material-icons">note_add</i></span>
+                      <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                      <div class="mat-button-focus-overlay"></div>
+                    </button>
+                    <button style="float: right; margin-top: -46px;" mat-raised-button="" mat-min-fab="" *ngIf="(business != 'PAT' && business != 'ZC') || ((business == 'PAT' || business == 'ZC') && defWorkflowStepIndex > 4 && defLegalMail != '')"
+                      class="btn btn-warning btn-fab mat-raised-button mat-button-base" (click)="openPopupMailContratto()">
+                      <span class="mat-button-wrapper"><i class="material-icons">mail_outline</i></span>
+                      <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                      <div class="mat-button-focus-overlay"></div>
+                    </button>
+                  </div>
+                  <div class="card-body " style="padding-top: 40px; padding-bottom: 0;">
+                    <div class="col-sm-12" *ngIf="(business == 'PAT' || business == 'ZC')">
+                        <div class="row padding-top">
+                            <mat-label class="col-sm-4 control-label bold" style="padding-top: 1.7rem;">Canale Garanzia</mat-label>
+                            <div class="col-sm-8">
+                                <mat-form-field appearance="fill" class="px-0">
+                                    <mat-label></mat-label>
+                                    <mat-select [(ngModel)]="defCanaleGaranziaSottoscrizione" name="canaleGaranziaSottoscrizione" [ngModelOptions]="{standalone: true}" [disabled]="authStep4 != true || defWorkflowStepIndex > 4 || action != 'edit'">
+                                        <mat-option *ngFor="let item of listCanaliGaranzie" [value]="item.id">
+                                            {{item.nome}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-hover" *ngIf="(business != 'PAT' && business != 'ZC')">
+                      <tbody>
+                        <tr *ngFor="let item of this.listSottoscrizioneGaranzieDoc">
+                          <td class="al_left document">
+                            <label class="doc-label">{{item.docName}}</label>
+                            <small class="doc-small text-info">{{item.tipoDocumento}}</small>
+                            <small *ngIf="!item.is_edit" class="doc-small right text-gray">inserito il {{item.lastModeDate | date:'dd/MM/YYYY'}} da {{item.lastModeUser}}</small>
+                            <small *ngIf="item.is_edit" class="doc-small right text-gray">modificato il {{item.lastModeDate | date:'dd/MM/YYYY'}} da {{item.lastModeUser}}</small>
+                          </td>
+                          <td class="app-comandi document" style="text-align: center;">
+                            <a href="javascript:;" (click)="openDocument(item.documentId)">
+                              <span class="fa fa-binoculars"></span>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-5"></div>
+              </div>
+            </wi-step>
+            
+            <!-- WIZARD STEP 5 -->
+            <wi-step (onNext)="onValutazioneNext_5($event)" (onPrev)="onValutazionePrev_5($event)" title="Valutazione Garanzie" formGroupName="address" class="tab-content">
+              <div class="row" style="margin-left: 0px;">
+                <div class="col-md-1 step5LeftBox">
+                  <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist" style="background-color: transparent; margin-bottom: 20px; ">
+                    <li class="nav-item" [ngClass]="{'disabled_li': (authStep5 != true || !listGaranzieValutazione || listGaranzieValutazione.length == 0 || action != 'edit')}">
+                      <a class="nav-link show" [ngClass]="{'active': defStatoValutazioneGaranzia === 'Rifiutato'}" (click)="toggleValutazione('Rifiutato', 'Garanzia')" data-toggle="tab" href="#link7" role="tablist">
+                        <i class="fa fa-times-circle"></i> NEGATIVA
+                      </a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'disabled_li': (authStep5 != true || !listGaranzieValutazione || listGaranzieValutazione.length == 0 || action != 'edit')}">
+                      <a class="nav-link" [ngClass]="{'active': defStatoValutazioneGaranzia === 'Validato'}" (click)="toggleValutazione('Validato', 'Garanzia')" data-toggle="tab" href="#link8" role="tablist">
+                        <i class="fa fa-check"></i> POSITIVA
+                      </a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'disabled_li': (authStep5 != true || !listGaranzieValutazione || listGaranzieValutazione.length == 0 || action != 'edit')}">
+                      <a class="nav-link" [ngClass]="{'active': defStatoValutazioneGaranzia === 'Con Deroga'}" (click)="toggleValutazione('Con Deroga', 'Garanzia')" data-toggle="tab" href="#link9" role="tablist">
+                        <i class="fa fa-comments"></i> DEROGA
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card step5CenterBox" [ngClass]="defStatoValutazioneGaranzia === 'Con Deroga' ? 'sottCardNotComplete' : 'sottCardComplete'">
+                  <div class="card-header card-header-warning card-header-icon ">
+                    <div class="card-icon" style="padding:5px;">
+                      <i class="material-icons ">manage_search</i>
+                    </div>
+                    <div class="togglebutton" style="float:right;margin-top: -2px;margin-right: -23px;">
+                      <label> Side letter                         
+                        <input id="presenza_sideletter" type="checkbox" [checked]="defPresenzaSideLetterValutazione" (change)="toggleChange($event.target.checked, 'sideLetter')"
+                        [disabled]="authStep5 != true || defRichiestaSalvata || action != 'edit'">
+                        <span class="toggle text-warning"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="card-body " style="padding-top: 20px; padding-bottom: 0;">
+                    <table class="table table-hover">
+                      <thead class="text-warning">
+                        <th class="al_left" style="width: 60%;">Garanzia</th>
+                        <th class="al_center">Dovuto</th>
+                        <th class="al_center">Prestato</th>
+                        <th class="al_center">Scadenza</th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.listGaranzieValutazione">
+                          <td class="al_left document">
+                            <div class="sottLineBox">
+                              <label class="doc-label al_center col-md-4">{{item.descrizione}}</label>
+                              <label class="doc-label al_center doc-label-rose col-md-5">{{item.protocollo}}</label>
+                              <label class="doc-label al_center doc-label-info col-md-3">{{item.diritto}}</label>
+                            </div>
+                            <div class="sottLineBox">
+                              <label class="text-info al_center col-md-4" style="padding-left: 0; font-size: smaller;">{{item.tipologia}}</label>
+                              <label class="text-gray al_center col-md-5" style="font-size: smaller;">{{item.ente}}</label>
+                              <label class="text-gray al_center col-md-3" style="padding-right: 0; font-size: 0.6rem;">del {{item.data}}</label>
+                            </div>
+                          </td>
+                          <td class="al_center document"><label class="doc-label">{{item.dovuto|currency:'EUR':true}}</label></td>
+                          <td class="al_center document"><label class="doc-label">{{item.prestato|currency:'EUR':true}}</label></td>
+                          <td class="al_center document"><label class="doc-label">{{item.dataScadenza}}</label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card" style=" float:left; max-width: 21% !important; flex:0 0 21%; margin-left: 10px;" [hidden]="defStatoValutazioneGaranzia != 'Con Deroga'">
+                  <div class="card-header card-header-warning card-header-icon ">
+                    <div class="card-icon" style="padding:5px;">
+                      <i class="material-icons ">mail_outline</i>
+                    </div>
+                    <h4 class="card-title fbold " style="margin-top: -4px !important;">Deroga</h4>
+                    <div class="togglebutton" style="float:right;margin-top: -27px;margin-right: -23px;">
+                      <label>
+                        <input id="presenza_deroga" type="checkbox" [checked]="defPresenzaDerogaValutazione" (change)="toggleChange($event.target.checked, 'deroga')"
+                        [disabled]="true">
+                        <!--"authStep5 != true || defStatoValutazioneGaranzia != 'Con Deroga' || action != 'edit'">-->
+                        <span class="toggle text-warning"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="card-body " style="padding-top: 16px; padding-bottom: 0;">
+                    <div class="col-md-12 form-group bmd-form-group is-focused">
+                      <label for="emailadress" class="bmd-label-floating"> Note Deroga </label>
+                      <textarea class="form-control " required="true" name="emailadress" aria-required="true" [(ngModel)]="defNoteValutazioneGaranzia"
+                        name="noteValutazioneGaranzia" [ngModelOptions]="{standalone: true}" [disabled]="!defPresenzaDerogaValutazione || defStatoValutazioneGaranzia != 'Con Deroga' || action != 'edit'"
+                        style="text-align: left;" rows="12">
+                        {{this.defNoteValutazioneGaranzia}}
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </wi-step>
+
+          </wi-form>
+        </div>
+      </div>
+    </div>
+    <!-- WIZARD END -->
+
+  </div>
+</div>

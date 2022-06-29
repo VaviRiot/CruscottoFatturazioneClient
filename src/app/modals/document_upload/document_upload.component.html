@@ -1,0 +1,129 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mat-dialog-title">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">{{this.textDocTitle}}</h4>
+                        <a href="javascript:;"(click)="close()" class="close-toggle">
+                          <span class="fa fa-times-circle"></span>
+                        </a>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <mat-accordion *ngIf="errorMessage != ''" class="gestione-errori-container">
+                                    <mat-expansion-panel hideToggle class="reset-margin" style="background-color: #f1c40f !important;">
+                                    <mat-expansion-panel-header class="accordion-warning">
+                                        <mat-panel-title>
+                                        <strong>{{errorMessage}}</strong>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                        </div>
+                        <div class="container-fluid largest">
+                            <div class="row noLateralPadding">
+                                <div class="col-sm-12" *ngIf="action == 'derMerito'">
+                                    <div class="row">
+                                        <mat-label class="col-sm-4 control-label bold">Nota Deroga</mat-label>
+                                        <div class="col-sm-8">
+                                            <mat-form-field appearance="fill" class="px-0 my-text-area">
+                                                <mat-label></mat-label>
+                                                <textarea matInput class="form-control" style="text-align: left;" rows="5" [(ngModel)]="noteDerogaMerito"
+                                                    name="noteDerogaMerito" [ngModelOptions]="{standalone: true}" (keyup)="changeNoteDerogaMerito($event)"
+                                                    [disabled]="isView == true">
+                                                    {{this.noteDerogaMerito}}
+                                                </textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-100" *ngIf="action == 'derMerito'"></div>
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <mat-label class="col-sm-4 control-label bold">Descrizione Documento</mat-label>
+                                        <mat-label class="col-sm-8 control-label">
+                                            <input type="text" class="form-control " id="fileDescription" required="true" name="fileDescription" aria-required="true" [(ngModel)]="fileDescription"
+                                             [disabled]="isView == true"/>
+                                        </mat-label>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-sm-12">
+                                    <div class="row padding-top">
+                                        <mat-label class="col-sm-4 control-label bold" style="padding-top: 1.7rem;">Tipologia Documento</mat-label>
+                                        <div class="col-sm-8">
+                                            <mat-form-field appearance="fill" class="px-0">
+                                                <mat-label></mat-label>
+                                                <mat-select [(ngModel)]="tipologiaDocumento" [disabled]="isView == true || action != 'docUpload'" (selectionChange)="changeTipo($event)">
+                                                    <mat-option *ngFor="let item of listTipiDocumenti" [value]="item.id">
+                                                        {{item.tipologia}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-100" *ngIf="(businessName == 'PAT' || businessName == 'ZC') && action == 'valContratto'"></div>
+                                <div class="col-sm-12" *ngIf="(businessName == 'PAT' || businessName == 'ZC') && action == 'valContratto'">
+                                    <div class="row padding-top">
+                                        <mat-label class="col-sm-4 control-label bold" style="padding-top: 1.7rem;">Canale Garanzia</mat-label>
+                                        <div class="col-sm-8">
+                                            <mat-form-field appearance="fill" class="px-0">
+                                                <mat-label></mat-label>
+                                                <mat-select [(ngModel)]="canaleGaranzia" [disabled]="isView == true" (selectionChange)="changeCanale($event)">
+                                                    <mat-option *ngFor="let item of listCanaliGaranzie" [value]="item.id">
+                                                        {{item.nome}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-100" *ngIf="isView == false"></div>
+                                <div class="col-sm-12" *ngIf="isView == false">
+                                    <div class="row padding-top">
+                                        <mat-label class="col-sm-4 control-label bold" style="padding-top: 0.7rem;">{{this.textDocNameUpload}}</mat-label>
+                                        <div class="col-sm-8" style="padding-top: 0.7rem; font-weight: bold;">
+                                            {{this.file_full_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                            </div>
+                            <br>
+                            <div class="col-md-12 form-group bmd-form-group is-focused" style="height: 4.5rem;" *ngIf="isView == true">
+                                <div class="attachLabel">
+                                    <label class="bmd-label-floating">File Caricati</label>
+                                </div>
+                                <ul class="attachList">
+                                    <li class="attachItem" *ngFor="let item of this.fileList">
+                                        <img src="./assets/img/{{item.type}}.png" alt="{{item.type}}" title="{{item.document_name}}" (click)="openDocument(item)">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row justify-content-sm-end" *ngIf="isView == false">
+                                <div class="col-sm-auto" >
+
+                                </div>
+                                <div class="col-sm-auto" >
+                                    <input style="display: none" #fileSelector type="file" (change)="handleFileInput($event)">
+                                    <button class="btn primary" mat-button (click)="fileSelector.click()">
+                                        ALLEGA {{this.textDocNameUp}}
+                                    </button>
+                                </div>
+                                <div class="col-sm-auto" >
+                                    <button class="btn primary" mat-button (click)="salvaDocumento()" [disabled]="(file_full_name == '-' || fileDescription == '' || tipologiaDocumento == 0) && (action != 'derMerito' || validDeroga == false)" >
+                                        SALVA {{this.textDocNameUp}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

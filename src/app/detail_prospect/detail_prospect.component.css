@@ -1,0 +1,452 @@
+/* Nicolò Mura */
+wi-radio-icon-list {
+  display: inherit !important;
+  width: 100% !important;
+}
+
+::ng-deep .wizard-header {
+  text-align: left !important;
+  padding: 5px 26px 35px !important;
+}
+
+::ng-deep .moving-tab {
+  height: 50px !important;
+  top: -12px !important;
+}
+
+::ng-deep .wizard-title {
+  font-size: 1.3em;
+}
+
+::ng-deep .timeline>li>.timeline-badge.danger {
+  background-color: #f44336;
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(244 67 54 / 40%);
+}
+::ng-deep .timeline.timeline-simple>li>.timeline-badge {
+  left: 5%;
+}
+::ng-deep .timeline>li>.timeline-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 51px;
+  font-size: 1.4em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  margin-left: -24px;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+::ng-deep .timeline>li>.timeline-badge [class*=" ti-"], .timeline>li>.timeline-badge [class=material-icons], .timeline>li>.timeline-badge [class^=ti-] {
+  line-height: inherit;
+}
+
+::ng-deep .timeline>li {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+::ng-deep .form-group {
+  margin: 8px 0 0 0px !important;
+  padding: 0px 10px 7px 0px !important;
+  float: left;
+}
+::ng-deep .form-group > input {
+  padding: 0;
+}
+::ng-deep .form-group.is-focused .form-control {
+ 
+  background-size: 0 2px, 100% 1px !important;
+}
+::ng-deep form-control {
+  height: 28px !important;
+}
+
+::ng-deep .is-focused .bmd-label-floating, .is-filled .bmd-label-floating 
+{
+  top: -0.5rem !important;
+}
+::ng-deep .doc-label{
+  float: left;
+  width: 100%;
+}
+::ng-deep .doc-small{
+    float: left;
+    margin-top: -13px;
+}
+::ng-deep .right{
+  margin-left: 15px;
+  margin-top: -13px;
+}
+::ng-deep td.document {
+  padding-top: 3px !important;;
+  padding-bottom: 3px !important;
+}
+
+::ng-deep .checkbox label, .radio label, label {
+  color: #495057;
+}
+::ng-deep .gar_progr {
+  width: 100%;
+    height: 2px;
+    margin-top: -5px;
+    float: left;
+}
+::ng-deep .progress{
+  box-shadow: none !important;
+  }
+
+::ng-deep .progress.progress-line-info {
+  background: rgba(0,188,212,.2);
+}
+::ng-deep.progress .progress-bar.progress-bar-info {
+  background: #00bcd4;
+}
+
+::ng-deep .progress.progress-line-primary {
+  background: rgba(156,39,176,.2);
+}
+::ng-deep .progress .progress-bar.progress-bar-primary {
+  background: #9c27b0!important;
+}
+
+
+::ng-deep.progress .progress-bar.progress-bar-warning {
+  background: #ff9800;
+}
+::ng-deep .progress.progress-line-warning{background:rgba(255,152,0,.2)}
+::ng-deep .progress.progress-line-danger{background:rgba(244,67,54,.2)}
+::ng-deep .progress .progress-bar.progress-bar-danger {
+  background: #f44336;
+}
+
+::ng-deep .gar-label{
+  float: left;
+  width: 100%;
+}
+::ng-deep .gar-small{
+    float: left;
+    margin-top: -16px;
+}
+::ng-deep .gar-right{
+  margin-left: 15px;
+  margin-top: -16px;
+}
+::ng-deep .al_center{
+  text-align: center !important;
+}
+::ng-deep .al_left{
+  text-align: left !important;
+}
+
+
+.togglebutton label input[type=checkbox]:checked+.text-warning {
+  background-color: #ff9800 !important;
+}
+.togglebutton label input[type=checkbox]:checked+.text-info {
+  background-color: #00bcd4 !important;
+}
+
+.togglebutton label input[type=checkbox]:checked+.text-danger {
+  background-color: #f44336 !important;
+}
+.togglebutton label input[type=checkbox]:checked+.text-rose {
+  background-color: #ec407a !important;
+}
+
+
+::ng-deep .nav-link.active, .nav-link.active:hover {
+  background-color: #ff9800;
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(255 152 0 / 40%);
+  color: #fff !important;
+}
+::ng-deep .pull-left
+{
+  float: left !important;
+}
+::ng-deep .pull-right
+{
+  float: right !important;
+}
+::ng-deep .label {
+  display: inline;
+  padding: 0.3em 0.7em 0.4em;
+  font-size: 95%;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25em;
+}
+
+.boxDocumenti
+{
+  min-height: 24.3rem;
+}
+
+.disabled_li {
+  pointer-events:none;
+  opacity:0.6;
+}
+
+.inputContratto
+{
+  width: calc(100% - 0.9rem);
+  float: left;
+}
+
+.viewContratto
+{
+  width: 0.5rem;
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
+  float: right;
+}
+
+.form-group.is-focused .form-control {
+  background-image: none;
+}
+
+.card {
+  margin-left: 1rem;
+}
+
+.nav-item
+{
+  cursor: pointer;
+}
+
+.timeline-title
+{
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 0rem;
+  font-size: 1.3em;
+  color: #3C4858;
+  text-decoration: none;
+  font-weight: 700;
+  line-height: 1.4em;
+}
+
+.timeline-subtitle
+{
+  margin-top: 0rem;
+  margin-left: 1rem;
+  margin-bottom: 0rem;
+  font-size: 1.0625rem;
+  line-height: 1.4em;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  font-weight: 300;
+}
+
+.form-control[disabled], .form-group .form-control[disabled], fieldset[disabled] .form-control, fieldset[disabled] .form-group .form-control {
+  cursor: default;
+  border-bottom: 1px solid #d2d2d2;
+}
+
+::ng-deep .btn-open-sale
+{
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+}
+
+::ng-deep .btn-open-sale i
+{
+  font-size: 18px !important;
+  line-height: 30px !important;
+}
+
+.displayNone
+{
+  display: none;
+}
+
+::ng-deep .compactMovingTab
+{
+    left: 7rem !important;
+    /*opacity: 0.8;*/
+}
+
+.step5LeftBox
+{
+  margin-top: 2rem;
+  min-width: 8%;
+  margin-right: 0px;
+  width: 10%;
+  max-width: 10%;
+  flex: none;
+}
+
+.step5CenterBox
+{
+  width: 64%;
+  max-width: 64%;
+  flex: none;
+}
+
+.sottCardNotComplete
+{
+  width: 64%;
+  max-width: 64%;
+  flex: none;
+}
+
+.sottCardComplete
+{
+  width: 86%;
+  max-width: 86%;
+  flex: none;
+}
+
+.sottLineBox
+{
+  float: left;
+  width: 100%;
+  height: 1.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.pointerClass
+{
+  cursor: pointer !important;
+  pointer-events: all !important;
+}
+
+.pointerClass .presaCaricoText
+{
+  color: #3C4858!important;
+}
+
+.presaCaricoBox
+{
+  min-width: 10.5rem;
+  border: 1px solid #EEE;
+  background: #fff;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 14%);
+  border-radius: 4px;
+  padding: 0.3rem;
+  float: right;
+  position: absolute;
+  right: 1rem;
+  top: 2.8rem;
+  z-index: 100;
+  cursor: default;
+  pointer-events: none;
+}
+
+.presaCaricoCaption
+{
+  float: left;
+  min-width: calc(100% - 2.5rem);
+  width: calc(100% - 2.5rem);
+  margin-top: 0.5rem;
+  margin-left: 0.2rem;
+  font-size: 0.9rem;
+  color: #212529;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  font-weight: 300;
+}
+
+.presaCaricoText
+{
+  float: left;
+  margin-top: 0.3rem;
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+  color: #f44336;
+}
+
+::ng-deep .btn-presa-carico
+{
+  float: right;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+}
+
+::ng-deep .btn-presa-carico i
+{
+  font-size: 18px !important;
+  line-height: 30px !important;
+}
+
+.doc-label-default {
+  color: #FFFFFF;
+}
+.doc-label-inverse {
+  color: #212121;
+}
+.doc-label-primary {
+  color: #9c27b0;
+}
+.doc-label-success {
+  color: #4caf50;
+}
+.doc-label-info {
+  color: #00bcd4;
+}
+.doc-label-warning {
+  color: #ff9800;
+}
+.doc-label-danger {
+  color: #f44336;
+}
+.doc-label-rose {
+  color: #e91e63;
+}
+
+::ng-deep #detail-prospect-modal
+{
+  padding-left: 0rem;
+  padding-top: 2rem;
+  padding-right: 0.5rem;
+}
+
+::ng-deep #detail-prospect-modal .container-fluid
+{
+  padding-left: 0rem;
+}
+
+::ng-deep #detail-prospect-modal .detail_popup_header .card-title
+{
+  font-size: 1.125rem !important;
+  font-weight: 700;
+}
+
+::ng-deep #detail-prospect-modal .detail_popup_header .close-toggle .fa
+{
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  color: white;
+  font-size: 1.2rem;
+}
+
+::ng-deep #detail-prospect-modal .detail_popup_header .card
+{
+  padding: 1rem;
+  margin-top: -3.7rem;
+  z-index: 100;
+  position: fixed;
+  width: 77%;
+}
+
+::ng-deep .fillerRow
+{
+  height: 1rem;
+}

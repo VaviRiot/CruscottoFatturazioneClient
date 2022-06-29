@@ -1,0 +1,14 @@
+.card-header
+{
+    min-height: 5rem;
+}
+
+.mat-button-wrapper svg
+{
+    width: 1.5rem !important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex
+{
+    background-color: transparent;
+}

@@ -1,0 +1,275 @@
+::ng-deep .dx-datagrid .dx-data-row > td.bullet {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+::ng-deep #PCRV .dx-datagrid-header-panel {
+    padding: 0;
+    background-color: transparent;
+}
+
+::ng-deep #PCRV .dx-datagrid-header-panel .dx-toolbar {
+    margin: 0;
+    padding-right: 20px;
+    background-color: transparent;
+}
+
+::ng-deep #PCRV {
+    height: 110vh;
+}
+
+::ng-deep #scrollview {
+    height: 65vh !important;
+}
+
+#scrollview {
+    height: 65vh !important;
+}
+
+dx-scrollview-content{
+    height: 65vh !important;
+}
+
+.dx-scrollable-scrollbars-alwaysvisible.dx-scrollable-both > .dx-scrollable-wrapper > .dx-scrollable-container > .dx-scrollable-content, .dx-scrollable-scrollbars-alwaysvisible.dx-scrollable-vertical > .dx-scrollable-wrapper > .dx-scrollable-container > .dx-scrollable-content {
+    height: 65vh !important;
+}
+
+::ng-deep #scrollviewdistrict {
+    height: 20vh;
+}
+
+::ng-deep #scrollviewzone {
+    height: 20vh;
+}
+
+::ng-deep #scrollviewGeneral {
+    height: 80vh;
+    flex-grow: 2;
+}
+
+::ng-deep #PCRV .dx-datagrid-header-panel .dx-toolbar-items-container {
+    display: flex;
+    align-content: stretch;
+    align-items: baseline;
+    height: 5rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    h3
+    {
+        display: none;
+    }
+}
+
+::ng-deep #PCRV .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:not(:first-child) {
+    background-color: transparent;
+
+}
+
+::ng-deep #PCRV .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:last-child {
+    padding-right: 5px;
+}
+
+::ng-deep #PCRV .dx-datagrid-header-panel .dx-selectbox {
+    margin: 17px 10px;
+}
+
+::ng-deep #PCRV .dx-datagrid-header-panel .dx-button {
+    margin: 17px 0;
+}
+
+::ng-deep .dx-drawer-expand.dx-drawer-right .panel-list {
+    float: right;
+}
+
+::ng-deep #PCRV .informer {
+    //height: 70px;
+    //width: 130px;
+    text-align: center;
+    color: #000;
+}
+
+::ng-deep #PCRV .count {
+    padding-top: 15px;
+    line-height: 27px;
+    margin: 0;
+}
+
+///Tasto imbuto su header filter
+::ng-deep .dx-overlay-wrapper.dx-header-filter-menu.dx-popup-wrapper {
+    z-index: 1000000 !important;
+  }
+
+.dx-toolbar-items-container
+{
+    height: 5rem;
+}
+
+
+mat-expansion-panel{
+    width: 100%;
+}
+
+mat-chip-list {
+    display: inline-block !important;
+}
+
+.bearit-drawer {
+    width: 700px;
+
+    background-color:white;
+    padding:0; 
+    //overflow-y: auto;
+}
+
+.bearit-drawer-container {
+    background-color: lightgray;
+}
+
+.block {
+    display: block;
+}
+
+.bearit-drawer-button {
+    width: 20%;
+}
+
+.bearit-drawer-margin {
+    margin: 0 12px;
+  }
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.padded {
+    padding-right: 20px;
+}
+
+.margined {
+    margin-right: 15px;
+}
+
+.hover:hover {
+    /* color: white; */
+    /* text-shadow: 4px 4px 6px #000000; */
+    opacity: 0.7;
+}
+
+/* evidenziare elementi filtrati nella list */
+::ng-deep .cell-highlight {
+    div.dx-texteditor-input-container input {
+        background-color: #4d4d4d !important;
+        color: white !important;
+    }
+ 
+    div.dx-filter-range-content {
+        background-color: #4d4d4d !important;
+        color: white !important;
+        border-radius: 3px;
+    }
+}
+
+.label-default {
+    
+    background: linear-gradient( 60deg, rgb(163, 162, 162), #777);
+    box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(119 119 119 / 40%);
+}
+
+.label-primary
+{
+    background: linear-gradient(60deg, #ab47bc, #8e24aa);
+    /* background: linear-gradient( 60deg, #007bff, #007bff); */
+    box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(156 39 176 / 40%);
+}
+
+.label-purple {
+    background: linear-gradient(60deg, #ab47bc, #8e24aa);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
+  }
+  .label-info {
+    background: linear-gradient(60deg, #26c6da, #00acc1);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
+  }
+  .label-success{
+   
+    background: linear-gradient(60deg, #66bb6a, #43a047);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
+  }
+  .label-warning {
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+  }
+  .label-danger {
+    background: linear-gradient(60deg, #ef5350, #e53935);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+  }
+  .label-rose {
+    background: linear-gradient(60deg, #ec407a, #d81b60);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4);
+  }
+
+.label {
+    display: inline;
+    padding: 0.3em 0.7em 0.4em;
+    font-size: 95%;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+}
+
+.app-comandi span.fa 
+{
+    color: #AAAAAA;
+    opacity: 1;
+}
+
+.app-comandi a span
+{
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.card-header
+{
+    min-height: 5rem;
+}
+
+.card-title
+{
+  float: left;
+  width: calc(100% - 1.5rem);
+}
+
+.new-user-toggle
+{
+  float: right;
+  color: #fff;
+}
+
+.new-user-toggle span
+{
+  font-size: 1.4rem;
+}
+
+::ng-deep .dx-toolbar .dx-toolbar-after {
+    padding-left: 5px;
+}
+
+::ng-deep #PCRV .dx-datagrid-header-panel .dx-toolbar-before
+{
+    width: calc(100% - 3.5rem);
+    padding-right: 0px;
+}
+
+::ng-deep #PCRV .my-dx-button
+{
+    width: 2.5rem;
+    padding: 0.47rem;
+
+    i {
+        font-size: 1.25rem;
+    }
+}

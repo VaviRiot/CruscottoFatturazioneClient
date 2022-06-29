@@ -1,0 +1,11 @@
+.wizard-header {
+    text-align: left !important;
+    padding: 5px 26px 35px !important;
+  }
+
+
+  ::ng-deep  .main-panel .main-content {
+    margin-top: 35px !important;
+    padding: 30px 15px;
+    min-height: calc(100vh - 123px);
+}

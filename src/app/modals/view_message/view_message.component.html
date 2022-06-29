@@ -1,0 +1,21 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mat-dialog-title">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">{{this.customTitle}}</h4>
+                        <a href="javascript:;"(click)="close()" class="close-toggle">
+                          <span class="fa fa-times-circle"></span>
+                        </a>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <div class="mat-dialog-content" style="width: 100%; height: 45vh;">
+                            {{this.customMessage}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

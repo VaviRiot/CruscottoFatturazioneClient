@@ -1,0 +1,89 @@
+<div class="main-content">
+    <div class="container-fluid">
+  
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-primary">
+                      <h4 class="card-title">Gestione Ruoli - Iter Approvativi</h4>
+                      <a href="javascript:;" [routerLink]="['/detail_role_workflowstep', 'create', -1]" class="new-user-toggle">
+                        <span class="fa fa-plus-circle"></span>
+                      </a>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <dx-data-grid id="PCRW" [dataSource]="dataSource" [remoteOperations]="{ paging: true, filtering: true, sorting: true }"
+                            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [columnAutoWidth]="false" [showBorders]="true"
+                            (onContentReady)="contentReady($event)" (onToolbarPreparing)="onToolbarPreparing($event)"
+                            (onExporting)="onExporting($event)">
+
+                            <dxo-selection mode="multiple" [allowSelectAll]="true" [selectAllMode]="'page'" [showCheckBoxesMode]="'never'">
+                            </dxo-selection>
+                            <dxo-sorting mode="multiple"></dxo-sorting>
+                            <dxo-header-filter [visible]="true"></dxo-header-filter>
+                            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                            <dxo-state-storing [enabled]="true" type="custom" [customLoad]="tableStateLoad" [customSave]="tableStateSave">
+                            </dxo-state-storing>
+                            <dxo-filter-row [visible]="true"></dxo-filter-row>
+                            <dxo-paging [pageSize]="25"></dxo-paging>
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[25, 50, 75, 'all']" [visible]="true"></dxo-pager>
+
+                            <dxi-column dataField="ruoloWorkflowStep.name" caption="Ruolo" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="true" [allowSorting]="true" tabindex="1"
+                                [cssClass]="hasFilter('ruoloWorkflowStep.name') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="workflowStepRuolo.nomeStep" caption="Workflow Step" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="true" [allowSorting]="true" tabindex="2"
+                                [cssClass]="hasFilter('workflowStepRuolo.nomeStep') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="workflowStepRuolo.workflow.business" caption="Business" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="true" [allowSorting]="true" tabindex="3"
+                                [cssClass]="hasFilter('workflowStepRuolo.workflow.business') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="createDateString" caption="Data Creazione" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="false" [allowSorting]="true" tabindex="4"
+                                [cssClass]="hasFilter('createDateString') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="lastModString" caption="Ultima mod" alignment="center" [allowHeaderFiltering]="false"
+                                [allowFiltering]="false" [allowSorting]="true" tabindex="5" [cssClass]="hasFilter('lastModString') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column caption="" alignment="center" [allowHeaderFiltering]="false"  [width]="150"
+                                [allowFiltering]="false" [allowSorting]="false" cellTemplate="tool" tabindex="6"
+                                [cssClass]="hasFilter('id') == true ? 'cell-highlight' : ''">
+                                <div *dxTemplate="let row of 'tool'" class="app-comandi" style="text-align: center;">
+                                    <a href="javascript:;" [routerLink]="['/detail_role_workflowstep', 'edit', row.data.id]">
+                                        <span class="fa fa-pencil"></span>
+                                    </a>
+                                    <a href="javascript:;" (click)="deleteWorkflowStepRole(row.data.id)">
+                                        <span class="fa fa-trash"></span>
+                                    </a>
+                                    <a href="javascript:;" [routerLink]="['/detail_role_workflowstep', 'view', row.data.id]">
+                                        <span class="fa fa-binoculars"></span>
+                                    </a>
+                                </div>
+                            </dxi-column>
+                            
+                            <div *dxTemplate="let data of 'totalCount'">
+                                <div class="informer text-left pt-3 pb-3" style="float: left;">
+                                    <div class="name">{{ listOverview.totalCount }} Risultati trovati</div>
+                                </div>
+                                <div style="float: right;">
+                                    <div class="dx-widget dx-button dx-button-mode-outlined dx-button-normal dx-button-has-icon dx-item dx-buttongroup-item dx-item-content dx-buttongroup-item-content dx-buttongroup-first-item dx-buttongroup-last-item dx-shape-standard dx-dropdownbutton-action dx-buttongroup-item-has-width"
+                                     role="button" (click)="resetGrid()" title="Rimuovi filtri">
+                                        <div class="dx-button-content my-dx-button">
+                                            <i class="material-icons">layers_clear</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dx-data-grid>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
