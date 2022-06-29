@@ -16,6 +16,7 @@ export class User {
         public lastModUser?: string,
         public lastModDate?: Date,
         public validFrom?: Date,
+        public societa?: String,
         public validTo?: Date,
         public avaiableBusiness?: Array<string>,
         public vociUtente?: Array<VoceMenu>,

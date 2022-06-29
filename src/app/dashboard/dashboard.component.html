@@ -9,11 +9,11 @@
                         <i class="material-icons">content_copy</i>
                     </div>
                     <p class="card-category">Fatture Emesse</p>
-                    <h3 class="card-title">{{topSummary.firstBoxValue}}</h3>
+                    <h3 class="card-title">{{topSummary.fattureEmesse}}</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">update</i> aggiornato al {{topSummary.firstBoxDetail | date:'dd/MM/YYYY'}}
+                        <i class="material-icons">update</i> aggiornato al {{topSummary.dataFattureEmesse | date:'dd/MM/YYYY hh:mm'}}
                     </div>
                 </div>
             </div>
@@ -26,11 +26,11 @@
                           <i class="material-icons">store</i>
                       </div>
                       <p class="card-category">Fatture Convalidate</p>
-                      <h3 class="card-title">{{topSummary.secondBoxValue}}</h3>
+                      <h3 class="card-title">{{topSummary.fattureConvalidate}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <i class="material-icons">date_range</i> su {{topSummary.secondBoxDetail}}
+                          <i class="material-icons">date_range</i> aggiornato al {{topSummary.dataFattureConvalidate | date:'dd/MM/YYYY hh:mm'}}
                       </div>
                   </div>
               </div>
@@ -43,11 +43,11 @@
                           <i class="material-icons">alarm</i>
                       </div>
                       <p class="card-category">Fatture Rifiutate</p>
-                      <h3 class="card-title">{{topSummary.thirdBoxValue}}</h3>
+                      <h3 class="card-title">{{topSummary.fattureRifiutate}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                        <i class="material-icons">money</i> Totale {{topSummary.thirdBoxDetail|currency:'EUR':true}}
+                        <i class="material-icons">money</i> Totale {{topSummary.importoFattureRifiutate|currency:'EUR':true}}
                       </div>
                   </div>
               </div>
@@ -59,11 +59,11 @@
                             <i class="material-icons">announcement</i>
                       </div>
                       <p class="card-category">Totale importo fatture</p>
-                      <h3 class="card-title">{{topSummary.fourthBoxValue}}</h3>
+                      <h3 class="card-title">{{topSummary.totaleImportoFatture | currency:'EUR':true }}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <i class="material-icons">update</i> aggiornato al {{topSummary.fourthBoxDetail | date:'dd/MM/YYYY'}}
+                          <i class="material-icons">update</i> aggiornato al {{topSummary.dataImportoFatture | date:'dd/MM/YYYY'}}
                       </div>
                   </div>
               </div>              

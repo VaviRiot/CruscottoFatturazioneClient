@@ -1,14 +1,12 @@
 export class DashboardTopSummary {
     constructor(
-        public firstBoxValue?: number,
-        public firstBoxDetail?: Date,
-        public secondBoxValue?: number,
-        public secondBoxDetail?: string,
-        public thirdBoxValue?: number,
-        public thirdBoxDetail?: string,
-        public fourthBoxValue?: number,
-        public fourthBoxDetail?: Date,
-        public fifthBoxValue?: number,
-        public fifthBoxDetail?: string
+        public fattureEmesse?: number,
+        public dataFattureEmesse?: Date,
+        public fattureConvalidate?: number,
+        public dataFattureConvalidate?: Date,
+        public fattureRifiutate?: number,
+        public importoFattureRifiutate?: number,
+        public totaleImportoFatture?: number,
+        public dataImportoFatture?: Date,
     ) { }
 }

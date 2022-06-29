@@ -1,6 +1,6 @@
 {
-  "name": "portale-credito",
-  "version": "2.6.0",
+  "name": "portale-fatture",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

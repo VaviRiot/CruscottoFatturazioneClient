@@ -11,17 +11,17 @@ export class DashboardService {
 
   constructor() { }
 
-  getTopSummary(authToken: string, idRole: number, isAdmin: boolean, adminView: boolean, selectedBusiness: Array<string>)
+  getTopSummary(authToken: string, idRole: number, isAdmin: boolean, adminView: boolean, selectedBusiness: Array<string>, societa:String)
   {
-    const endpoint = environment.serverUrl + "dashboard/getDashboardTopSummary";
+    const endpoint = environment.serverUrl + "dashboard/getDashboardTopSummary?codiceSocieta=" + societa;
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
                       .append('Content-Type', 'application/json')
                       .append('Accept', 'application/json');
 
-    let dashReq = new DashboardProspectRequest(idRole, isAdmin, adminView, selectedBusiness);
+    // let dashReq = new DashboardProspectRequest(idRole, isAdmin, adminView, selectedBusiness);
 
-    return CustomHttpService.post(endpoint, dashReq, {headers: my_headers});
+    return CustomHttpService.get(endpoint, my_headers);
   }
 
   getListBottomClienti(authToken: string, idRole: number, isAdmin: boolean, adminView: boolean, selectedBusiness: Array<string>)
@@ -63,17 +63,17 @@ export class DashboardService {
     return CustomHttpService.post(endpoint, dashReq, {headers: my_headers});
   }
 
-  getDashboardClientiAttivi(authToken: string, idRole: number, isAdmin: boolean, adminView: boolean, selectedBusiness: Array<string>)
+  getDashboardYearChart(authToken: string, idRole: number, isAdmin: boolean, adminView: boolean, selectedBusiness: Array<string>, societa: String)
   {
-    const endpoint = environment.serverUrl + "dashboard/getDashboardClientiAttivi";
+    const endpoint = environment.serverUrl + "dashboard/getDashboardYearChart?codiceSocieta=" + societa;
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
                       .append('Content-Type', 'application/json')
                       .append('Accept', 'application/json');
 
-    let dashReq = new DashboardProspectRequest(idRole, isAdmin, adminView, selectedBusiness);
+    // let dashReq = new DashboardProspectRequest(idRole, isAdmin, adminView, selectedBusiness);
 
-    return CustomHttpService.post(endpoint, dashReq, {headers: my_headers});
+    return CustomHttpService.get(endpoint, my_headers);
   }
 
   getDashboardGaranzieScadenze(authToken: string, idRole: number, isAdmin: boolean, adminView: boolean, selectedBusiness: Array<string>)
