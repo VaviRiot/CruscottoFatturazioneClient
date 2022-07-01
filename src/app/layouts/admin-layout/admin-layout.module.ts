@@ -128,7 +128,7 @@ export class MaterialModule {
 
 @NgModule({
   imports: [
-    WizardFormModule, ///Nicolò mura  => tutti i componenti dichiarati in declarations ora avranno accesso a wizard form module
+    WizardFormModule, 
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
