@@ -157,7 +157,7 @@ export abstract class CustomHttpService {
         
         let token: string = sessionStorage.getItem(environment.keyToken);
         let user: User = JSON.parse(sessionStorage.getItem(environment.keyUser));
-
+        sessionStorage.setItem(environment.keyUser, JSON.stringify(user));
         let verTokReq = new VerifyTokenRequest(token, user.username);
 
         return http.post<VerifyTokenResponse>(endpointNot, verTokReq);

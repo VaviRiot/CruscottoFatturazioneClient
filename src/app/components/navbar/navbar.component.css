@@ -12,6 +12,39 @@
     color: #fff;
 }
 
+li.mat-menu-trigger.nav-item.menu {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+span.societa-active {
+    padding: 7px 0px 10px 16px;
+    font-size: 15px;
+    width: 100%;
+    display: block;
+}
+
+.mat-menu-panel.menu-societa {
+    width: 200px;
+}
+
+button.selected {
+    font-weight: bold;
+    background-color: #f44336;
+    box-shadow: 0 0px 0px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(244 67 54 / 40%);
+    color: white;
+}
+
+::ng-deep.mat-menu-panel {
+    width: 193px !important;  }
+
+
+
+button.mat-focus-indicator.selected:hover {
+    background: #f44336;
+}
+
 .notifiche-menu, .business-menu
 {
     position: absolute;

@@ -1,73 +1,89 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-info">
-                      <h4 class="card-title">Dettaglio Utente</h4>
-                      <p class="card-category"></p>
-                  </div>
-                  <div class="card-body">
-                      <form>
-                          <div class="row">
-                              <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
-                                  <input [formControl]="nameCtrl" matInput placeholder="Nome" type="text" id="name" name="name" [(ngModel)]="user.name">
-                                  <mat-error *ngIf="nameCtrl.invalid">{{getNameErrorMessage()}}</mat-error>
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input [formControl]="emailCtrl" matInput placeholder="Indirizzo Email" type="email" [(ngModel)]="user.email">
-                                    <mat-error *ngIf="emailCtrl.invalid">{{getEmailErrorMessage()}}</mat-error>
-                                  </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input [formControl]="usernameCtrl" matInput placeholder="Username" [(ngModel)]="user.username">
-                                    <mat-error *ngIf="usernameCtrl.invalid">{{getUsernameErrorMessage()}}</mat-error>
-                                  </mat-form-field>
-                              </div>
-                              <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input [formControl]="passwordCtrl" matInput placeholder="Password" type="password" [(ngModel)]="user.password">
-                                    <mat-error *ngIf="passwordCtrl.invalid">{{getPasswordErrorMessage()}}</mat-error>
-                                  </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <mat-form-field appearance="fill" class="px-0">
-                                <mat-label>Ruolo</mat-label>
-                                <mat-select [formControl]="ruoloCtrl" [(ngModel)]="defRuoloId" name="ruolo">
-                                    <mat-option *ngFor="let item of listRuoli" [value]="item.id">
-                                        {{item.name}}
-                                    </mat-option>
-                                </mat-select>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-md-6">
-                              <mat-form-field appearance="fill">
-                                <mat-label>Validit&agrave;</mat-label>
-                                <mat-date-range-input [rangePicker]="picker" [disabled]="!isEdit">
-                                  <input [formControl]="validFromCtrl" matStartDate placeholder="Data Inizio" [(ngModel)]="user.validFrom">
-                                  <input [formControl]="validToCtrl" matEndDate placeholder="Data Fine" [(ngModel)]="user.validTo">
-                                </mat-date-range-input>
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-date-range-picker #picker></mat-date-range-picker>
-                                <mat-error *ngIf="validFromCtrl.invalid">{{getValidFromErrorMessage()}}</mat-error>
-                                <mat-error *ngIf="validToCtrl.invalid">{{getValidToErrorMessage()}}</mat-error>
-                              </mat-form-field>
-                            </div>
-                          </div>
-                          <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right" (click)="salvaUtente()">{{this.buttonTitle}}</button>
-                          <div class="clearfix"></div>
-                      </form>
-                  </div>
-              </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Dettaglio Utente</h4>
+            <p class="card-category"></p>
           </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input [formControl]="nameCtrl" matInput placeholder="Nome" type="text" id="name" name="name"
+                      [(ngModel)]="user.name">
+                    <mat-error *ngIf="nameCtrl.invalid">{{getNameErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input [formControl]="emailCtrl" matInput placeholder="Indirizzo Email" type="email"
+                      [(ngModel)]="user.email">
+                    <mat-error *ngIf="emailCtrl.invalid">{{getEmailErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input [formControl]="usernameCtrl" matInput placeholder="Username" [(ngModel)]="user.username">
+                    <mat-error *ngIf="usernameCtrl.invalid">{{getUsernameErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-select [formControl]="societaCtrl"  [(ngModel)]="user.societa" multiple name="societa">
+                      <mat-option *ngFor="let societa of listSocieta" [value]="societa.codiceSocieta"> {{societa.codiceSocieta}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input [formControl]="passwordCtrl" matInput placeholder="Password" type="password"
+                      [(ngModel)]="user.password">
+                    <mat-error *ngIf="passwordCtrl.invalid">{{getPasswordErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field appearance="fill" class="px-0">
+                    <mat-label>Ruolo</mat-label>
+                    <mat-select [formControl]="ruoloCtrl" [(ngModel)]="defRuoloId" name="ruolo">
+                      <mat-option *ngFor="let item of listRuoli" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Validit&agrave;</mat-label>
+                    <mat-date-range-input [rangePicker]="picker" [disabled]="!isEdit">
+                      <input [formControl]="validFromCtrl" matStartDate placeholder="Data Inizio"
+                        [(ngModel)]="user.validFrom">
+                      <input [formControl]="validToCtrl" matEndDate placeholder="Data Fine" [(ngModel)]="user.validTo">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                    <mat-error *ngIf="validFromCtrl.invalid">{{getValidFromErrorMessage()}}</mat-error>
+                    <mat-error *ngIf="validToCtrl.invalid">{{getValidToErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right"
+                (click)="salvaUtente()">{{this.buttonTitle}}</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>

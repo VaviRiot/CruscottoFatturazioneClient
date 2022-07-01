@@ -69,6 +69,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit()
     {
+        this.userLogged = this.authService.getUser();
         this.extraUrl = [
             { path: "/detail_prospect", title: "Dettaglio Prospect" }
           ];
@@ -100,9 +101,7 @@ export class NavbarComponent implements OnInit {
     ngAfterViewInit()
     {
         this.myUpdateSubscription = this.common.getUpdate().subscribe(res => {
-    
           let json_obj: InternalMessage = JSON.parse(res.text);
-
           // console.log(json_obj);
 
           if(json_obj.command == "refreshBusinessButton")
@@ -132,6 +131,12 @@ export class NavbarComponent implements OnInit {
           {
             this.refreshMenuTitle(JSON.parse(json_obj.message));
           }
+        });
+
+        this.userService.getUser(this.userLogged.token, this.userId).subscribe(res => {
+            sessionStorage.setItem(environment.keyUser, JSON.stringify(res));
+            this.userLogged = this.authService.getUser();
+        
         });
     }
 
@@ -538,5 +543,12 @@ export class NavbarComponent implements OnInit {
 
       if(this.myBusSubscription)
         this.myBusSubscription.unsubscribe();
+    }
+
+
+    changeSocieta(societa:string) {
+        sessionStorage.setItem('selectedSocieta', societa);
+        this.userLogged = this.authService.getUser();
+        window.location.reload();
     }
 }

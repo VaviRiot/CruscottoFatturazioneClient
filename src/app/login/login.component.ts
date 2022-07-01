@@ -71,12 +71,8 @@ export class LoginComponent implements OnInit {
 
     this.myLogSubscription = this.authService.serverLogin(logReq).subscribe(res => {
       console.log(res);
-      
       this.currentUser = res as User;
-      console.log('current', this.currentUser);
-    
-      // let authToken: string = this.currentUser.token.toString();
-
+      this.currentUser.selectedSocieta = this.currentUser.societa != null ? this.currentUser.societa[0].toString() : null;
       this.myRegSubscription = this.authService.registerLogin(this.currentUser).subscribe(() =>
       {
         if (this.authService.isLoggedIn())

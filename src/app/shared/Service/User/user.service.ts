@@ -191,6 +191,23 @@ export class UserService
     return CustomHttpService.get(endpoint, headers);
   }
 
+
+  getSocietaList(authToken: string)
+  {
+    const endpoint = environment.serverUrl + "societa/getSocietaList";
+
+    let headers = new HttpHeaders(
+      {
+        'Authorization': 'Bearer ' + authToken,
+         'Content-Type': 'application/json'
+      }
+    );
+
+    return CustomHttpService.get(endpoint, headers);
+  }
+
+
+
   getRoleVoceMenuById(authToken: string, idRoleVoceMenu: number)
   {
     const endpoint = environment.serverUrl + "user/getRoleVoceMenuById";

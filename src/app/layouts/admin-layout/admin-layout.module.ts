@@ -120,7 +120,7 @@ import { NotificationsGridComponent } from '../../notifications-grid/notificatio
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule,
   ]
 })
 export class MaterialModule {
@@ -143,6 +143,7 @@ export class MaterialModule {
     DxDrawerModule,
     DxListModule,
     DxRadioGroupModule,
+    
     // BrowserAnimationsModule,
     MglTimelineModule,
     PipesModule///Nicolò mura => tutti i componenti dichiarati avranno accesso a tutto il modulo material    

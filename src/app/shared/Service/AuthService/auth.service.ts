@@ -15,11 +15,10 @@ export class AuthService {
   roleAs: string;
   tokenUsr: string;
   userId: number;
-
+  selectedSocieta: String;
   constructor(private httpClient: HttpClient) { }
 
-  registerLogin(user: User)
-  {
+  registerLogin(user: User) {
     this.isLogin = true;
     this.roleAs = user.ruoloUtente.name.toString();
     this.tokenUsr = user.token.toString();
@@ -28,12 +27,13 @@ export class AuthService {
     sessionStorage.setItem(environment.keyState, 'true');
     sessionStorage.setItem(environment.keyRole, this.roleAs);
     sessionStorage.setItem(environment.keyToken, this.tokenUsr);
+    sessionStorage.setItem('vociMenu', JSON.stringify(user.vociUtente));
+
     //sessionStorage.setItem(environment.keyBusiness, JSON.stringify(user.avaiableBusiness));
     return of({ success: this.isLogin, role: this.roleAs });
   }
 
-  logout()
-  {
+  logout() {
     this.isLogin = false;
     this.roleAs = '';
     this.tokenUsr = '';
@@ -45,11 +45,13 @@ export class AuthService {
     sessionStorage.removeItem(environment.keyNotify);
     sessionStorage.removeItem(environment.keyBusiness);
     sessionStorage.removeItem(environment.keySelectBusiness);
+    sessionStorage.removeItem('selectedSocieta');
+    sessionStorage.removeItem('vociMenu');
+
     return of({ success: true, role: '' });
   }
 
-  isLoggedIn() 
-  {
+  isLoggedIn() {
     const loggedIn = sessionStorage.getItem(environment.keyState);
     if (loggedIn == 'true')
       this.isLogin = true;
@@ -58,109 +60,95 @@ export class AuthService {
     return this.isLogin;
   }
 
-  getRole(): string
-  {
+  getRole(): string {
     this.roleAs = sessionStorage.getItem(environment.keyRole);
     return this.roleAs;
   }
 
-  getUserId(): number
-  {
+  getUserId(): number {
     this.userId = +sessionStorage.getItem(environment.keyUserId);
     return this.userId;
   }
 
-  getAuthToken(): string
-  {
+  getAuthToken(): string {
     this.tokenUsr = sessionStorage.getItem(environment.keyToken);
     return this.tokenUsr;
   }
 
-  getUser(): User
-  {
-    return JSON.parse(sessionStorage.getItem(environment.keyUser));
+
+  getUser(): User {
+    let societa =  sessionStorage.getItem('selectedSocieta');
+    let vociMenu = JSON.parse(sessionStorage.getItem('vociMenu'));
+    let user = JSON.parse(sessionStorage.getItem(environment.keyUser));
+    user.selectedSocieta = societa ? societa : user.societa[0];
+    user.vociUtente = vociMenu;
+    return user;
   }
 
-  getRedirectUrl(): string
-  {
+  getRedirectUrl(): string {
     let returnString: string = "";
-    if(sessionStorage.getItem(environment.keyRedirectUrl))
-    {
+    if (sessionStorage.getItem(environment.keyRedirectUrl)) {
       returnString = JSON.parse(sessionStorage.getItem(environment.keyRedirectUrl));
     }
     return returnString;
   }
 
-  setRedirectUrl(urlRequirect: string)
-  {
+  setRedirectUrl(urlRequirect: string) {
     sessionStorage.setItem(environment.keyRedirectUrl, JSON.stringify(urlRequirect));
   }
 
-  setAvaiableBusiness(avaiableBusiness: Array<string>)
-  {
+  setAvaiableBusiness(avaiableBusiness: Array<string>) {
     sessionStorage.setItem(environment.keyBusiness, JSON.stringify(avaiableBusiness));
   }
 
-  getAvaiableBusiness(): Array<string>
-  {
+  getAvaiableBusiness(): Array<string> {
     return JSON.parse(sessionStorage.getItem(environment.keyBusiness));
   }
 
-  setSelectedBusiness(selectedBusiness: Array<string>)
-  {
+  setSelectedBusiness(selectedBusiness: Array<string>) {
     sessionStorage.setItem(environment.keySelectBusiness, JSON.stringify(selectedBusiness));
   }
 
-  getSelectedBusiness(): Array<string>
-  {
+  getSelectedBusiness(): Array<string> {
     return JSON.parse(sessionStorage.getItem(environment.keySelectBusiness));
   }
 
-  setCustomerPreFilter(customerPreFilter: string)
-  {
+  setCustomerPreFilter(customerPreFilter: string) {
     sessionStorage.setItem(environment.gmtCliPreListFilter, JSON.stringify(customerPreFilter));
   }
 
-  getCustomerPreFilter(): string
-  {
+  getCustomerPreFilter(): string {
     return JSON.parse(sessionStorage.getItem(environment.gmtCliPreListFilter));
   }
 
-  isUrlAvaiable(url: string): boolean
-  {
-    if(this.isPublicUrl(url))
-    {
+  isUrlAvaiable(url: string): boolean {
+    if (this.isPublicUrl(url)) {
       return true;
     }
-    else
-    {
+    else {
       let userLogged: User = this.getUser();
 
       //console.log(userLogged.vociMenu);
-  
+
       let vociUtente: Array<VoceMenu> = userLogged.vociUtente;
-  
-      if(vociUtente)
-      {
+
+      if (vociUtente) {
         for (let index = 0; index < vociUtente.length; index++) {
           const voceApp = vociUtente[index];
-  
+
           // console.log('-----------');
           // console.log(voceApp.path);
           // console.log(url);
-  
-          if(voceApp.path == url)
-          {
+
+          if (voceApp.path == url) {
             // console.log('return true');
             return true;
           }
-          else if(voceApp.child)
-          {
+          else if (voceApp.child) {
             for (let index = 0; index < voceApp.child.length; index++) {
               const elementChild = voceApp.child[index];
-              
-              if(elementChild.path = url)
-              {
+
+              if (elementChild.path = url) {
                 return true;
               }
             }
@@ -172,15 +160,13 @@ export class AuthService {
     }
   }
 
-  isPublicUrl(url:string): boolean
-  {
+  isPublicUrl(url: string): boolean {
     let publicUrls = environment.publicUrls;
 
     for (let index = 0; index < publicUrls.length; index++) {
       const pubUrl = publicUrls[index];
-      
-      if(url.startsWith(pubUrl))
-      {
+
+      if (url.startsWith(pubUrl)) {
         return true;
       }
     }
@@ -188,13 +174,12 @@ export class AuthService {
     return false;
   }
 
-  serverLogin(logRequest: LoginRequest)
-  {
+  serverLogin(logRequest: LoginRequest) {
     const endpoint = environment.serverUrl + "login";
-    
+
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
-    
+
     let options = { headers: headers };
 
     // console.log(options);
@@ -202,14 +187,13 @@ export class AuthService {
     return this.httpClient.post(endpoint, logRequest, options);
   }
 
-  serverLogout(authToken: string, id_utente: number)
-  {
+  serverLogout(authToken: string, id_utente: number) {
     const endpoint = environment.serverUrl + "user/logout";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, id_utente, {headers: my_headers});
+    return CustomHttpService.post(endpoint, id_utente, { headers: my_headers });
   }
 }
