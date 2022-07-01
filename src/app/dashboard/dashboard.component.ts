@@ -246,7 +246,7 @@ export class DashboardComponent implements OnInit {
 
     /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
-    this.myDashClientiSubscription = this.dashService.getDashboardYearChart(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.societa).subscribe(res => {
+    this.myDashClientiSubscription = this.dashService.getDashboardYearChart(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.dashClientiAttivi = res as DashboardClientiAttiviChart;
 
       var datawebsiteViewsChart = {
@@ -314,7 +314,7 @@ export class DashboardComponent implements OnInit {
         this.common.sendUpdate("showAlertDanger", error.message);
       });
 
-    this.myTopSubscription = this.dashService.getTopSummary(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.societa).subscribe(res => {
+    this.myTopSubscription = this.dashService.getTopSummary(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.topSummary = res as DashboardTopSummary;
 
 

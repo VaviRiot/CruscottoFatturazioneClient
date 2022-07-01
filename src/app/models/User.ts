@@ -16,11 +16,12 @@ export class User {
         public lastModUser?: string,
         public lastModDate?: Date,
         public validFrom?: Date,
-        public societa?: String,
+        public societa?: Array<String>,
         public validTo?: Date,
         public avaiableBusiness?: Array<string>,
         public vociUtente?: Array<VoceMenu>,
         public status?:string, //Campo di appoggio
-        public lastModString?:string //Campo di appoggio
+        public lastModString?:string ,//Campo di appoggio
+        public selectedSocieta?: string
     ) { }
 }

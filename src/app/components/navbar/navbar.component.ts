@@ -25,7 +25,6 @@ export class NavbarComponent implements OnInit {
 
     ///use for expand notify bug fix
     public notifyExpanded = false;
-
     private listTitles: any[];
     public location: Location;
     public mobile_menu_visible: any = 0;

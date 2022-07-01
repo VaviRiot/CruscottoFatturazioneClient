@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit {
       console.log(res);
       
       this.currentUser = res as User;
+      console.log('current', this.currentUser);
       
       // let authToken: string = this.currentUser.token.toString();
 
