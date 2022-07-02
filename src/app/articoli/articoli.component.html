@@ -5,8 +5,8 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Gestione Utenti</h4>
-                        <a href="javascript:;" [routerLink]="['/detail_user', 'create', -1]" class="new-user-toggle">
+                        <h4 class="card-title">Gestione Articoli</h4>
+                        <a href="javascript:;" [routerLink]="['/detail_articolo', 'create', -1]" class="new-user-toggle">
                             <span class="fa fa-plus-circle"></span>
                         </a>
                     </div>
@@ -31,64 +31,46 @@
                             <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[25, 50, 75, 'all']"
                                 [visible]="true"></dxo-pager>
 
-                            <dxi-column dataField="name" caption="Nome" alignment="center"
+                            <dxi-column dataField="codiceArticolo" caption="Codice Articolo" alignment="center"
                                 [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
-                                [visibleIndex]="1" [cssClass]="hasFilter('name') == true ? 'cell-highlight' : ''">
+                                [visibleIndex]="1" [cssClass]="hasFilter('codiceArticolo') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
-                            <dxi-column dataField="email" caption="Email" alignment="center"
+                            <dxi-column dataField="descrizione" caption="Descrizione" alignment="center"
                                 [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
-                                [visibleIndex]="2" [cssClass]="hasFilter('email') == true ? 'cell-highlight' : ''">
-                            </dxi-column>
-
-                            <dxi-column dataField="username" caption="Username" alignment="center"
-                                [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
-                                [visibleIndex]="3" [cssClass]="hasFilter('username') == true ? 'cell-highlight' : ''">
-                            </dxi-column>
-
-                            <dxi-column dataField="ruoloUtente.name" caption="Ruolo" alignment="center"
-                                [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
-                                [visibleIndex]="4"
-                                [cssClass]="hasFilter('ruoloUtente.name') == true ? 'cell-highlight' : ''">
-                            </dxi-column>
-
-                            <dxi-column dataField="societa" caption="Società" alignment="center"
-                                [allowHeaderFiltering]="false" [filterOperations]="['contains', '=']"
-                                 [allowFiltering]="true" [allowSorting]="true"
-                                [visibleIndex]="5"
-                                [cssClass]="hasFilter('societa') == true ? 'cell-highlight' : ''">
+                                [visibleIndex]="2" [cssClass]="hasFilter('descrizione') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
                             <dxi-column dataField="status" caption="Stato" alignment="center"
                                 [allowHeaderFiltering]="true" [allowSorting]="true" cellTemplate="open"
-                                [visibleIndex]="6" [allowFiltering]="false"
-                                [cssClass]="hasFilter('validTo') == true ? 'cell-highlight' : ''">
+                                [visibleIndex]="5" [allowFiltering]="false"
+                                [cssClass]="hasFilter('dataValidita') == true ? 'cell-highlight' : ''">
                                 <dxo-header-filter [dataSource]="validToListFilter"></dxo-header-filter>
                                 <div *dxTemplate="let row of 'open'">
-                                    <span *ngIf="utenteAttivo(row.data.validTo)"
+                                    <span *ngIf="societaAttiva(row.data.dataValidita)"
                                         class="label label-success">Attivo</span>
-                                    <span *ngIf="!utenteAttivo(row.data.validTo)"
+                                    <span *ngIf="!societaAttiva(row.data.dataValidita)"
                                         class="label label-danger">Disattivato</span>
                                 </div>
                             </dxi-column>
 
-                            <dxi-column dataField="lastModString" caption="Ultima mod" alignment="center"
+                            <dxi-column dataField="last_mod_date" caption="Ultima mod" alignment="center"
                                 [allowHeaderFiltering]="false" [allowFiltering]="false" [allowSorting]="true"
-                                [visibleIndex]="7"
-                                [cssClass]="hasFilter('lastModString') == true ? 'cell-highlight' : ''">
+                                [visibleIndex]="6"
+                                [cssClass]="hasFilter('last_mod_date') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
                             <dxi-column caption="" alignment="center" [allowHeaderFiltering]="false"
-                                [allowFiltering]="false" [allowSorting]="false" cellTemplate="tool" [visibleIndex]="8"
+                                [allowFiltering]="false" [allowSorting]="false" cellTemplate="tool" [visibleIndex]="7"
                                 [cssClass]="hasFilter('id') == true ? 'cell-highlight' : ''">
                                 <div *dxTemplate="let row of 'tool'" class="app-comandi" style="text-align: center;">
-                                    <a href="javascript:;" [routerLink]="['/detail_user', 'edit', row.data.id]">
+                                    <a href="javascript:;" [routerLink]="['/detail_articolo', 'edit', row.data.id]">
                                         <span class="fa fa-pencil"></span>
                                     </a>
-                                    <a href="javascript:;" (click)="deleteUser(row.data.id)">
+                                    <a href="javascript:;" (click)="deleteArticolo(row.data.id)">
                                         <span class="fa fa-trash"></span>
                                     </a>
-                                    <a href="javascript:;" [routerLink]="['/detail_user', 'view', row.data.id]">
+                                    <a href="javascript:;" [routerLink]="['/detail_articolo', 'view', row.data.id]">
                                         <span class="fa fa-binoculars"></span>
                                     </a>
                                 </div>
@@ -96,7 +78,7 @@
 
                             <div *dxTemplate="let data of 'totalCount'">
                                 <div class="informer text-left pt-3 pb-3" style="float: left;">
-                                    <div class="name">{{ utentiListOverview.totalCount }} Risultati trovati</div>
+                                    <div class="name">{{ articoliListOverview.totalCount }} Risultati trovati</div>
                                 </div>
                                 <div style="float: right;">
                                     <div class="dx-widget dx-button dx-button-mode-outlined dx-button-normal dx-button-has-icon dx-item dx-buttongroup-item dx-item-content dx-buttongroup-item-content dx-buttongroup-first-item dx-buttongroup-last-item dx-shape-standard dx-dropdownbutton-action dx-buttongroup-item-has-width"

@@ -41,8 +41,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   declarations: [
     AppComponent,
     LoginComponent,
-    AdminLayoutComponent
-  ],
+    AdminLayoutComponent   ],
   providers: [{
                 provide: LOCALE_ID,
                 useValue: 'it-IT'

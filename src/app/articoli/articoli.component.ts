@@ -25,18 +25,17 @@ import { OrderClause } from 'app/models/OrderClause'
 import { Dictionary } from 'app/models/Dictionary'
 import { User } from 'app/models/User';
 import { UserService } from 'app/shared/Service/User/user.service'
-import { UtentiListOverview } from 'app/models/Response/UtentiListOverview'
 
 import { DatePipe } from '@angular/common';
-
+import { ArticoliService } from 'app/shared/Service/Articoli/articoli.service'
+import { ArticoliListOverview } from 'app/models/Response/ArticoliListOverview'
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-articoli',
+  templateUrl: './articoli.component.html',
+  styleUrls: ['./articoli.component.scss']
 })
-export class UsersComponent implements OnInit {
-
-  public utentiListOverview = new UtentiListOverview(0, null);
+export class ArticoliComponent implements OnInit {
+  public articoliListOverview = new ArticoliListOverview(0, null);
 
   public validToListFilter: any = [
     {
@@ -56,25 +55,13 @@ export class UsersComponent implements OnInit {
   dateFilters: string[] = ['lastModDate', 'validTo'];
 
   listFilters: Array<Array<string>> = [
-    ['name', 'lke'],
-    ['email', 'lke'],
-    ['username', 'lke'],
-    ['ruoloUtente', 'lke'],
-    ['societa', 'lke'],
+    ['codiceArticolo', 'lke'],
+    ['descrizione', 'lke'],
     ['lastModDate', 'lke'],
-    ['validTo', 'lke']
   ]
 
   listInFilters: string[] = ['name'];
 
-  /* SERVER SIDE FILTERS*/
-  nameFilter: string;
-  emailFilter: string;
-  usernameFilter: string;
-  societaFilter: string;
-  ruoloUtenteFilter: string;
-  lastModDateFilter: string;
-  validToFilter: string;
 
   /* SERVER SORT CLAUSES */
   orderClause: OrderClause[]
@@ -89,7 +76,7 @@ export class UsersComponent implements OnInit {
   dataSource: DataSource;
 
   constructor(
-    private userService: UserService,
+    private articoliService: ArticoliService,
     public dialog: MatDialog,
     private common: CommonService,
     private authService: AuthService
@@ -98,9 +85,15 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let pipe = new DatePipe('it-IT');
 
     this.userLogged = this.authService.getUser();
+    this.loadDataTable();
+
+  }
+
+
+  loadDataTable() {
+    let pipe = new DatePipe('it-IT');
 
     this.dataSource = new DataSource({
       key: 'id',
@@ -130,25 +123,30 @@ export class UsersComponent implements OnInit {
 
         // console.log(filterPost);
 
-        return this.userService
-          .getUtentiDataTable(authToken, filterPost)
+        return this.articoliService
+          .getArticoliDataTable(authToken, filterPost)
           .toPromise()
           .then((res) => {
 
-            res.lines.forEach(userApp => {
-              if (this.utenteAttivo(userApp.validTo)) {
-                userApp.status = "Attivo";
+            res.lines.forEach(articolo => {
+              if (this.societaAttiva(articolo.dataValidita)) {
+                articolo.status = "Attivo";
               }
               else {
-                userApp.status = "Disattivato";
+                articolo.status = "Disattivato";
               }
 
-              if (userApp.lastModDate) {
-                userApp.lastModString = pipe.transform(userApp.lastModDate, 'dd/MM/yyyy HH:mm');
+              if (articolo.last_mod_user) {
+                articolo.last_mod_user = pipe.transform(articolo.last_mod_date, 'dd/MM/yyyy HH:mm');
               }
+
+              if (articolo.last_mod_date) {
+                articolo.last_mod_date = pipe.transform(articolo.last_mod_date, 'dd/MM/yyyy HH:mm');
+              }
+
             });
 
-            this.utentiListOverview = res;
+            this.articoliListOverview = res;
             // console.log(this.utentiListOverview);
 
             this.common.sendUpdate("hideSpinner");
@@ -254,7 +252,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  utenteAttivo(valid_to: Date): boolean {
+  societaAttiva(valid_to: Date): boolean {
     if (new Date(valid_to) > new Date()) {
       return true;
     }
@@ -263,38 +261,34 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  deleteUser(user_id: number) {
+  deleteArticolo(idArticolo: number) {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.id = 'confirm-message-modal'
     dialogConfig.height = 'fit-content'
     dialogConfig.width = '25rem';
 
     const modalDialog = this.dialog.open(ConfirmMessageComponent, dialogConfig);
-    modalDialog.componentInstance.messageText = "Sei sicuro di voler disabilitare l'utente?";
+    modalDialog.componentInstance.messageText = "Sei sicuro di voler eliminare l'articolo?";
 
     modalDialog.afterClosed().subscribe(res => {
       if (res == true) {
         this.common.sendUpdate("showSpinner");
-
         let auth_token: string = this.authService.getAuthToken();
-        this.deleteSubscription = this.userService.deleteUser(auth_token, user_id, this.userLogged.name).subscribe((res: boolean) => {
+        this.deleteSubscription = this.articoliService.deleteArticolo(auth_token, idArticolo, this.userLogged.name).subscribe((res: boolean) => {
           if (res) {
             //console.log(res);
-            this.common.sendUpdate("showAlertInfo", "Utente rimosso correttamente!");
+            this.common.sendUpdate("showAlertInfo", "Articolo rimosso correttamente!");
 
-            this.dataSource.reload();
-
+            // this.dataSource.reload();
+            this.loadDataTable();
             this.common.sendUpdate("hideSpinner");
           }
           else {
             this.common.sendUpdate("hideSpinner");
-            this.common.sendUpdate("showAlertDanger", "Impossibile rimuovere l'utente al momento.");
+            this.common.sendUpdate("showAlertDanger", "Impossibile rimuovere l'articolo al momento.");
           }
         },
           error => {
-            // console.log("getTopSummary");
-            // console.log(error);
-
             this.common.sendUpdate("hideSpinner");
             this.common.sendUpdate("showAlertDanger", error.message);
           });
@@ -307,5 +301,6 @@ export class UsersComponent implements OnInit {
     if (this.deleteSubscription)
       this.deleteSubscription.unsubscribe();
   }
+
 
 }

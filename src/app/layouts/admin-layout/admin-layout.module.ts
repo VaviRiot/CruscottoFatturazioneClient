@@ -87,6 +87,8 @@ import { PipesModule, TimeAgoPipe } from 'app/utils/time-ago-pipe';
 
 // DA RIMUOVERE
 import { NotificationsGridComponent } from '../../notifications-grid/notifications-grid.component';
+import { ArticoliComponent } from 'app/articoli/articoli.component';
+import { DetailArticoloComponent } from 'app/detail_articolo/detail-articolo.component';
 
 @NgModule({
   exports: [
@@ -184,7 +186,9 @@ export class MaterialModule {
     DetailRoleVocimenuComponent,
     ScadenzeGaranzieComponent,
     DetailScadenzeGaranzieComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ArticoliComponent,
+    DetailArticoloComponent
   ],
   providers: [
     DatePipe,

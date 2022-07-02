@@ -1,0 +1,53 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-info">
+              <h4 class="card-title">Dettaglio Articolo</h4>
+              <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <input [formControl]="codiceArticoloCtrl" matInput placeholder="Codice Articolo" type="text" id="codiceArticolo" name="codiceArticolo"
+                        [(ngModel)]="articolo.codiceArticolo">
+                      <mat-error *ngIf="codiceArticoloCtrl.invalid">{{getCodiceArticoloErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <input [formControl]="descrizioneCtrl" matInput placeholder="Descrizione" type="text"
+                        [(ngModel)]="articolo.descrizione">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Validit&agrave;</mat-label>
+                      <mat-date-range-input [rangePicker]="picker" [disabled]="!isEdit">
+                        <input [formControl]="validFromCtrl" matStartDate placeholder="Data Inizio"
+                          [(ngModel)]="articolo.create_date">
+                        <input [formControl]="validToCtrl" matEndDate placeholder="Data Fine" [(ngModel)]="articolo.dataValidita">
+                      </mat-date-range-input>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-date-range-picker #picker></mat-date-range-picker>
+                      <mat-error *ngIf="validFromCtrl.invalid">{{getValidFromErrorMessage()}}</mat-error>
+                      <mat-error *ngIf="validToCtrl.invalid">{{getValidToErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right"
+                  (click)="salvaArticolo()">{{this.buttonTitle}}</button>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

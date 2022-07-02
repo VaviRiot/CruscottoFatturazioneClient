@@ -12,3 +12,11 @@
 {
     background-color: transparent;
 }
+
+::ng-deep .mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate {
+    background-color: #0fb7cb!important;
+  }
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #0fb7cb;
+}
