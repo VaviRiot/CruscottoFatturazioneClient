@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-info">
-                        <h4 class="card-title">Dettaglio Articolo</h4>
+                        <h4 class="card-title">Dettaglio Corrispettivo</h4>
                         <p class="card-category"></p>
                     </div>
                     <div class="card-body">
@@ -12,19 +12,20 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
-                                        <input [formControl]="codiceArticoloCtrl" matInput placeholder="Codice Articolo"
-                                            type="text" id="codiceArticolo" name="codiceArticolo"
-                                            [(ngModel)]="articolo.codiceArticolo">
-                                        <mat-error *ngIf="codiceArticoloCtrl.invalid">
-                                            {{getCodiceArticoloErrorMessage()}}</mat-error>
+                                        <input [formControl]="codiceCorrispettivoCtrl" matInput
+                                            placeholder="Codice Corrispettivo" type="text" id="codiceArticolo"
+                                            name="codiceCorrispettivo" [(ngModel)]="corrispettivo.codiceCorrispettivo">
+                                        <mat-error *ngIf="codiceCorrispettivoCtrl.invalid">
+                                            {{getCodiceCorispettivoErrorMessage()}}</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="descrizioneCtrl" matInput placeholder="Descrizione"
-                                            type="text" [(ngModel)]="articolo.descrizione">
+                                            type="text" [(ngModel)]="corrispettivo.descrizione">
                                         <mat-error *ngIf="descrizioneCtrl.invalid">{{getDescrizioneErrorMessage()}}
                                         </mat-error>
+
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -35,9 +36,9 @@
                                         <mat-label>Validit&agrave;</mat-label>
                                         <mat-date-range-input [rangePicker]="picker" [disabled]="!isEdit">
                                             <input [formControl]="validFromCtrl" matStartDate placeholder="Data Inizio"
-                                                [(ngModel)]="articolo.create_date">
+                                                [(ngModel)]="corrispettivo.create_date">
                                             <input [formControl]="validToCtrl" matEndDate placeholder="Data Fine"
-                                                [(ngModel)]="articolo.dataValidita">
+                                                [(ngModel)]="corrispettivo.dataValidita">
                                         </mat-date-range-input>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-date-range-picker #picker></mat-date-range-picker>
@@ -48,7 +49,7 @@
                                 </div>
                             </div>
                             <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right"
-                                (click)="salvaArticolo()">{{this.buttonTitle}}</button>
+                                (click)="salvaCorrispettivo()">{{this.buttonTitle}}</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

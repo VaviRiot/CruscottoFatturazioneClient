@@ -28,6 +28,8 @@ import { DetailScadenzeGaranzieComponent } from 'app/detail_scadenze_garanzie/de
 import { ChangePasswordComponent } from 'app/change_password/change_password.component';
 import { ArticoliComponent } from 'app/articoli/articoli.component';
 import { DetailArticoloComponent } from 'app/detail_articolo/detail-articolo.component';
+import { CorrispettiviComponent } from 'app/corrispettivi/corrispettivi.component';
+import { DetailCorrispettivoComponent } from 'app/detail_corrispettivo/detail-corrispettivo.component';
 
 export const AdminLayoutRoutes: Routes = [
   {
@@ -101,6 +103,39 @@ export const AdminLayoutRoutes: Routes = [
     canActivate: [AuthGuardService],
     data: {
       title: 'Dettaglio Articolo',
+      role: [
+        UserRoleEnum.Admin,
+        UserRoleEnum.Manager,
+        UserRoleEnum.Ref_Area,
+        UserRoleEnum.Uff_Crediti,
+        UserRoleEnum.Uff_Garanzie,
+        UserRoleEnum.BU_Legal
+      ]
+    }
+  },
+
+  {
+    path: 'corrispettivi',
+    component: CorrispettiviComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      title: 'Lista Corrispettivi',
+      role: [
+        UserRoleEnum.Admin,
+        UserRoleEnum.Manager,
+        UserRoleEnum.Ref_Area,
+        UserRoleEnum.Uff_Crediti,
+        UserRoleEnum.Uff_Garanzie,
+        UserRoleEnum.BU_Legal
+      ]
+    }
+  },
+  {
+    path: 'detail_corrispettivo/:action/:id',
+    component: DetailCorrispettivoComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      title: 'Dettaglio Corrispettivo',
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Manager,

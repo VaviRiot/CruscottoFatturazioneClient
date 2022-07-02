@@ -2,32 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Articoli } from 'app/models/Articoli';
+import { Corrispettivi } from 'app/models/Corrispettivi';
 import { ArticoliService } from 'app/shared/Service/Articoli/articoli.service';
 import { AuthService } from 'app/shared/Service/AuthService/auth.service';
 import { CommonService } from 'app/shared/Service/Common/common.service';
-import { UserService } from 'app/shared/Service/User/user.service';
+import { CorrispettiviService } from 'app/shared/Service/Corrispettivi/corrispettivi.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-detail-articolo',
-  templateUrl: './detail-articolo.component.html',
-  styleUrls: ['./detail-articolo.component.scss']
+  selector: 'app-detail-corrispettivo',
+  templateUrl: './detail-corrispettivo.component.html',
+  styleUrls: ['./detail-corrispettivo.component.css']
 })
-export class DetailArticoloComponent implements OnInit {
+export class DetailCorrispettivoComponent implements OnInit {
   // Init Param
   public action: string = "";
   public id: number = -1;
 
-  public buttonTitle: string = "Aggiorna Articolo";
+  public buttonTitle: string = "Aggiorna Corrispettivo";
   public isEdit: boolean = false;
 
-  public articolo = new Articoli(-1, null, "", null, "", null, "", null, "");
+  public corrispettivo = new Corrispettivi(-1, null, "", null, "", null, "", null, "");
   public userLogged;
 
   private mySubscription: Subscription;
   private saveSubscription: Subscription;
 
-  public codiceArticoloCtrl = new FormControl('', [Validators.required, Validators.maxLength(3)]);
+  public codiceCorrispettivoCtrl = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]);
   public descrizioneCtrl = new FormControl('', [Validators.required, Validators.maxLength(35)]);
   public validToCtrl = new FormControl('', [Validators.required]);
   public validFromCtrl = new FormControl('', [Validators.required]);
@@ -37,8 +38,7 @@ export class DetailArticoloComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private common: CommonService,
-    private userService: UserService,
-    private articoliService: ArticoliService
+    private corrispettivoService: CorrispettiviService
 
   ) { }
 
@@ -52,14 +52,14 @@ export class DetailArticoloComponent implements OnInit {
 
     if (this.action == "create") {
       this.isEdit = true;
-      this.buttonTitle = "Crea Articolo";
+      this.buttonTitle = "Crea Corrispettivo";
       this.common.sendUpdate("hideSpinner");
     }
     else if (this.action == "edit") {
       let authToken: string = this.authService.getAuthToken();
       this.isEdit = true;
-      this.mySubscription = this.articoliService.getArticoloById(authToken, this.id).subscribe(res => {
-        this.articolo = res as Articoli;
+      this.mySubscription = this.corrispettivoService.getcorrispettivoById(authToken, this.id).subscribe(res => {
+        this.corrispettivo = res as Corrispettivi;
         this.common.sendUpdate("hideSpinner");
 
         // console.log(this.user);
@@ -78,25 +78,25 @@ export class DetailArticoloComponent implements OnInit {
     }
   }
 
-  salvaArticolo() {
+  salvaCorrispettivo() {
     this.common.sendUpdate("showSpinner");
 
-    if (this.codiceArticoloCtrl.valid == true) {
+    if (this.codiceCorrispettivoCtrl.valid == true) {
       if (this.descrizioneCtrl.valid == true) {
         if (this.validFromCtrl.valid == true) {
           if (this.validToCtrl.valid == true) {
             let authToken: string = this.authService.getAuthToken();
-            this.saveSubscription = this.articoliService.saveArticolo(authToken, this.articolo, this.userLogged.name).subscribe((res: boolean) => {
+            this.saveSubscription = this.corrispettivoService.saveCorrispettivo(authToken, this.corrispettivo, this.userLogged.name).subscribe((res: boolean) => {
               if (res) {
                 //console.log(res);
-                this.common.sendUpdate("showAlertInfo", "Articolo salvato correttamente!");
+                this.common.sendUpdate("showAlertInfo", "Corrispettivo salvato correttamente!");
 
-                this.common.redirectToUrl('/articoli');
+                this.common.redirectToUrl('/corrispettivi');
                 this.common.sendUpdate("hideSpinner");
               }
               else {
                 this.common.sendUpdate("hideSpinner");
-                this.common.sendUpdate("showAlertDanger", "Impossibile salvare l'articolo al momento.");
+                this.common.sendUpdate("showAlertDanger", "Impossibile salvare il corrispettivo al momento.");
               }
             },
               error => {
@@ -117,33 +117,20 @@ export class DetailArticoloComponent implements OnInit {
 
 
   // VALIDATION
-  getCodiceArticoloErrorMessage() {
-    if (this.codiceArticoloCtrl.hasError('minlength')) {
+  getCodiceCorispettivoErrorMessage() {
+    if (this.codiceCorrispettivoCtrl.hasError('minlength')) {
       return "Il codice deve contenere minimo 1 caratteri";
     }
-    else if (this.codiceArticoloCtrl.hasError('maxlength')) {
+    else if (this.codiceCorrispettivoCtrl.hasError('maxlength')) {
       return "Il codice deve contenere al massimo 3 caratteri";
     }
-    else if (this.codiceArticoloCtrl.hasError('required')) {
+    else if (this.codiceCorrispettivoCtrl.hasError('required')) {
       return "Codice non valido";
     }
     else {
       return "";
     }
   }
-  
-  getDescrizioneErrorMessage() {
-    if (this.descrizioneCtrl.hasError('maxlength')) {
-      return "La descrizione deve contenere al massimo 3 caratteri";
-    }
-    else if (this.descrizioneCtrl.hasError('required')) {
-      return "La descrizione non valido";
-    }
-    else {
-      return "";
-    }
-  }
-
 
   getValidFromErrorMessage() {
     if (this.validFromCtrl.hasError('required')) {
@@ -162,6 +149,19 @@ export class DetailArticoloComponent implements OnInit {
       return "";
     }
   }
+  
+  getDescrizioneErrorMessage() {
+    if (this.descrizioneCtrl.hasError('maxlength')) {
+      return "La descrizione deve contenere al massimo 3 caratteri";
+    }
+    else if (this.descrizioneCtrl.hasError('required')) {
+      return "La descrizione non valido";
+    }
+    else {
+      return "";
+    }
+  }
+
 
   ngOnDestroy(): void {
     ///qui viene distrutto il componente
