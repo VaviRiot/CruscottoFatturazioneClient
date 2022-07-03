@@ -40,11 +40,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dashboard',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -56,11 +56,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Fatture',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -72,11 +72,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Clienti',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -89,11 +89,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Articoli',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -105,11 +105,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Articolo',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -122,11 +122,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Corrispettivi',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -138,11 +138,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Corrispettivo',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -155,11 +155,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Prospect',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -171,11 +171,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Utenti',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -187,11 +187,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Utente',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -203,11 +203,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Cambio Password Utente',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -219,11 +219,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Ruoli',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -235,11 +235,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Ruolo',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -251,11 +251,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Ruoli - Iter Approvativi',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -267,11 +267,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Ruolo - Iter Approvativi',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -283,11 +283,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Ruoli - Voci Menu',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -299,11 +299,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Ruolo - Voci Menu',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -315,11 +315,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Scadenze Garanzie',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -331,11 +331,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Scadenze Garanzie',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -347,11 +347,11 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Lista Notifiche',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -363,78 +363,16 @@ export const AdminLayoutRoutes: Routes = [
       title: 'Dettaglio Notifica',
       role: [
         UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+        // UserRoleEnum.Uff_Crediti,
+        // UserRoleEnum.Uff_Garanzie,
+        // UserRoleEnum.BU_Legal
       ]
     }
   },
-  {
-    path: 'dashboard_insoluti',
-    component: Dashboard_insolutiComponent,
-    canActivate: [AuthGuardService],
-    data: {
-      title: 'dashboard_insoluti',
-      role: [
-        UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
-      ]
-    }
-  },
-  {
-    path: 'dashboard_insoluti',
-    component: DetailProspectComponent,
-    canActivate: [AuthGuardService],
-    data: {
-      title: 'Dashboard Insoluti',
-      role: [
-        UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
-      ]
-    }
-  },
-  {
-    path: 'insoluti',
-    component: InsolutiComponent,
-    canActivate: [AuthGuardService],
-    data: {
-      title: 'Lista Insoluti',
-      role: [
-        UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
-      ]
-    }
-  },
-  {
-    path: 'detail_insoluti/:action/:id/:codiceCliente/:business/:stepIndex',
-    component: DetailInsolutiComponent,
-    canActivate: [AuthGuardService],
-    data: {
-      title: 'Dettaglio Insoluti',
-      role: [
-        UserRoleEnum.Admin,
-        UserRoleEnum.Manager,
-        UserRoleEnum.Ref_Area,
-        UserRoleEnum.Uff_Crediti,
-        UserRoleEnum.Uff_Garanzie,
-        UserRoleEnum.BU_Legal
-      ]
-    }
-  },
+ 
+ 
   { path: 'timeline', component: TimelineComponent },
   { path: 'table-list', component: TableListComponent },
   { path: 'typography', component: TypographyComponent },
