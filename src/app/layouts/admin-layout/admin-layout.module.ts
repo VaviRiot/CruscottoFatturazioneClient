@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
@@ -91,6 +91,8 @@ import { ArticoliComponent } from 'app/articoli/articoli.component';
 import { DetailArticoloComponent } from 'app/detail_articolo/detail-articolo.component';
 import { CorrispettiviComponent } from 'app/corrispettivi/corrispettivi.component';
 import { DetailCorrispettivoComponent } from 'app/detail_corrispettivo/detail-corrispettivo.component';
+import { FattureComponent } from 'app/fatture/fatture.component';
+import { DetailFatturaComponent } from 'app/detail-fattura/detail-fattura.component';
 
 @NgModule({
   exports: [
@@ -192,11 +194,14 @@ export class MaterialModule {
     ArticoliComponent,
     DetailArticoloComponent,
     CorrispettiviComponent,
-    DetailCorrispettivoComponent
+    DetailCorrispettivoComponent,
+    FattureComponent,
+    DetailFatturaComponent
   ],
   providers: [
     DatePipe,
-    { provide: MAT_DIALOG_DATA, useValue: {modal: false} }
+    { provide: MAT_DIALOG_DATA, useValue: {modal: false}, }, 
+    DecimalPipe, CurrencyPipe
   ]
 })
 

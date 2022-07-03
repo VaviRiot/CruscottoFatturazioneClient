@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ProspectComponent } from '../../prospect/prospect.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { DetailUserComponent } from '../../detail_user/detail_user.component';
 import { TableListComponent } from '../../table-list/table-list.component';
@@ -9,9 +8,6 @@ import { MapsComponent } from '../../maps/maps.component';
 import { DetailProspectComponent } from '../../detail_prospect/detail_prospect.component';
 import { AuthGuardService } from '../../shared/Service/AuthGuard/auth-guard.service';
 import { UserRoleEnum } from '../../models/Enum/UserRoleEnum';
-import { Dashboard_insolutiComponent } from '../../dashboard_insoluti/dashboard_insoluti.component';
-import { InsolutiComponent } from '../../insoluti/insoluti.component';
-import { DetailInsolutiComponent } from '../../detail_insoluti/detail_insoluti.component';
 import { UsersComponent } from '../../users/users.component';
 import { RolesComponent } from '../../roles/roles.component';
 import { DetailRoleComponent } from '../../detail_role/detail_role.component';
@@ -30,6 +26,9 @@ import { ArticoliComponent } from 'app/articoli/articoli.component';
 import { DetailArticoloComponent } from 'app/detail_articolo/detail-articolo.component';
 import { CorrispettiviComponent } from 'app/corrispettivi/corrispettivi.component';
 import { DetailCorrispettivoComponent } from 'app/detail_corrispettivo/detail-corrispettivo.component';
+import { Fatture } from 'app/models/Cliente';
+import { DetailFatturaComponent } from 'app/detail-fattura/detail-fattura.component';
+import { FattureComponent } from 'app/fatture/fatture.component';
 
 export const AdminLayoutRoutes: Routes = [
   {
@@ -42,15 +41,12 @@ export const AdminLayoutRoutes: Routes = [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
         UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
       ]
     }
   },
   {
     path: 'fatture',
-    component: ProspectComponent,
+    component: FattureComponent,
     canActivate: [AuthGuardService],
     data: {
       title: 'Lista Fatture',
@@ -58,12 +54,23 @@ export const AdminLayoutRoutes: Routes = [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
         UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
       ]
     }
   },
+  {
+    path: 'detail_fattura/:action/:id',
+    component: DetailFatturaComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      title: 'Dettaglio Fattura',
+      role: [
+        UserRoleEnum.Admin,
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+      ]
+    }
+  },
+
   {
     path: 'customers',
     component: CustomersComponent,
@@ -91,9 +98,6 @@ export const AdminLayoutRoutes: Routes = [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
         UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -107,9 +111,6 @@ export const AdminLayoutRoutes: Routes = [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
         UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -123,10 +124,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -140,9 +138,6 @@ export const AdminLayoutRoutes: Routes = [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
         UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -157,9 +152,6 @@ export const AdminLayoutRoutes: Routes = [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
         UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -172,10 +164,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -188,10 +177,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -204,10 +190,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -220,10 +203,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -236,10 +216,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -253,9 +230,6 @@ export const AdminLayoutRoutes: Routes = [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
         UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
       ]
     }
   },
@@ -268,10 +242,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -284,10 +255,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -300,10 +268,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -316,10 +281,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -332,10 +294,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -348,10 +307,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
@@ -364,10 +320,7 @@ export const AdminLayoutRoutes: Routes = [
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,
-        UserRoleEnum.Base,
-        // UserRoleEnum.Uff_Crediti,
-        // UserRoleEnum.Uff_Garanzie,
-        // UserRoleEnum.BU_Legal
+        UserRoleEnum.Base
       ]
     }
   },
