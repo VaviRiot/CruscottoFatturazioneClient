@@ -4,8 +4,11 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Fatture</h4>
-                        <p class="date-subtitle">al {{todayDate}}</p>
+                        <h4 class="card-title">Fatture
+                            <br>
+                            <p class="date-subtitle">al {{todayDate}}</p>
+
+                        </h4>
                         <a href="javascript:;" [routerLink]="['/detail_fattura', 'create', -1]" class="new-user-toggle">
                             <span class="fa fa-plus-circle"></span>
                         </a>
@@ -31,45 +34,46 @@
                             <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[25, 50, 75, 'all']"
                                 [visible]="true"></dxo-pager>
 
-                            <dxi-column dataField="codiceCliente" caption="Codice Cliente" alignment="center"
+                            <dxi-column dataField="cliente.codiceCliente" caption="Codice Cliente" alignment="center"
                                 [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
                                 [visibleIndex]="1"
-                                [cssClass]="hasFilter('codiceCliente') == true ? 'cell-highlight' : ''">
+                                [cssClass]="hasFilter('cliente.codiceCliente') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
-                            <dxi-column dataField="codiceCliente" caption="Codice Fiscale" alignment="center"
+                            <dxi-column dataField="cliente.codiceFiscale" caption="Codice Fiscale" alignment="center"
                                 [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
                                 [visibleIndex]="2"
-                                [cssClass]="hasFilter('codiceCliente') == true ? 'cell-highlight' : ''">
+                                [cssClass]="hasFilter('cliente.codiceFiscale') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
-                            <dxi-column dataField="codiceCliente" caption="Denominazione" alignment="center"
+                            <dxi-column dataField="cliente.ragioneSociale" caption="Denominazione" alignment="center"
                                 [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
                                 [visibleIndex]="3"
                                 [cssClass]="hasFilter('codiceCliente') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
-                            <dxi-column dataField="codiceCliente" caption="Tipo" alignment="center"
+                            <dxi-column dataField="tipologiaFattura" caption="Tipo" alignment="center"
                                 [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
                                 [visibleIndex]="4"
-                                [cssClass]="hasFilter('codiceCliente') == true ? 'cell-highlight' : ''">
+                                [cssClass]="hasFilter('tipologiaFattura') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
                             <dxi-column dataField="statoFattura" caption="Stato" alignment="center"
                                 [allowHeaderFiltering]="false" [allowSorting]="true" cellTemplate="open"
                                 [visibleIndex]="5" [allowFiltering]="true"
                                 [cssClass]="hasFilter('statoFattura') == true ? 'cell-highlight' : ''">
+
                                 <div *dxTemplate="let row of 'open'">
                                     <span *ngIf="row.data.statoFattura === 'Validata' "
                                         class="label label-success">Validata</span>
-                                        <span *ngIf="row.data.statoFattura === 'S' "
-                                        class="label label-success">Validata da SAP</span>
+                                    <span *ngIf="row.data.statoFattura === 'S' " class="label label-success">Validata da
+                                        SAP</span>
 
                                     <span *ngIf="row.data.statoFattura === 'Rifiutata' "
                                         class="label label-danger">Rifiutata</span>
-                                    <span *ngIf="row.data.statoFattura === 'G' "
-                                        class="label label-danger">Rigettata da SAP</span>
-                                        
+                                    <span *ngIf="row.data.statoFattura === 'G' " class="label label-danger">Rigettata da
+                                        SAP</span>
+
                                     <span *ngIf="row.data.statoFattura === 'compilazione' "
                                         class="label label-default">In
                                         compilazione</span>
@@ -87,14 +91,16 @@
                                 [allowFiltering]="false" [allowSorting]="false" cellTemplate="tool" [visibleIndex]="7"
                                 [cssClass]="hasFilter('id') == true ? 'cell-highlight' : ''">
                                 <div *dxTemplate="let row of 'tool'" class="app-comandi" style="text-align: center;">
-                                    <a href="javascript:;" [routerLink]="['/detail_fattura', 'edit', row.data.id]">
+                                    <a href="javascript:;" *ngIf="editFattura(row.data.statoFattura)"
+                                        [routerLink]="['/detail_fattura', 'edit', row.data.id]">
                                         <span class="fa fa-pencil"></span>
                                     </a>
-                                    <!-- <a href="javascript:;" (click)="deleteCorr(row.data.id)">
-                                        <span class="fa fa-trash"></span>
-                                    </a> -->
+
                                     <a href="javascript:;" [routerLink]="['/detail_fattura', 'view', row.data.id]">
                                         <span class="fa fa-binoculars"></span>
+                                    </a>
+                                    <a href="javascript:;">
+                                        <span class="fa fa-history"></span>
                                     </a>
                                 </div>
                             </dxi-column>

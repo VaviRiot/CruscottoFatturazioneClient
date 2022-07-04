@@ -49,6 +49,7 @@ export class FattureService {
     return CustomHttpService.post(endpoint, saveReq, { headers: my_headers });
   }
 
+
   inoltraFattura(authToken: string, idFattura, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "fattura/inoltraFattura";
 
@@ -61,6 +62,15 @@ export class FattureService {
     return CustomHttpService.post(endpoint, saveReq, { headers: my_headers });
   }
 
+  getClienteById(authToken: string, idCliente: number) {
+    const endpoint = environment.serverUrl + "cliente/getClienteByCodiceCliente";
+
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.post(endpoint, idCliente, { headers: my_headers });
+  }
 
   validaFattura(authToken: string, idFattura, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "fattura/validaFattura";

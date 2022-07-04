@@ -1,1 +1,80 @@
-<p>detail-fattura works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Dettaglio Fattura: {{userLogged.selectedSocieta}}</h4>
+                        <p class="card-category"> Stato: <span style="font-weight: bold;">{{fattura.statoFattura}} </span></p>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="idFatturaCtrl" matInput placeholder="ID Fattura"
+                                            type="text" id="codiceFattura" name="idFattura"
+                                            [(ngModel)]="fattura.id" readonly>
+                                        <!-- <mat-error *ngIf="codiceCorrispettivoCtrl.invalid">
+                                            {{getCodiceCorispettivoErrorMessage()}}</mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="codiceClienteCtrl" matInput placeholder="Codice Cliente"
+                                            type="text" [(ngModel)]="fattura.cliente.codiceCliente" (focusout)="getClientById($event)">
+                                        <!-- <mat-error *ngIf="descrizioneCtrl.invalid">{{getDescrizioneErrorMessage()}}
+                                        </mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="denominazioneCtrl" matInput placeholder="Denominazione"
+                                            type="text" id="denominazione" name="denominazione"
+                                            [(ngModel)]="fattura.cliente.ragioneSociale" readonly>
+                                        <!-- <mat-error *ngIf="codiceCorrispettivoCtrl.invalid">
+                                            {{getCodiceCorispettivoErrorMessage()}}</mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="pIvaCtrl" matInput placeholder="P.IVA" type="text"
+                                            [(ngModel)]="fattura.cliente.partitaIva" readonly>
+                                        <!-- <mat-error *ngIf="descrizioneCtrl.invalid">{{getDescrizioneErrorMessage()}}
+                                        </mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label> Tipologia di Fattura</mat-label>
+                                        <mat-select [(value)]="fattura.tipologiaFattura">
+                                            <mat-option value="FA">
+                                                FA - Fattura
+                                            </mat-option>
+                                            <mat-option value="NC">
+                                                NC - Nota di Credito
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+                            <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right"
+                                (click)="salvaFattura()">Salva Fattura</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

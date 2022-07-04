@@ -1,0 +1,7 @@
+h4.card-title {
+    text-transform: capitalize;
+}
+
+.card [class*=card-header-] .card-title+.card-category {
+    color: white;
+}

@@ -14,6 +14,7 @@ export class Cliente {
 }
 
 
+
 export class Fatture {
     constructor(
         public idFattura?: number,

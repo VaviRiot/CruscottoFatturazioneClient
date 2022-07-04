@@ -19,7 +19,6 @@ import { OrderClause } from 'app/models/OrderClause'
 import { Dictionary } from 'app/models/Dictionary'
 import { User } from 'app/models/User';
 import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
-import { CorrispettiviService } from 'app/shared/Service/Corrispettivi/corrispettivi.service'
 import { FatturaListOverview } from 'app/models/Response/FatturaListOverview'
 import { FattureService } from 'app/shared/Service/Fatture/fatture.service'
 
@@ -34,12 +33,24 @@ export class FattureComponent implements OnInit {
 
   public validToListFilter: any = [
     {
-      text: 'Attivo',
-      value: ['validTo', 'gte', new Date()],
+      text: 'Rifiutata',
+      value: ['statoFattura', 'lke'],
     },
     {
-      text: 'Disattivo',
-      value: ['validTo', 'lt', new Date()],
+      text: 'Rigettata da SAP',
+      value: ['statoFattura', 'lke'],
+    },
+    {
+      text: 'Da approvare',
+      value: ['statoFattura', 'lke'],
+    },
+    {
+      text: 'Contabilizzata',
+      value: ['statoFattura', 'lke'],
+    },
+    {
+      text: 'In compilazione',
+      value: ['statoFattura', 'lke'],
     }
   ];
 
@@ -253,7 +264,6 @@ export class FattureComponent implements OnInit {
 
   getFattureState(state) {
     switch (state) {
-   
       case 'V':
         return 'Validata';
       case 'R':
@@ -267,8 +277,22 @@ export class FattureComponent implements OnInit {
       case 'S':
         return 'S';
       default:
-          return 'compilazione';
+        return 'compilazione';
     }
   }
+
+  editFattura(state) {
+    switch (state) {
+      case 'Rifiutata':
+        return true
+      case 'compilazione':
+        return true;
+      case 'G':
+        return true;
+      default:
+        return false
+    }
+  }
+
 
 }
