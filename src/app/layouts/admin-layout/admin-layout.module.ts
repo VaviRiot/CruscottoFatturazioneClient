@@ -35,12 +35,12 @@ import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatRippleModule} from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSelectModule} from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatRippleModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 ////Nicolò mura - angular material
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
@@ -93,6 +93,7 @@ import { CorrispettiviComponent } from 'app/corrispettivi/corrispettivi.componen
 import { DetailCorrispettivoComponent } from 'app/detail_corrispettivo/detail-corrispettivo.component';
 import { FattureComponent } from 'app/fatture/fatture.component';
 import { DetailFatturaComponent } from 'app/detail-fattura/detail-fattura.component';
+import { ViewLogFatturaComponent } from 'app/modals/view_log_fattura/view-log-fattura.component';
 
 @NgModule({
   exports: [
@@ -134,7 +135,7 @@ export class MaterialModule {
 
 @NgModule({
   imports: [
-    WizardFormModule, 
+    WizardFormModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
@@ -149,7 +150,7 @@ export class MaterialModule {
     DxDrawerModule,
     DxListModule,
     DxRadioGroupModule,
-    
+
     // BrowserAnimationsModule,
     MglTimelineModule,
     PipesModule///Nicolò mura => tutti i componenti dichiarati avranno accesso a tutto il modulo material    
@@ -196,13 +197,15 @@ export class MaterialModule {
     CorrispettiviComponent,
     DetailCorrispettivoComponent,
     FattureComponent,
-    DetailFatturaComponent
+    DetailFatturaComponent,
+    ViewLogFatturaComponent
   ],
   providers: [
     DatePipe,
-    { provide: MAT_DIALOG_DATA, useValue: {modal: false}, }, 
+    { provide: MAT_DIALOG_DATA, useValue: { modal: false }, },
     DecimalPipe, CurrencyPipe
-  ]
+  ],
+  entryComponents: []
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule { }

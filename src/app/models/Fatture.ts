@@ -59,3 +59,12 @@ export class Cliente {
     ) { }
 }
 
+export class FatturaLog {
+    constructor(
+        public id: number,
+        public idFattura: number,
+        public statoFattura: string,
+        public create_user: any,
+        public create_date: any,
+    ) { }
+}

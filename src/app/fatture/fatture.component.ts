@@ -21,6 +21,8 @@ import { User } from 'app/models/User';
 import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { FatturaListOverview } from 'app/models/Response/FatturaListOverview'
 import { FattureService } from 'app/shared/Service/Fatture/fatture.service'
+import { FatturaLog } from 'app/models/Fatture'
+import { ViewLogFatturaComponent } from 'app/modals/view_log_fattura/view-log-fattura.component'
 
 @Component({
   selector: 'app-fatture',
@@ -34,24 +36,33 @@ export class FattureComponent implements OnInit {
   public validToListFilter: any = [
     {
       text: 'Rifiutata',
-      value: ['statoFattura', 'lke'],
+      value: ['statoFattura', '=', 'R'],
     },
     {
       text: 'Rigettata da SAP',
-      value: ['statoFattura', 'lke'],
+      value: ['statoFattura', '=', 'G'],
     },
     {
       text: 'Da approvare',
-      value: ['statoFattura', 'lke'],
+      value: ['statoFattura', '=', 'D'],
     },
     {
       text: 'Contabilizzata',
-      value: ['statoFattura', 'lke'],
+      value: ['statoFattura', '=', 'c'],
     },
     {
       text: 'In compilazione',
-      value: ['statoFattura', 'lke'],
+      value: ['statoFattura', '=', ''],
+    },
+    {
+      text: 'Validata',
+      value: ['statoFattura', '=', 'V'],
+    },
+    {
+      text: 'Validata da SAP',
+      value: ['statoFattura', '=', 'V'],
     }
+
   ];
 
   public userLogged: User;
@@ -294,5 +305,20 @@ export class FattureComponent implements OnInit {
     }
   }
 
+  openLogFattura(idFattura): void {
+    let authToken: string = this.authService.getAuthToken();
+    this.fattureService.getLogStatoFattura(authToken, idFattura).subscribe(res => {
+      let result = res;
+      const dialogRef = this.dialog.open(ViewLogFatturaComponent, {
+        width: '100%',
+        data: result,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }, error => {
+      console.log(error);
+    })
+  }
 
 }

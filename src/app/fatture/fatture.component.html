@@ -59,9 +59,10 @@
                             </dxi-column>
 
                             <dxi-column dataField="statoFattura" caption="Stato" alignment="center"
-                                [allowHeaderFiltering]="false" [allowSorting]="true" cellTemplate="open"
-                                [visibleIndex]="5" [allowFiltering]="true"
+                                [allowHeaderFiltering]="true" [allowSorting]="true" cellTemplate="open"
+                                [visibleIndex]="5" [allowFiltering]="false"
                                 [cssClass]="hasFilter('statoFattura') == true ? 'cell-highlight' : ''">
+                                <dxo-header-filter [dataSource]="validToListFilter"></dxo-header-filter>
 
                                 <div *dxTemplate="let row of 'open'">
                                     <span *ngIf="row.data.statoFattura === 'Validata' "
@@ -99,8 +100,8 @@
                                     <a href="javascript:;" [routerLink]="['/detail_fattura', 'view', row.data.id]">
                                         <span class="fa fa-binoculars"></span>
                                     </a>
-                                    <a href="javascript:;">
-                                        <span class="fa fa-history"></span>
+                                    <a href="javascript:;" >
+                                        <span (click)="openLogFattura(row.data.id)" class="fa fa-history"></span>
                                     </a>
                                 </div>
                             </dxi-column>

@@ -1,0 +1,10 @@
+table {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+  
+  button.close-modal {
+    margin-left: auto;
+    font-weight: bold;
+    border: 1px solid grey;
+}

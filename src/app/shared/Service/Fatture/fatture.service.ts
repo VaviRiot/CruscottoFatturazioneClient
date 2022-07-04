@@ -26,6 +26,14 @@ export class FattureService {
     return CustomHttpService.post(endpoint, filterPost, { headers: my_headers });
   }
 
+  getLogStatoFattura(authToken: string, idFattura): Observable<FatturaListOverview> {
+    const endpoint = environment.serverUrl + "fattura/getLogStatoFattura?idFattura=" + idFattura;
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+      return CustomHttpService.get(endpoint, my_headers);
+    }
 
   getFatturaById(authToken: string, idFattura: number) {
     const endpoint = environment.serverUrl + "fattura/getFatturaById";
