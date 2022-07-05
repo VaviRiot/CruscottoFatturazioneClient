@@ -9,7 +9,8 @@ import { AuthService } from 'app/shared/Service/AuthService/auth.service';
 import { CommonService } from 'app/shared/Service/Common/common.service';
 import { CorrispettiviService } from 'app/shared/Service/Corrispettivi/corrispettivi.service';
 import { FattureService } from 'app/shared/Service/Fatture/fatture.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 @Component({
   selector: 'app-detail-fattura',
   templateUrl: './detail-fattura.component.html',
@@ -34,7 +35,8 @@ export class DetailFatturaComponent implements OnInit {
   public denominazioneCtrl = new FormControl('', [Validators.required]);
   public pIvaCtrl = new FormControl('', [Validators.required, Validators.maxLength(9)]);
   public tipoFatturaCtrl = new FormControl('', [Validators.required]);;
-
+  options: string[] = []; 
+  filteredOptions: Observable<string[]>;
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -44,10 +46,27 @@ export class DetailFatturaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    let authToken: string = this.authService.getAuthToken();
+
     this.common.sendUpdate("showSpinner");
     this.userLogged = this.authService.getUser();
     this.action = this.route.snapshot.paramMap.get('action');
     this.id = +this.route.snapshot.paramMap.get('id');
+    this.fattureService.getListClienti(authToken, this.userLogged.selectedSocieta).subscribe(client => {
+      let result = client as Array<Cliente>;
+      result.forEach(elm => {
+        this.options.push(elm.codiceCliente);
+        this.filteredOptions = this.codiceClienteCtrl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value || '')),
+        );
+
+      });
+      this.common.sendUpdate("hideSpinner");
+
+    }, error => {
+
+    })
 
     if (this.action == "create") {
       this.isEdit = true;
@@ -55,11 +74,11 @@ export class DetailFatturaComponent implements OnInit {
       this.common.sendUpdate("hideSpinner");
     }
     else if (this.action == "edit") {
-      let authToken: string = this.authService.getAuthToken();
       this.isEdit = true;
       this.mySubscription = this.fattureService.getFatturaById(authToken, this.id).subscribe(res => {
-        this.fattura = res as Fattura;
         this.common.sendUpdate("hideSpinner");
+
+        this.fattura = res as Fattura;
 
         // console.log(this.user);
       },
@@ -132,7 +151,7 @@ export class DetailFatturaComponent implements OnInit {
   // }
 
 
-  getClientById(event:any) {
+  getClientById(event: any) {
     let authToken: string = this.authService.getAuthToken();
 
     this.fattureService.getClienteById(authToken, event.target.value).subscribe(res => {
@@ -141,6 +160,12 @@ export class DetailFatturaComponent implements OnInit {
       this.pIvaCtrl.setValue(result.partitaIva);
 
     })
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
 

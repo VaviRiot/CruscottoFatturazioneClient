@@ -32,8 +32,8 @@ export class FattureService {
       .append('Content-Type', 'application/json')
       .append('Accept', 'application/json');
 
-      return CustomHttpService.get(endpoint, my_headers);
-    }
+    return CustomHttpService.get(endpoint, my_headers);
+  }
 
   getFatturaById(authToken: string, idFattura: number) {
     const endpoint = environment.serverUrl + "fattura/getFatturaById";
@@ -80,6 +80,16 @@ export class FattureService {
     return CustomHttpService.post(endpoint, idCliente, { headers: my_headers });
   }
 
+  getListClienti(authToken: string, societa: number) {
+    const endpoint = environment.serverUrl + "cliente/getClientiList?codiceSocieta=" + societa;
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.get(endpoint,  my_headers );
+  }
+
+  
   validaFattura(authToken: string, idFattura, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "fattura/validaFattura";
 
