@@ -5,7 +5,8 @@
                 <div class="card">
                     <div class="card-header card-header-info">
                         <h4 class="card-title">Dettaglio Fattura: {{userLogged.selectedSocieta}}</h4>
-                        <p class="card-category"> Stato: <span style="font-weight: bold;">{{fattura.statoFattura}} </span></p>
+                        <p class="card-category"> Stato: <span style="font-weight: bold;">{{fattura.statoFattura}}
+                            </span></p>
                     </div>
                     <div class="card-body">
                         <form>
@@ -13,19 +14,26 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="idFatturaCtrl" matInput placeholder="ID Fattura"
-                                            type="text" id="codiceFattura" name="idFattura"
-                                            [(ngModel)]="fattura.id" readonly>
+                                            type="text" id="codiceFattura" name="idFattura" [(ngModel)]="fattura.id"
+                                            readonly>
                                         <!-- <mat-error *ngIf="codiceCorrispettivoCtrl.invalid">
                                             {{getCodiceCorispettivoErrorMessage()}}</mat-error> -->
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
-                                        <input [formControl]="codiceClienteCtrl" matInput placeholder="Codice Cliente"
-                                            type="text" [(ngModel)]="fattura.cliente.codiceCliente" (focusout)="getClientById($event)">
-                                        <!-- <mat-error *ngIf="descrizioneCtrl.invalid">{{getDescrizioneErrorMessage()}}
-                                        </mat-error> -->
-                                    </mat-form-field>
+                                        <input type="text" [formControl]="codiceClienteCtrl" matInput
+                                            placeholder="Codice Cliente" type="text"
+                                            [(ngModel)]="fattura.cliente.codiceCliente"
+                                            (focusout)="getClientById($event)" [matAutocomplete]="auto">
+                                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field> 
+
+
                                 </div>
                             </div>
 
