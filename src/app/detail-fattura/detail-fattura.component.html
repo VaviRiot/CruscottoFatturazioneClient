@@ -31,7 +31,7 @@
                                                 {{option}}
                                             </mat-option>
                                         </mat-autocomplete>
-                                    </mat-form-field> 
+                                    </mat-form-field>
 
 
                                 </div>
@@ -82,6 +82,70 @@
                         </form>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-12" [formGroup]="addForm">
+                <div class="card">
+                    <div class="card-header card-header-info list">
+                        <h4 class="card-title">Lista Dettaglio Fattura</h4>
+
+                        <div class="new-user-toggle">
+                            <span (click)="onAddRow()" class="fa fa-plus-circle"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group card-body" *ngIf="addForm.get('rows')?.controls.length > 0">
+                        <table class="mat-table custom ">
+                            <thead>
+                                <tr class="mat-header-row">
+                                    <th class="mat-header-cell mat-column-position"> Codice Articolo</th>
+                                    <th class="mat-header-cell mat-column-position">Descrizione</th>
+                                    <th class="mat-header-cell mat-column-position">Corrispettivo</th>
+                                    <th class="mat-header-cell mat-column-position">Importo</th>
+                                    <th class="mat-header-cell mat-column-position">Note</th>
+                                    <th class="mat-header-cell mat-column-position"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="mat-row"
+                                    *ngFor="let row of addForm.get('rows')?.controls;let index = index;">
+                                    <td class="mat-cell mat-column-position">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" [formControl]="row.get('idArticolo')" matInput
+                                                placeholder="Codice Cliente" type="text" [matAutocomplete]="auto">
+                                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                                <mat-option *ngFor="let option of filteredOptionsArticoli | async"
+                                                    [value]="option">
+                                                    {{option}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+
+                                    </td>
+                                    <td class="mat-cell mat-column-position">
+                                        <input [formControl]="row.get('descrizioneArticolo')">
+                                    </td>
+                                    <td class="mat-cell mat-column-position">
+                                        <input [formControl]="row.get('corrispettivo')">
+                                    </td>
+                                    <td class="mat-cell mat-column-position">
+                                        <input [formControl]="row.get('importo')">
+                                    </td>
+                                    <td class="mat-cell mat-column-position">
+                                        <input [formControl]="row.get('note')">
+                                    </td>
+                                    <td class="mat-cell mat-column-position">
+                                        <i class="fa fa-trash" style="cursor:pointer" (click)="onRemoveRow(index)">
+                                        </i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>

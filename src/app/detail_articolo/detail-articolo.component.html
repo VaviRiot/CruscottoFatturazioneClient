@@ -14,7 +14,7 @@
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="codiceArticoloCtrl" matInput placeholder="Codice Articolo"
                                             type="text" id="codiceArticolo" name="codiceArticolo"
-                                            [(ngModel)]="articolo.codiceArticolo">
+                                            [(ngModel)]="articolo.codiceArticolo" [readonly]="action == 'create' ? false : true" >
                                         <mat-error *ngIf="codiceArticoloCtrl.invalid">
                                             {{getCodiceArticoloErrorMessage()}}</mat-error>
                                     </mat-form-field>
@@ -36,7 +36,7 @@
                                         <mat-date-range-input [rangePicker]="picker" [disabled]="!isEdit">
                                             <input [formControl]="validFromCtrl" matStartDate placeholder="Data Inizio"
                                                 [(ngModel)]="articolo.create_date">
-                                            <input [formControl]="validToCtrl" matEndDate placeholder="Data Fine"
+                                            <input [formControl]="validToCtrl"  matEndDate placeholder="Data Fine"
                                                 [(ngModel)]="articolo.dataValidita">
                                         </mat-date-range-input>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

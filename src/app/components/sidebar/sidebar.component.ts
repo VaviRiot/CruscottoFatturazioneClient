@@ -7,6 +7,8 @@ import { CommonService } from 'app/shared/Service/Common/common.service';
 import { RolesService } from 'app/shared/Service/Roles/roles.service';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
+import { UserService } from 'app/shared/Service/User/user.service';
+import { Societa } from 'app/models/Societa';
 declare const $: any;
 
 @Component({
@@ -23,12 +25,13 @@ export class SidebarComponent implements OnInit {
   private menuSubscription: Subscription;
   public sidebarVisible: boolean = true;
   public isChildUrl: boolean = false;
-
+  public societaName: string;
   menuItems: any[];
 
   constructor(private common: CommonService,
     private authService: AuthService,
-    private roleService: RolesService) { }
+    private roleService: RolesService,
+    private userService: UserService) { }
 
   ngOnInit() {
     let authToken: string = this.authService.getAuthToken();
@@ -43,17 +46,17 @@ export class SidebarComponent implements OnInit {
 
     this.menuSubscription = this.roleService.getVociMenuByRoleId(authToken, roleId, isAdmin).subscribe(res => {
       this.defListVociMenu = res;
-      //this is mock
-      // this.defListVociMenu = [{ "id": 1, "path": "/dashboard", "title": "Dashboard", "icon": "dashboard", "orderNumber": 1, "cssClass": null, "identifier": "dashboard", "isDettaglio": null, "child": [], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }, 
-      // { "id": 2, "path": "/fatture", "title": "Fatture", "icon": "content_copy", "orderNumber": 2, "cssClass": null, "identifier": "fatture", "isDettaglio": null, "child": [{ "id": 13, "path": "/detail_prospect", "title": "Dettaglio Prospect", "icon": "content_copy", "orderNumber": 2, "cssClass": null, "identifier": "detail_prospect", "isDettaglio": true, "child": [], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }, { "id": 3, "path": "/customers", "title": "Clienti", "icon": "perm_contact_calendar", "orderNumber": 3, "cssClass": null, "identifier": "customers", "isDettaglio": null, "child": [], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }, {
-      //   "id": 4, "path": "", "title": "Setup", "icon": "settings", "orderNumber": 4, "cssClass": null, "identifier": "setup", "isDettaglio": null, "child": [{ "id": 5, "path": "/users", "title": "Gestione Utenti", "icon": "manage_accounts", "orderNumber": 5, "cssClass": null, "identifier": "users", "isDettaglio": null, "child": [{ "id": 20, "path": "/detail_user", "title": "Dettaglio Utente", "icon": "manage_accounts", "orderNumber": 5, "cssClass": null, "identifier": "detail_user", "isDettaglio": true, "child": null, "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }, { "id": 6, "path": "/roles", "title": "Gestione Ruoli", "icon": "supervisor_account", "orderNumber": 6, "cssClass": null, "identifier": "roles", "isDettaglio": null, "child": [{ "id": 16, "path": "/detail_role", "title": "Dettaglio Ruolo", "icon": "supervisor_account", "orderNumber": 6, "cssClass": null, "identifier": "detail_role", "isDettaglio": true, "child": null, "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }, { "id": 8, "path": "/articoli", "title": "Gestione Articoli.", "icon": "article", "orderNumber": 8, "cssClass": null, "identifier": "role_workflowstep", "isDettaglio": null, "child": [{ "id": 18, "path": "/detail_role_workflowstep", "title": "Dettaglio Iter Approvativo", "icon": "timeline", "orderNumber": 8, "cssClass": null, "identifier": "detail_role_workflowstep", "isDettaglio": true, "child": null, "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }, { "id": 9, "path": "/corrispettivi", "title": "Gestione Corrispettivi", "icon": "density_small", "orderNumber": 9, "cssClass": null, "identifier": "role_vocimenu", "isDettaglio": null, "child": [{ "id": 17, "path": "/detail_role_vocimenu", "title": "Dettaglio Ruolo Voci Menù", "icon": "reorder", "orderNumber": 9, "cssClass": null, "identifier": "detail_role_vocimenu", "isDettaglio": true, "child": null, "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null }], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null },
-      //   ], "createUser": "Diego Capone", "createDate": moment("2022-04-11T10:55:00.000+00:00").toDate(), "lastModUser": null, "lastModDate": null
-      // },]
-      // Funzione che lascia il menu aperto se è una voce figlia
+      this.userService.getSocietaList(authToken).subscribe(soc => {
+        let result = soc as Societa[];
+        result.forEach(element => {
+            if(element.codiceSocieta == this.userLogged.selectedSocieta) {
+              this.societaName = element.descrizione;
+            }
+        });
+    
+      });
       this.manageChildUrl();
-
       this.cleanDetailUrl();
-
       this.common.sendUpdate("titleMenuRefresh", JSON.stringify(this.defListVociMenu));
     });
 

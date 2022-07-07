@@ -27,6 +27,19 @@ export class ArticoliService {
     return CustomHttpService.post(endpoint, filterPost, {headers: my_headers});
   }
 
+
+  getArticoliList(authToken: string): Observable<Articoli[]>
+  {
+    const endpoint = environment.serverUrl + "articolo/getArticoliList";
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+                      .append('Content-Type', 'application/json')
+                      .append('Accept', 'application/json');
+
+    return CustomHttpService.get(endpoint,my_headers);
+  }
+
+
+
   deleteArticolo(authToken: string, idArticolo: number, utenteUpdate: string)
   {
     const endpoint = environment.serverUrl + "articolo/deleteArticolo";

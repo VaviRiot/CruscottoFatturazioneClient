@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Articoli } from 'app/models/Articoli';
 import { Corrispettivi } from 'app/models/Corrispettivi';
@@ -35,24 +35,97 @@ export class DetailFatturaComponent implements OnInit {
   public denominazioneCtrl = new FormControl('', [Validators.required]);
   public pIvaCtrl = new FormControl('', [Validators.required, Validators.maxLength(9)]);
   public tipoFatturaCtrl = new FormControl('', [Validators.required]);;
-  options: string[] = []; 
+  options: string[] = [];
   filteredOptions: Observable<string[]>;
+  filteredOptionsArticoli: Observable<string[]>;
+
+  addForm: FormGroup;
+  articoliList: Articoli[] = [];
+  articoliListString: string[] = [];
+  rows: FormArray;
+  itemForm: FormGroup;
+
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
     private common: CommonService,
-    private fattureService: FattureService
+    private fattureService: FattureService,
+    private articoliService: ArticoliService,
+    private fb: FormBuilder
 
-  ) { }
+  ) {
+    this.addForm = this.fb.group({
+      items: [null, Validators.required],
+      items_value: ['on', Validators.required]
+    });
+
+    this.rows = this.fb.array([]);
+  }
 
   ngOnInit() {
-    let authToken: string = this.authService.getAuthToken();
+    this.initialRequest();
+  }
 
+
+  async initialRequest() {
     this.common.sendUpdate("showSpinner");
     this.userLogged = this.authService.getUser();
     this.action = this.route.snapshot.paramMap.get('action');
     this.id = +this.route.snapshot.paramMap.get('id');
-    this.fattureService.getListClienti(authToken, this.userLogged.selectedSocieta).subscribe(client => {
+    this.addForm.addControl('rows', this.rows);
+    await this.getListaClienti();
+    await this.getArticoliList();
+
+    if (this.action == "create") {
+      this.isEdit = true;
+      this.buttonTitle = "Crea Fattura";
+    }
+    else if (this.action == "edit") {
+      this.isEdit = true;
+      await this.getFatturaById();
+    }
+    else {
+      this.isEdit = false;
+    }
+    this.common.sendUpdate("hideSpinner");
+  }
+
+  async getArticoliList() {
+    let authToken: string = this.authService.getAuthToken();
+
+    await this.articoliService.getArticoliList(authToken).toPromise().then(res => {
+      this.articoliList = res;
+      this.articoliList.forEach(element => {
+          this.articoliListString.push(element.codiceArticolo.toString())
+      });
+      this.filteredOptionsArticoli = this.addForm.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterArticoli(value || '')),
+      );
+
+    }, error => {
+      this.common.sendUpdate("hideSpinner");
+
+    });
+  }
+
+  async getFatturaById() {
+    let authToken: string = this.authService.getAuthToken();
+    await this.fattureService.getFatturaById(authToken, this.id).toPromise().then(res => {
+      this.fattura = res as Fattura;
+    },
+      error => {
+        this.common.sendUpdate("showAlertDanger", error.message);
+      });
+  }
+
+  async getListaClienti() {
+    let authToken: string = this.authService.getAuthToken();
+    this.common.sendUpdate("showSpinner");
+    this.userLogged = this.authService.getUser();
+    this.action = this.route.snapshot.paramMap.get('action');
+    this.id = +this.route.snapshot.paramMap.get('id');
+    await this.fattureService.getListClienti(authToken, this.userLogged.selectedSocieta).toPromise().then(client => {
       let result = client as Array<Cliente>;
       result.forEach(elm => {
         this.options.push(elm.codiceCliente);
@@ -60,40 +133,9 @@ export class DetailFatturaComponent implements OnInit {
           startWith(''),
           map(value => this._filter(value || '')),
         );
-
       });
-      this.common.sendUpdate("hideSpinner");
-
     }, error => {
-
-    })
-
-    if (this.action == "create") {
-      this.isEdit = true;
-      this.buttonTitle = "Crea Fattura";
-      this.common.sendUpdate("hideSpinner");
-    }
-    else if (this.action == "edit") {
-      this.isEdit = true;
-      this.mySubscription = this.fattureService.getFatturaById(authToken, this.id).subscribe(res => {
-        this.common.sendUpdate("hideSpinner");
-
-        this.fattura = res as Fattura;
-
-        // console.log(this.user);
-      },
-        error => {
-          // console.log("getTopSummary");
-          // console.log(error);
-          this.common.sendUpdate("hideSpinner");
-          this.common.sendUpdate("showAlertDanger", error.message);
-        });
-    }
-    else {
-      this.isEdit = false;
-      this.common.sendUpdate("hideSpinner");
-
-    }
+    });
   }
 
   salvaFattura() {
@@ -164,10 +206,14 @@ export class DetailFatturaComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
+
+  private _filterArticoli(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.articoliListString.filter(option => option.toLowerCase().includes(filterValue));
+  }
 
   ngOnDestroy(): void {
     ///qui viene distrutto il componente
@@ -176,6 +222,24 @@ export class DetailFatturaComponent implements OnInit {
 
     if (this.saveSubscription)
       this.saveSubscription.unsubscribe();
-
   }
+
+  onAddRow() {
+    this.rows.push(this.createItemFormGroup());
+  }
+
+  onRemoveRow(rowIndex: number) {
+    this.rows.removeAt(rowIndex);
+  }
+
+  createItemFormGroup(): FormGroup {
+    return this.fb.group({
+      idArticolo: null,
+      descrizioneArticolo: null,
+      corrispettivo: null,
+      importo: null,
+      note: null
+    });
+  }
+
 }

@@ -8,6 +8,7 @@ import { AuthService } from 'app/shared/Service/AuthService/auth.service';
 import { CommonService } from 'app/shared/Service/Common/common.service';
 import { CorrispettiviService } from 'app/shared/Service/Corrispettivi/corrispettivi.service';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-detail-corrispettivo',
@@ -22,7 +23,7 @@ export class DetailCorrispettivoComponent implements OnInit {
   public buttonTitle: string = "Aggiorna Corrispettivo";
   public isEdit: boolean = false;
 
-  public corrispettivo = new Corrispettivi(-1, null, "", null, "", null, "", null, "");
+  public corrispettivo = new Corrispettivi(-1, null, "",  moment("31/12/2050", "DD/MM/YYYY").toDate(), "", null, "", null, "");
   public userLogged;
 
   private mySubscription: Subscription;
@@ -149,7 +150,7 @@ export class DetailCorrispettivoComponent implements OnInit {
       return "";
     }
   }
-  
+
   getDescrizioneErrorMessage() {
     if (this.descrizioneCtrl.hasError('maxlength')) {
       return "La descrizione deve contenere al massimo 3 caratteri";

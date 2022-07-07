@@ -19,172 +19,158 @@ import { UpdateGenericResponse } from 'app/models/Response/UpdateGenericResponse
 @Injectable({
   providedIn: 'root'
 })
-export class UserService
-{
+export class UserService {
   constructor() { }
 
-  getUserList(authToken: string)
-  {
+  getUserList(authToken: string) {
     const endpoint = environment.serverUrl + "user/getUserList";
 
     let headers = new HttpHeaders(
       {
         'Authorization': 'Bearer ' + authToken,
-         'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     );
 
     return CustomHttpService.get(endpoint, headers);
   }
 
-  getUtentiDataTable(authToken: string, filterPost: FilterPayload): Observable<UtentiListOverview>
-  {
+  getUtentiDataTable(authToken: string, filterPost: FilterPayload): Observable<UtentiListOverview> {
     const endpoint = environment.serverUrl + "user/getUtentiDataTable";
 
-    
-    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, filterPost, {headers: my_headers});
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.post(endpoint, filterPost, { headers: my_headers });
   }
 
-  getRoleVoceMenuDataTable(authToken: string, filterPost: FilterPayload): Observable<RoleVoceMenuOverview>
-  {
+  getRoleVoceMenuDataTable(authToken: string, filterPost: FilterPayload): Observable<RoleVoceMenuOverview> {
     const endpoint = environment.serverUrl + "user/getRoleVoceMenuDataTable";
 
-    
-    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, filterPost, {headers: my_headers});
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.post(endpoint, filterPost, { headers: my_headers });
   }
 
-  getUser(authToken: string, id_utente: number)
-  {
+  getUser(authToken: string, id_utente: number) {
     const endpoint = environment.serverUrl + "user/getUserById";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, id_utente, {headers: my_headers});
+    return CustomHttpService.post(endpoint, id_utente, { headers: my_headers });
   }
 
-  saveUser(authToken: string, utente: User, utenteUpdate: string)
-  {
+  saveUser(authToken: string, utente: User, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "user/saveUser";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
     let saveReq = new UserSaveRequest(utente, utenteUpdate);
 
-    return CustomHttpService.post(endpoint, saveReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, saveReq, { headers: my_headers });
   }
 
-  changeUserPassword(authToken: string, idUser: number, passwordPrecedente: string, passwordNuova: string, utenteUpdate: string): Observable<UpdateGenericResponse>
-  {
+  changeUserPassword(authToken: string, idUser: number, passwordPrecedente: string, passwordNuova: string, utenteUpdate: string): Observable<UpdateGenericResponse> {
     const endpoint = environment.serverUrl + "user/changeUserPassword";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
     let changeUserPassReq = new ChangePasswordRequest(idUser, passwordPrecedente, passwordNuova, utenteUpdate);
 
-    return CustomHttpService.post(endpoint, changeUserPassReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, changeUserPassReq, { headers: my_headers });
   }
 
-  deleteUser(authToken: string, idUser: number, utenteUpdate: string)
-  {
+  deleteUser(authToken: string, idUser: number, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "user/deleteUser";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
     let deleteReq = new DeleteRequest(idUser, utenteUpdate);
 
-    return CustomHttpService.post(endpoint, deleteReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, deleteReq, { headers: my_headers });
   }
 
-  getRuoliList(authToken: string)
-  {
+  getRuoliList(authToken: string) {
     const endpoint = environment.serverUrl + "user/getRuoliList";
 
     let headers = new HttpHeaders(
       {
         'Authorization': 'Bearer ' + authToken,
-         'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     );
 
     return CustomHttpService.get(endpoint, headers);
   }
 
-  getRuoliDataTable(authToken: string, filterPost: FilterPayload): Observable<RuoliListOverview>
-  {
+  getRuoliDataTable(authToken: string, filterPost: FilterPayload): Observable<RuoliListOverview> {
     const endpoint = environment.serverUrl + "user/getRuoliDataTable";
 
-    
-    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, filterPost, {headers: my_headers});
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.post(endpoint, filterPost, { headers: my_headers });
   }
 
-  getGruppiList(authToken: string)
-  {
+  getGruppiList(authToken: string) {
     const endpoint = environment.serverUrl + "user/getGruppiList";
 
     let headers = new HttpHeaders(
       {
         'Authorization': 'Bearer ' + authToken,
-         'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     );
 
     return CustomHttpService.get(endpoint, headers);
   }
 
-  getAvaiableBusinessByUser(authToken: string, idUser: number, isAdmin: boolean): Observable<Array<string>>
-  {
+  getAvaiableBusinessByUser(authToken: string, idUser: number, isAdmin: boolean): Observable<Array<string>> {
     const endpoint = environment.serverUrl + "user/getAvaiableBusinessByUser";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                                      .append('Content-Type', 'application/json')
-                                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
-    let busReq = new UserBusinessRequest(idUser, isAdmin);                                      
+    let busReq = new UserBusinessRequest(idUser, isAdmin);
 
-    return CustomHttpService.post(endpoint, busReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, busReq, { headers: my_headers });
   }
 
-  deleteRoleVoceMenu(authToken: string, idRoleVoceMenu: number, utenteUpdate: string)
-  {
+  deleteRoleVoceMenu(authToken: string, idRoleVoceMenu: number, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "user/deleteRoleVoceMenu";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
     let deleteReq = new DeleteRequest(idRoleVoceMenu, utenteUpdate);
 
-    return CustomHttpService.post(endpoint, deleteReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, deleteReq, { headers: my_headers });
   }
 
-  getVociMenuList(authToken: string)
-  {
+  getVociMenuList(authToken: string) {
     const endpoint = environment.serverUrl + "user/getVociMenuList";
 
     let headers = new HttpHeaders(
       {
         'Authorization': 'Bearer ' + authToken,
-         'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     );
 
@@ -192,14 +178,13 @@ export class UserService
   }
 
 
-  getSocietaList(authToken: string)
-  {
+  getSocietaList(authToken: string) {
     const endpoint = environment.serverUrl + "societa/getSocietaList";
 
     let headers = new HttpHeaders(
       {
         'Authorization': 'Bearer ' + authToken,
-         'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     );
 
@@ -207,28 +192,36 @@ export class UserService
   }
 
 
+  getSocietaById(authToken: string, societa) {
+    const endpoint = environment.serverUrl + "societa/getSocietaById";
 
-  getRoleVoceMenuById(authToken: string, idRoleVoceMenu: number)
-  {
+
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.post(endpoint, societa, { headers: my_headers });
+  }
+
+  getRoleVoceMenuById(authToken: string, idRoleVoceMenu: number) {
     const endpoint = environment.serverUrl + "user/getRoleVoceMenuById";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                                      .append('Content-Type', 'application/json')
-                                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, idRoleVoceMenu, {headers: my_headers});
+    return CustomHttpService.post(endpoint, idRoleVoceMenu, { headers: my_headers });
   }
 
-  saveRoleVoceMenu(authToken: string, roleVoceMenu: RoleVoceMenu, utenteUpdate: string)
-  {
+  saveRoleVoceMenu(authToken: string, roleVoceMenu: RoleVoceMenu, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "user/saveRoleVoceMenu";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
     let saveReq = new RoleVoceMenuSaveRequest(roleVoceMenu, utenteUpdate);
 
-    return CustomHttpService.post(endpoint, saveReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, saveReq, { headers: my_headers });
   }
 }

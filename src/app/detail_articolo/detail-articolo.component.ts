@@ -7,6 +7,7 @@ import { AuthService } from 'app/shared/Service/AuthService/auth.service';
 import { CommonService } from 'app/shared/Service/Common/common.service';
 import { UserService } from 'app/shared/Service/User/user.service';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-detail-articolo',
@@ -21,7 +22,7 @@ export class DetailArticoloComponent implements OnInit {
   public buttonTitle: string = "Aggiorna Articolo";
   public isEdit: boolean = false;
 
-  public articolo = new Articoli(-1, null, "", null, "", null, "", null, "");
+  public articolo = new Articoli(-1, null, "", moment("31/12/2050", "DD/MM/YYYY").toDate(), "", null, "", null, "");
   public userLogged;
 
   private mySubscription: Subscription;
@@ -31,7 +32,7 @@ export class DetailArticoloComponent implements OnInit {
   public descrizioneCtrl = new FormControl('', [Validators.required, Validators.maxLength(35)]);
   public validToCtrl = new FormControl('', [Validators.required]);
   public validFromCtrl = new FormControl('', [Validators.required]);
-
+  date = moment("31/12/2050", "DD/MM/YYYY");
 
   constructor(
     private route: ActivatedRoute,

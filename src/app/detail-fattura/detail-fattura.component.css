@@ -5,3 +5,40 @@ h4.card-title {
 .card [class*=card-header-] .card-title+.card-category {
     color: white;
 }
+
+.card-header.card-header-info .new-user-toggle {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.card-header.card-header-info.list {
+    display: flex;
+    align-items: center;
+
+}
+
+table.mat-table.custom {
+    width: 100%;
+}
+
+
+table.mat-table.custom input {
+    border: none;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+
+  
