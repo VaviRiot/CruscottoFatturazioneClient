@@ -22,7 +22,7 @@ export class DetailArticoloComponent implements OnInit {
   public buttonTitle: string = "Aggiorna Articolo";
   public isEdit: boolean = false;
 
-  public articolo = new Articoli(-1, null, "", moment("31/12/2050", "DD/MM/YYYY").toDate(), "", null, "", null, "");
+  public articolo = new Articoli(-1, null, "", moment("31/12/2050", "DD/MM/YYYY").toDate(), "", moment().toDate(), "", null, "");
   public userLogged;
 
   private mySubscription: Subscription;
@@ -57,28 +57,32 @@ export class DetailArticoloComponent implements OnInit {
       this.common.sendUpdate("hideSpinner");
     }
     else if (this.action == "edit") {
-      let authToken: string = this.authService.getAuthToken();
-      this.isEdit = true;
-      this.mySubscription = this.articoliService.getArticoloById(authToken, this.id).subscribe(res => {
-        this.articolo = res as Articoli;
-        this.common.sendUpdate("hideSpinner");
+      this.getDetail();
 
-        // console.log(this.user);
-      },
-        error => {
-          // console.log("getTopSummary");
-          // console.log(error);
-          this.common.sendUpdate("hideSpinner");
-          this.common.sendUpdate("showAlertDanger", error.message);
-        });
     }
     else {
       this.isEdit = false;
-      this.common.sendUpdate("hideSpinner");
+      this.getDetail();
 
     }
   }
 
+
+  getDetail() {
+    let authToken: string = this.authService.getAuthToken();
+    this.isEdit = true;
+    this.mySubscription = this.articoliService.getArticoloById(authToken, this.id).subscribe(res => {
+      this.articolo = res as Articoli;
+      this.common.sendUpdate("hideSpinner");
+    },
+      error => {
+        // console.log("getTopSummary");
+        // console.log(error);
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", error.message);
+      });
+  };
+  
   salvaArticolo() {
     this.common.sendUpdate("showSpinner");
 
@@ -132,7 +136,7 @@ export class DetailArticoloComponent implements OnInit {
       return "";
     }
   }
-  
+
   getDescrizioneErrorMessage() {
     if (this.descrizioneCtrl.hasError('maxlength')) {
       return "La descrizione deve contenere al massimo 3 caratteri";
