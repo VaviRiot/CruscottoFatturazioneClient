@@ -113,7 +113,7 @@
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width">
                                             <input type="text" [formControl]="row.get('idArticolo')" matInput
-                                                placeholder="Codice Cliente" type="text" [matAutocomplete]="auto">
+                                               type="text" [matAutocomplete]="auto" (change)="indexSelected = index">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
                                                     [value]="option">

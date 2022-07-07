@@ -23,7 +23,7 @@ export class DetailCorrispettivoComponent implements OnInit {
   public buttonTitle: string = "Aggiorna Corrispettivo";
   public isEdit: boolean = false;
 
-  public corrispettivo = new Corrispettivi(-1, null, "",  moment("31/12/2050", "DD/MM/YYYY").toDate(), "", null, "", null, "");
+  public corrispettivo = new Corrispettivi(-1, null, "", moment("31/12/2050", "DD/MM/YYYY").toDate(), "", moment().toDate(), "", null, "");
   public userLogged;
 
   private mySubscription: Subscription;
@@ -57,26 +57,30 @@ export class DetailCorrispettivoComponent implements OnInit {
       this.common.sendUpdate("hideSpinner");
     }
     else if (this.action == "edit") {
-      let authToken: string = this.authService.getAuthToken();
-      this.isEdit = true;
-      this.mySubscription = this.corrispettivoService.getcorrispettivoById(authToken, this.id).subscribe(res => {
-        this.corrispettivo = res as Corrispettivi;
-        this.common.sendUpdate("hideSpinner");
-
-        // console.log(this.user);
-      },
-        error => {
-          // console.log("getTopSummary");
-          // console.log(error);
-          this.common.sendUpdate("hideSpinner");
-          this.common.sendUpdate("showAlertDanger", error.message);
-        });
+      this.getDetail();
     }
     else {
       this.isEdit = false;
-      this.common.sendUpdate("hideSpinner");
+      this.getDetail();
 
     }
+  }
+
+  getDetail() {
+    let authToken: string = this.authService.getAuthToken();
+    this.isEdit = true;
+    this.mySubscription = this.corrispettivoService.getcorrispettivoById(authToken, this.id).subscribe(res => {
+      this.corrispettivo = res as Corrispettivi;
+      this.common.sendUpdate("hideSpinner");
+
+      // console.log(this.user);
+    },
+      error => {
+        // console.log("getTopSummary");
+        // console.log(error);
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", error.message);
+      });
   }
 
   salvaCorrispettivo() {

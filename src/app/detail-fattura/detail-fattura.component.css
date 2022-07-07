@@ -42,3 +42,6 @@ table {
   
 
   
+  .table.custom .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0;
+  }

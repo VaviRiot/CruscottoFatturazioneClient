@@ -33,11 +33,11 @@ export class CorrispettiviComponent implements OnInit {
   public validToListFilter: any = [
     {
       text: 'Attivo',
-      value: ['validTo', 'gte', new Date()],
+      value: ['dataValidita', 'gte', new Date()],
     },
     {
       text: 'Disattivo',
-      value: ['validTo', 'lt', new Date()],
+      value: ['dataValidita', 'lt', new Date()],
     }
   ];
 
@@ -45,7 +45,7 @@ export class CorrispettiviComponent implements OnInit {
   private deleteSubscription: Subscription;
 
   ///Lista dei filtri di tipo data da utilizzare nel makeAdditionalsFilter
-  dateFilters: string[] = ['lastModDate', 'validTo'];
+  dateFilters: string[] = ['lastModDate', 'dataValidita'];
 
   listFilters: Array<Array<string>> = [
     ['codiceCorrispettivo', 'lke'],

@@ -44,7 +44,7 @@ export class DetailFatturaComponent implements OnInit {
   articoliListString: string[] = [];
   rows: FormArray;
   itemForm: FormGroup;
-
+  indexSelected = 0;
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -96,8 +96,9 @@ export class DetailFatturaComponent implements OnInit {
     await this.articoliService.getArticoliList(authToken).toPromise().then(res => {
       this.articoliList = res;
       this.articoliList.forEach(element => {
-          this.articoliListString.push(element.codiceArticolo.toString())
+        this.articoliListString.push(element.codiceArticolo.toString())
       });
+      let array = this.addForm.get('rows');
       this.filteredOptionsArticoli = this.addForm.valueChanges.pipe(
         startWith(''),
         map(value => this._filterArticoli(value || '')),
@@ -105,7 +106,6 @@ export class DetailFatturaComponent implements OnInit {
 
     }, error => {
       this.common.sendUpdate("hideSpinner");
-
     });
   }
 
@@ -210,7 +210,9 @@ export class DetailFatturaComponent implements OnInit {
   }
 
 
-  private _filterArticoli(value: string): string[] {
+  private _filterArticoli(object: any): string[] {
+    let array = object != '' ? object.rows  : null;
+    let value = object != '' ? array[this.indexSelected].idArticolo : '';
     const filterValue = value.toLowerCase();
     return this.articoliListString.filter(option => option.toLowerCase().includes(filterValue));
   }

@@ -14,8 +14,8 @@
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="codiceCorrispettivoCtrl" matInput
                                             placeholder="Codice Corrispettivo" type="text" id="codiceArticolo"
-                                            name="codiceCorrispettivo" [(ngModel)]="corrispettivo.codiceCorrispettivo">
-                                        <mat-error *ngIf="codiceCorrispettivoCtrl.invalid">
+                                            name="codiceCorrispettivo" [(ngModel)]="corrispettivo.codiceCorrispettivo"  [readonly]="action == 'create' ? false : true">
+                                        <mat-error *ngIf="codiceCorrispettivoCtrl.invalid" >
                                             {{getCodiceCorispettivoErrorMessage()}}</mat-error>
                                     </mat-form-field>
                                 </div>
