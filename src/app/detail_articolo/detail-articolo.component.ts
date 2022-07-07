@@ -57,6 +57,7 @@ export class DetailArticoloComponent implements OnInit {
       this.common.sendUpdate("hideSpinner");
     }
     else if (this.action == "edit") {
+      this.isEdit = true;
       this.getDetail();
 
     }
@@ -70,7 +71,7 @@ export class DetailArticoloComponent implements OnInit {
 
   getDetail() {
     let authToken: string = this.authService.getAuthToken();
-    this.isEdit = true;
+    //this.isEdit = true;
     this.mySubscription = this.articoliService.getArticoloById(authToken, this.id).subscribe(res => {
       this.articolo = res as Articoli;
       this.common.sendUpdate("hideSpinner");

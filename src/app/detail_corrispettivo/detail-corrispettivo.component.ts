@@ -57,6 +57,7 @@ export class DetailCorrispettivoComponent implements OnInit {
       this.common.sendUpdate("hideSpinner");
     }
     else if (this.action == "edit") {
+      this.isEdit = true;
       this.getDetail();
     }
     else {
@@ -68,7 +69,7 @@ export class DetailCorrispettivoComponent implements OnInit {
 
   getDetail() {
     let authToken: string = this.authService.getAuthToken();
-    this.isEdit = true;
+    //this.isEdit = true;
     this.mySubscription = this.corrispettivoService.getcorrispettivoById(authToken, this.id).subscribe(res => {
       this.corrispettivo = res as Corrispettivi;
       this.common.sendUpdate("hideSpinner");

@@ -22,7 +22,7 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="descrizioneCtrl" matInput placeholder="Descrizione"
-                                            type="text" [(ngModel)]="articolo.descrizione">
+                                            type="text" [(ngModel)]="articolo.descrizione"  [readonly]="action == 'create' || action == 'edit'? false : true" >
                                         <mat-error *ngIf="descrizioneCtrl.invalid">{{getDescrizioneErrorMessage()}}
                                         </mat-error>
                                     </mat-form-field>
