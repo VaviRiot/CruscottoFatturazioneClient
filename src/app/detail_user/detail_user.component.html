@@ -35,7 +35,7 @@
 
                 <div class="col-md-6">
                   <mat-form-field class="example-full-width">
-                    <mat-select [formControl]="societaCtrl"  [(ngModel)]="user.societa" multiple name="societa">
+                    <mat-select [formControl]="societaCtrl"  [(ngModel)]="user.societa" multiple name="societa"   placeholder="Societa">
                       <mat-option *ngFor="let societa of listSocieta" [value]="societa.codiceSocieta"> {{societa.codiceSocieta}}
                       </mat-option>
                     </mat-select>
