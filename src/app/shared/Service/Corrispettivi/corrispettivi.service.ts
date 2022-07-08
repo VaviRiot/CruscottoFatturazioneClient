@@ -16,51 +16,57 @@ export class CorrispettiviService {
 
   constructor() { }
 
-  getCorrispettiviDataTable(authToken: string, filterPost: FilterPayload): Observable<CorrispettiviListOverview>
-  {
+  getCorrispettiviDataTable(authToken: string, filterPost: FilterPayload): Observable<CorrispettiviListOverview> {
     const endpoint = environment.serverUrl + "tipologiaCorrispettivi/getTipologiaCorrispettiviDataTable";
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, filterPost, {headers: my_headers});
+    return CustomHttpService.post(endpoint, filterPost, { headers: my_headers });
   }
 
-  deleteCorrispettivo(authToken: string, idcorrispettivo: number, utenteUpdate: string)
-  {
+  getCorrispettiviList(authToken: string): Observable<Corrispettivi[]> {
+    const endpoint = environment.serverUrl + "tipologiaCorrispettivi/getTipologiaCorrispettiviList?onlyActive=true";
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.get(endpoint, my_headers);
+  }
+
+
+  deleteCorrispettivo(authToken: string, idcorrispettivo: number, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "tipologiaCorrispettivi/deleteTipologiaCorrispettivi";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
     let deleteReq = new DeleteRequest(idcorrispettivo, utenteUpdate);
 
-    return CustomHttpService.post(endpoint, deleteReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, deleteReq, { headers: my_headers });
   }
 
-  getcorrispettivoById(authToken: string, id_corrispettivo: number)
-  {
+  getcorrispettivoById(authToken: string, id_corrispettivo: number) {
     const endpoint = environment.serverUrl + "tipologiaCorrispettivi/getTipologiaCorrispettiviById";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, id_corrispettivo, {headers: my_headers});
+    return CustomHttpService.post(endpoint, id_corrispettivo, { headers: my_headers });
   }
 
-  saveCorrispettivo(authToken: string, corrispettivo: Corrispettivi, utenteUpdate: string)
-  {
+  saveCorrispettivo(authToken: string, corrispettivo: Corrispettivi, utenteUpdate: string) {
     const endpoint = environment.serverUrl + "tipologiaCorrispettivi/saveTipologiaCorrispettivi";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
-                      .append('Content-Type', 'application/json')
-                      .append('Accept', 'application/json');
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
 
     let saveReq = new CorrispettivoSaveRequest(corrispettivo, utenteUpdate);
 
-    return CustomHttpService.post(endpoint, saveReq, {headers: my_headers});
+    return CustomHttpService.post(endpoint, saveReq, { headers: my_headers });
   }
-  
+
 }

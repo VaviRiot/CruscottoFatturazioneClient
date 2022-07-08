@@ -1,5 +1,6 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Articoli } from 'app/models/Articoli';
 import { Corrispettivi } from 'app/models/Corrispettivi';
@@ -9,8 +10,11 @@ import { AuthService } from 'app/shared/Service/AuthService/auth.service';
 import { CommonService } from 'app/shared/Service/Common/common.service';
 import { CorrispettiviService } from 'app/shared/Service/Corrispettivi/corrispettivi.service';
 import { FattureService } from 'app/shared/Service/Fatture/fatture.service';
-import { Observable, Subscription } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { UserService } from 'app/shared/Service/User/user.service';
+import * as moment from 'moment';
+import { Observable, of, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+
 @Component({
   selector: 'app-detail-fattura',
   templateUrl: './detail-fattura.component.html',
@@ -38,20 +42,27 @@ export class DetailFatturaComponent implements OnInit {
   options: string[] = [];
   filteredOptions: Observable<string[]>;
   filteredOptionsArticoli: Observable<string[]>;
-
+  filteredOptionsCorrispettivi: Observable<string[]>;
   addForm: FormGroup;
   articoliList: Articoli[] = [];
+  corrispettiviList: Corrispettivi[] = [];
   articoliListString: string[] = [];
+  corrispettiviListString: string[] = [];
   rows: FormArray;
   itemForm: FormGroup;
   indexSelected = 0;
+  searchCtrl = new FormControl();
+
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
     private common: CommonService,
     private fattureService: FattureService,
     private articoliService: ArticoliService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private articoloService: ArticoliService,
+    private corrispettiviService: CorrispettiviService,
+    private currencyPipe: CurrencyPipe
 
   ) {
     this.addForm = this.fb.group({
@@ -75,6 +86,7 @@ export class DetailFatturaComponent implements OnInit {
     this.addForm.addControl('rows', this.rows);
     await this.getListaClienti();
     await this.getArticoliList();
+    await this.getCorrispettiviList();
 
     if (this.action == "create") {
       this.isEdit = true;
@@ -92,17 +104,24 @@ export class DetailFatturaComponent implements OnInit {
 
   async getArticoliList() {
     let authToken: string = this.authService.getAuthToken();
-
     await this.articoliService.getArticoliList(authToken).toPromise().then(res => {
       this.articoliList = res;
       this.articoliList.forEach(element => {
         this.articoliListString.push(element.codiceArticolo.toString())
       });
-      let array = this.addForm.get('rows');
-      this.filteredOptionsArticoli = this.addForm.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterArticoli(value || '')),
-      );
+    }, error => {
+      this.common.sendUpdate("hideSpinner");
+    });
+  }
+
+  async getCorrispettiviList() {
+    let authToken: string = this.authService.getAuthToken();
+
+    await this.corrispettiviService.getCorrispettiviList(authToken).toPromise().then(res => {
+      this.corrispettiviList = res;
+      this.corrispettiviList.forEach(element => {
+        this.corrispettiviListString.push(element.descrizione.toString())
+      });
 
     }, error => {
       this.common.sendUpdate("hideSpinner");
@@ -146,17 +165,28 @@ export class DetailFatturaComponent implements OnInit {
         if (this.denominazioneCtrl.valid == true) {
           if (this.pIvaCtrl.valid == true) {
             let authToken: string = this.authService.getAuthToken();
+            let array = this.addForm.get('rows') as FormArray;
+            array.controls.forEach(el => {
+              let idCorrispettivo = this.corrispettiviList.filter(x => x.descrizione == el.value.codiceCorrispettivo)[0];
+              if (el.value.codiceCorrispettivo == idCorrispettivo.descrizione) {
+                el.patchValue({ codiceCorrispettivo: idCorrispettivo.codiceCorrispettivo });
+              }
+            });
+            this.fattura.importo = 0.0;
+            this.fattura.listaDettaglioFattura = array.value;
+            this.fattura.dataFattura = moment().toDate();
+            this.fattura.societa = this.userLogged.selectedSocieta;
+            this.fattura.statoFattura = '';
             this.saveSubscription = this.fattureService.saveFattura(authToken, this.fattura, this.userLogged.name).subscribe((res: boolean) => {
               if (res) {
                 //console.log(res);
-                this.common.sendUpdate("showAlertInfo", "Corrispettivo salvato correttamente!");
+                this.common.sendUpdate("showAlertInfo", "Fattura salvata correttamente!");
 
-                this.common.redirectToUrl('/corrispettivi');
                 this.common.sendUpdate("hideSpinner");
               }
               else {
                 this.common.sendUpdate("hideSpinner");
-                this.common.sendUpdate("showAlertDanger", "Impossibile salvare il corrispettivo al momento.");
+                this.common.sendUpdate("showAlertDanger", "Impossibile salvare la fattura al momento.");
               }
             },
               error => {
@@ -176,32 +206,35 @@ export class DetailFatturaComponent implements OnInit {
   }
 
 
-  // VALIDATION
-  // getCodiceCorispettivoErrorMessage() {
-  //   if (this.codiceCorrispettivoCtrl.hasError('minlength')) {
-  //     return "Il codice deve contenere minimo 1 caratteri";
-  //   }
-  //   else if (this.codiceCorrispettivoCtrl.hasError('maxlength')) {
-  //     return "Il codice deve contenere al massimo 3 caratteri";
-  //   }
-  //   else if (this.codiceCorrispettivoCtrl.hasError('required')) {
-  //     return "Codice non valido";
-  //   }
-  //   else {
-  //     return "";
-  //   }
-  // }
-
-
   getClientById(event: any) {
     let authToken: string = this.authService.getAuthToken();
-
     this.fattureService.getClienteById(authToken, event.target.value).subscribe(res => {
       let result = res as Cliente;
       this.denominazioneCtrl.setValue(result.ragioneSociale);
       this.pIvaCtrl.setValue(result.partitaIva);
 
     })
+  }
+
+  get formArr() {
+    return (this.addForm.get('rows') as FormArray).controls;
+  }
+
+  getArticoloById(event: any, index) {
+    let authToken: string = this.authService.getAuthToken();
+    let value = this.articoliList.filter(x => x.codiceArticolo == event.source.value)[0];
+    let array = this.addForm.get('rows') as FormArray;
+    let findIndex = array.controls.findIndex(x => x.value.codiceArticolo == event.source.value && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo);
+    if (findIndex >= 0) {
+      this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Combinazione è già esistente");
+      array.controls[index].patchValue({ codiceArticolo: null, codiceCorrispettivo: null })
+    } else {
+      this.articoloService.getArticoloById(authToken, value?.id).subscribe(res => {
+        let result = res as Articoli;
+        let array = this.addForm.get('rows') as FormArray;
+        array.controls[index].patchValue({ 'descrizioneArticolo': result.descrizione })
+      })
+    }
   }
 
   private _filter(value: string): string[] {
@@ -211,10 +244,18 @@ export class DetailFatturaComponent implements OnInit {
 
 
   private _filterArticoli(object: any): string[] {
-    let array = object != '' ? object.rows  : null;
-    let value = object != '' ? array[this.indexSelected].idArticolo : '';
-    const filterValue = value.toLowerCase();
+    let array = object != '' ? object.rows : null;
+    let value = object != '' ? array[this.indexSelected]?.codiceArticolo : '';
+    const filterValue = value ? value.toLowerCase() : '';
     return this.articoliListString.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+
+  private _filterCorrispettivi(object: any): string[] {
+    let array = object != '' ? object.rows : null;
+    let value = object != '' ? array[this.indexSelected]?.codiceCorrispettivo : '';
+    const filterValue = value ? value.toLowerCase() : '';
+    return this.corrispettiviListString.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   ngOnDestroy(): void {
@@ -228,20 +269,103 @@ export class DetailFatturaComponent implements OnInit {
 
   onAddRow() {
     this.rows.push(this.createItemFormGroup());
+    this.filteredOptionsArticoli = this.addForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticoli(value || '')),
+    );
+    this.filteredOptionsCorrispettivi = this.addForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterCorrispettivi(value || '')),
+    );
+    this.updateTable();
+
   }
+
+  updateTable() {
+    this.formArr$ = this.searchCtrl.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      switchMap(val => {
+        return of(this.formArr as AbstractControl[]).pipe(
+          map((formArr: AbstractControl[]) =>
+            formArr.filter((group: AbstractControl) => {
+              return group.get('codiceArticolo').value
+                .toLowerCase()
+                .includes(val.toLowerCase());
+            })
+          )
+        );
+      })
+    );
+  }
+
+  formArr$ = this.searchCtrl.valueChanges.pipe(
+    startWith(''),
+    distinctUntilChanged(),
+    switchMap(val => {
+      return of(this.formArr as AbstractControl[]).pipe(
+        map((formArr: AbstractControl[]) =>
+          formArr.filter((group: AbstractControl) => {
+            return group.get('codiceArticolo').value
+              .toLowerCase()
+              .includes(val.toLowerCase());
+          })
+        )
+      );
+    })
+  );
 
   onRemoveRow(rowIndex: number) {
     this.rows.removeAt(rowIndex);
+    this.updateTable();
+  }
+
+  getCheckCorrispettivo(event: any, index) {
+    let array = this.addForm.get('rows') as FormArray;
+    let findIndex = array.controls.findIndex(x => x.value.codiceCorrispettivo == event.source.value && x.value.codiceArticolo == array.controls[index].value.codiceArticolo);
+    if (findIndex >= 0) {
+      this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
+      array.controls[index].patchValue({ codiceArticolo: null, codiceCorrispettivo: null, descrizioneArticolo: null })
+    }
   }
 
   createItemFormGroup(): FormGroup {
     return this.fb.group({
-      idArticolo: null,
+      codiceArticolo: "",
       descrizioneArticolo: null,
-      corrispettivo: null,
-      importo: null,
-      note: null
+      codiceCorrispettivo: null,
+      importo: "",
+      note: null,
+      create_user: this.userLogged.createUser
     });
   }
 
+  transformAmount(element, index) {
+    let array = this.addForm.get('rows') as FormArray;
+    let value = array.controls[index].value.importo;
+    value = value.replace(',', '.');
+    value = value.replace('€', '');
+    value = parseFloat(value);
+    array.controls[index].value.importo = this.currencyPipe.transform(value, 'EUR', true);
+    return element.target.value = array.controls[index].value.importo;
+  }
+
+  getSumTotal() {
+    let array = this.addForm.get('rows') as FormArray;
+    let total = 0.0;
+    let totalString = '';
+    for (var i in array.controls) {
+      if (array.controls[i].value.importo != '') {
+        var value = array.controls[i].value.importo;
+        value = value.replace('.', '');
+        value = value.replace(',', '.');
+        value = value.replace('€', '');
+        value = parseFloat(value);
+        total += value
+      }
+    }
+    totalString = total ? this.currencyPipe.transform(total, 'EUR') : '';
+
+    return totalString;
+  }
 }

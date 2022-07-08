@@ -158,10 +158,10 @@ export class DetailCorrispettivoComponent implements OnInit {
 
   getDescrizioneErrorMessage() {
     if (this.descrizioneCtrl.hasError('maxlength')) {
-      return "La descrizione deve contenere al massimo 3 caratteri";
+      return "La descrizione deve contenere al massimo 35 caratteri";
     }
     else if (this.descrizioneCtrl.hasError('required')) {
-      return "La descrizione non valido";
+      return "La descrizione non valida";
     }
     else {
       return "";

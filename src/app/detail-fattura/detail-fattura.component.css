@@ -41,7 +41,12 @@ table {
   }
   
 
-  
-  .table.custom .mat-form-field-appearance-legacy .mat-form-field-underline {
-    height: 0;
-  }
+  tfoot > tr > td {
+    border: none !important;
+}
+
+
+mat-form-field.mat-form-field.search {
+    width: 30%;
+    margin-bottom: 1em;
+}

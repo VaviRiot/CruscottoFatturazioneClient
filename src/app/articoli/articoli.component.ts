@@ -52,12 +52,12 @@ export class ArticoliComponent implements OnInit {
   private deleteSubscription: Subscription;
 
   ///Lista dei filtri di tipo data da utilizzare nel makeAdditionalsFilter
-  dateFilters: string[] = ['lastModDate', 'dataValidita'];
+  dateFilters: string[] = ['last_mod_date', 'dataValidita'];
 
   listFilters: Array<Array<string>> = [
     ['codiceArticolo', 'lke'],
     ['descrizione', 'lke'],
-    ['lastModDate', 'lke'],
+    ['last_mod_date', 'lke'],
   ]
 
   listInFilters: string[] = ['name'];
@@ -103,8 +103,8 @@ export class ArticoliComponent implements OnInit {
 
         if (loadOptions.sort) {
           (loadOptions.sort as any).forEach(element => {
-            if (element.selector == 'lastModString') {
-              element.selector = 'lastModDate';
+            if (element.selector == 'last_mod_date') {
+              element.selector = 'last_mod_date';
             }
             sorts.push(new Sort(element.selector, element.desc ? 'DESC' : 'ASC'));
           });

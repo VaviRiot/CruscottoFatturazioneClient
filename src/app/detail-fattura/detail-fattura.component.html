@@ -76,8 +76,7 @@
 
                             </div>
 
-                            <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right"
-                                (click)="salvaFattura()">Salva Fattura</button>
+
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -95,6 +94,9 @@
                     </div>
 
                     <div class="form-group card-body" *ngIf="addForm.get('rows')?.controls.length > 0">
+                        <mat-form-field class="search">
+                            <input matInput [formControl]="searchCtrl" placeholder="Cerca per id articolo" />
+                        </mat-form-field>
                         <table class="mat-table custom ">
                             <thead>
                                 <tr class="mat-header-row">
@@ -108,15 +110,15 @@
                             </thead>
 
                             <tbody>
-                                <tr class="mat-row"
-                                    *ngFor="let row of addForm.get('rows')?.controls;let index = index;">
+                                <tr class="mat-row" *ngFor="let row of formArr$ | async;let index = index;">
                                     <td class="mat-cell mat-column-position">
-                                        <mat-form-field class="example-full-width">
-                                            <input type="text" [formControl]="row.get('idArticolo')" matInput
-                                               type="text" [matAutocomplete]="auto" (change)="indexSelected = index">
+                                        <mat-form-field class="example-full-width" appearance="none">
+                                            <input type="text" [formControl]="row.get('codiceArticolo')" matInput
+                                                type="text" [matAutocomplete]="auto" (click)="indexSelected = index">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
-                                                    [value]="option">
+                                                    [value]="option"
+                                                    (onSelectionChange)="getArticoloById($event, index)">
                                                     {{option}}
                                                 </mat-option>
                                             </mat-autocomplete>
@@ -127,10 +129,23 @@
                                         <input [formControl]="row.get('descrizioneArticolo')">
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <input [formControl]="row.get('corrispettivo')">
+                                        <mat-form-field class="example-full-width" appearance="none">
+                                            <input type="text" [formControl]="row.get('codiceCorrispettivo')" matInput
+                                                type="text" [matAutocomplete]="corr" (click)="indexSelected = index">
+                                            <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete">
+                                                <mat-option *ngFor="let option of filteredOptionsCorrispettivi | async"
+                                                    [value]="option"
+                                                    (onSelectionChange)="getCheckCorrispettivo($event, index)">
+                                                    {{option}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <input [formControl]="row.get('importo')">
+                                        <mat-form-field class="example-full-width" appearance="none">
+                                            <input type="text" (blur)="transformAmount($event, index)"
+                                                [formControl]="row.get('importo')" matInput>
+                                        </mat-form-field>
                                     </td>
                                     <td class="mat-cell mat-column-position">
                                         <input [formControl]="row.get('note')">
@@ -141,11 +156,23 @@
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Totale Fattura</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td> {{getSumTotal()}}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+
                         </table>
                     </div>
 
                 </div>
-
+                <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right"
+                    (click)="salvaFattura()">Salva Fattura</button>
             </div>
         </div>
     </div>

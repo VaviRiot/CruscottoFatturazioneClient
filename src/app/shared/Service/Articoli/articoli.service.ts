@@ -30,15 +30,13 @@ export class ArticoliService {
 
   getArticoliList(authToken: string): Observable<Articoli[]>
   {
-    const endpoint = environment.serverUrl + "articolo/getArticoliList";
+    const endpoint = environment.serverUrl + "articolo/getArticoliList?onlyActive=true";
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
                       .append('Content-Type', 'application/json')
                       .append('Accept', 'application/json');
 
     return CustomHttpService.get(endpoint,my_headers);
   }
-
-
 
   deleteArticolo(authToken: string, idArticolo: number, utenteUpdate: string)
   {

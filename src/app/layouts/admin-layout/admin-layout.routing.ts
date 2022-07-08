@@ -58,7 +58,7 @@ export const AdminLayoutRoutes: Routes = [
     }
   },
   {
-    path: 'detail_fattura/:action/:id',
+    path: 'detail_fatture/:action/:id',
     component: DetailFatturaComponent,
     canActivate: [AuthGuardService],
     data: {
@@ -102,7 +102,7 @@ export const AdminLayoutRoutes: Routes = [
     }
   },
   {
-    path: 'detail_articolo/:action/:id',
+    path: 'detail_articoli/:action/:id',
     component: DetailArticoloComponent,
     canActivate: [AuthGuardService],
     data: {
@@ -129,7 +129,7 @@ export const AdminLayoutRoutes: Routes = [
     }
   },
   {
-    path: 'detail_corrispettivo/:action/:id',
+    path: 'detail_corrispettivi/:action/:id',
     component: DetailCorrispettivoComponent,
     canActivate: [AuthGuardService],
     data: {

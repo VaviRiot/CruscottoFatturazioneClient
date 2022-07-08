@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-header card-header-primary">
                         <h4 class="card-title">Gestione Articoli</h4>
-                        <a href="javascript:;" [routerLink]="['/detail_articolo', 'create', -1]" class="new-user-toggle">
+                        <a href="javascript:;" [routerLink]="['/detail_articoli', 'create', -1]" class="new-user-toggle">
                             <span class="fa fa-plus-circle"></span>
                         </a>
                     </div>
@@ -42,7 +42,7 @@
                             </dxi-column>
 
                             <dxi-column dataField="status" caption="Stato" alignment="center"
-                                [allowHeaderFiltering]="true" [allowSorting]="true" cellTemplate="open"
+                                [allowHeaderFiltering]="true" [allowSorting]="false" cellTemplate="open"
                                 [visibleIndex]="5" [allowFiltering]="false"
                                 [cssClass]="hasFilter('dataValidita') == true ? 'cell-highlight' : ''">
                                 <dxo-header-filter [dataSource]="validToListFilter"></dxo-header-filter>
@@ -64,13 +64,13 @@
                                 [allowFiltering]="false" [allowSorting]="false" cellTemplate="tool" [visibleIndex]="7"
                                 [cssClass]="hasFilter('id') == true ? 'cell-highlight' : ''">
                                 <div *dxTemplate="let row of 'tool'" class="app-comandi" style="text-align: center;">
-                                    <a href="javascript:;" [routerLink]="['/detail_articolo', 'edit', row.data.id]">
+                                    <a href="javascript:;" [routerLink]="['/detail_articoli', 'edit', row.data.id]">
                                         <span class="fa fa-pencil"></span>
                                     </a>
                                     <a href="javascript:;" (click)="deleteArticolo(row.data.id)">
                                         <span class="fa fa-trash"></span>
                                     </a>
-                                    <a href="javascript:;" [routerLink]="['/detail_articolo', 'view', row.data.id]">
+                                    <a href="javascript:;" [routerLink]="['/detail_articoli', 'view', row.data.id]">
                                         <span class="fa fa-binoculars"></span>
                                     </a>
                                 </div>
