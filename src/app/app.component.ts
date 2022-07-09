@@ -44,15 +44,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (json_obj.command == "refreshNotify") 
       {
-        this.mySubscriptionNot = this.notifiche.getNotificationByServer().subscribe((res: SummaryNotificheUtente) => 
-        {
-          this.notifiche.setSummaryNotificheUtente(res);
-          // console.log(res);
-
-          this.common.sendUpdate("refreshNotifyPanel");
-          
-          this.common.sendUpdate("refreshBusinessButton");
-        });
+        
       }
       if(json_obj.command == "showAlertInfo")
       {

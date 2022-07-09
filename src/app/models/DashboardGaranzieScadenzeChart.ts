@@ -1,4 +1,5 @@
 export class DashboardGaranzieScadenzaChart {
+    settimane: any;
     constructor(
         public giorno_1?: number,
         public giorno_2?: number,

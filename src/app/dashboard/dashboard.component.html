@@ -40,14 +40,14 @@
               <div class="card card-stats" style="min-height: 11rem;">
                   <div class="card-header card-header-danger card-header-icon" style="min-height: 6rem;">
                       <div class="card-icon">
-                          <i class="material-icons">alarm</i>
+                          <i class="material-icons">info</i>
                       </div>
                       <p class="card-category">Fatture Rifiutate</p>
-                      <h3 class="card-title">{{topSummary.fattureRifiutate}}</h3>
+                      <h3 class="card-title">{{topSummary.fattureRifiutate ? topSummary.fattureRifiutate : 0}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                        <i class="material-icons">money</i> Totale {{topSummary.importoFattureRifiutate|currency:'EUR':true}}
+                        <i class="material-icons">money</i> Totale {{(topSummary.importoFattureRifiutate ? topSummary.importoFattureRifiutate : '0' | currency:'EUR':true)}}
                       </div>
                   </div>
               </div>
@@ -78,7 +78,7 @@
                   <div class="card-body">
                       <h4 class="card-title">Fatture emmese ultima settimana</h4>
                       <p class="card-category">
-                          <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{aumentoNuoviProspect}}% </span> incremento questa settimana</p> 
+                          <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{dashNuoviProspect.incrementoSettimana}}% </span> incremento questa settimana</p> 
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -140,22 +140,22 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of listBottomProspect">
-                                <td>{{item.idFattura}}</td>
-                                <td>{{item.nomeCliente}}</td>
-                                <td>{{item.piva}}</td>
-                                <td [ngSwitch]="item.status">
-                                    <span *ngSwitchCase="'compile'" class="label label-default">In Compilazione</span>
-                                    <span *ngSwitchCase="'not-valid'" class="label label-danger">Rifiutata</span>
-                                    <span *ngSwitchCase="'pending'" class="label label-warning">Da approvare</span>
-                                    <span *ngSwitchCase="'valid'" class="label label-success">Validata</span>
+                                <td>{{item.id}}</td>
+                                <td>{{item.cliente.ragioneSociale ? item.cliente.ragioneSociale : item.cliente.codiceCliente}}</td>
+                                <td>{{item.cliente.partitaIva ? item.cliente.partitaIva : 'N/D'}}</td>
+                                <td [ngSwitch]="item.statoFattura">
+                                    <span *ngSwitchCase="''" class="label label-default">In Compilazione</span>
+                                    <span *ngSwitchCase="'R'" class="label label-danger">Rifiutata</span>
+                                    <span *ngSwitchCase="'D'" class="label label-warning">Da approvare</span>
+                                    <span *ngSwitchCase="'V'" class="label label-success">Validata</span>
                                 </td>
                                 <td>{{item.importo |currency:'EUR':true}}</td>
                        
                                 <td class="app-comandi" style="text-align: center;">
-                                    <a href="javascript:;" [routerLink]="['/detail_prospect', 'edit', item.id, item.codiceCliente, item.business, 0]">
+                                    <a href="javascript:;" [routerLink]="['/detail_fatture', 'edit', item.id]">
                                         <span class="fa fa-pencil"></span>
                                     </a>
-                                    <a href="javascript:;" [routerLink]="['/detail_prospect', 'view', item.id, item.codiceCliente, item.business, 0]">
+                                    <a href="javascript:;" [routerLink]="['/detail_fatture', 'view', item.id]">
                                         <span class="fa fa-binoculars"></span>
                                     </a>
                                 </td>

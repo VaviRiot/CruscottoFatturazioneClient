@@ -151,42 +151,26 @@ export class DashboardComponent implements OnInit {
       this.defSelectedBusiness = new Array<string>();
     }
 
-    this.myDashProspectSubscription = this.dashService.getDashboardNuoviProspectChart(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness).subscribe(res => {
+    this.myDashProspectSubscription = this.dashService.getDashboardNuoviProspectChart(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.dashNuoviProspect = res as DashboardNuoviProspectChart;
-
+      let seriesX = [];
+      let seriesY = [];
+      this.dashNuoviProspect.giorni.forEach(element => {
+        seriesX.push(element.numero);
+        seriesY.push(element.giornoSettimana[0].toString().toUpperCase())
+      });
       const dataDailySalesChart: any = {
-        labels: ['L', 'M', 'M', 'G', 'V', 'S', 'D'],
-        series: [
-          [
-            this.dashNuoviProspect.lunedi,
-            this.dashNuoviProspect.martedi,
-            this.dashNuoviProspect.mercoledi,
-            this.dashNuoviProspect.giovedi,
-            this.dashNuoviProspect.venerdi,
-            this.dashNuoviProspect.sabato,
-            this.dashNuoviProspect.domenica
-          ]
-        ]
+        labels: seriesY,
+        series: [seriesX]
+
       };
 
-      if (this.dashNuoviProspect.lastModDate) {
-        this.nuoviProspectDate = this.dashNuoviProspect.lastModDate;
-      }
-      else {
-        this.nuoviProspectDate = this.dashNuoviProspect.createDate;
-      }
-
-      let maxNuoviProspect = 50;
-      if (this.dashNuoviProspect.maxValue) {
-        maxNuoviProspect = this.dashNuoviProspect.maxValue;
-      }
 
       const optionsDailySalesChart: any = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0
         }),
         low: 0,
-        high: maxNuoviProspect, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       }
 
@@ -195,50 +179,8 @@ export class DashboardComponent implements OnInit {
       this.startAnimationForLineChart(dailySalesChart);
     },
       error => {
-        //MOck
-        const dataDailySalesChart: any = {
-          labels: ['L', 'M', 'M', 'G', 'V', 'S', 'D'],
-          series: [
-            [
-              10,
-              40,
-              30,
-              20,
-              5,
-              0,
-              3
-            ]
-          ]
-        };
-
-        if (this.dashNuoviProspect.lastModDate) {
-          this.nuoviProspectDate = this.dashNuoviProspect.lastModDate;
-        }
-        else {
-          this.nuoviProspectDate = this.dashNuoviProspect.createDate;
-        }
-
-        let maxNuoviProspect = 50;
-        if (this.dashNuoviProspect.maxValue) {
-          maxNuoviProspect = this.dashNuoviProspect.maxValue;
-        }
-
-        const optionsDailySalesChart: any = {
-          lineSmooth: Chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: maxNuoviProspect, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-        }
-
-        var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-        this.startAnimationForLineChart(dailySalesChart);
-
         // console.log("getTopSummary");
         // console.log(error);
-
         this.common.sendUpdate("showAlertDanger", error.message);
       });
 
@@ -248,7 +190,6 @@ export class DashboardComponent implements OnInit {
 
     this.myDashClientiSubscription = this.dashService.getDashboardYearChart(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.dashClientiAttivi = res as DashboardClientiAttiviChart;
-
       var datawebsiteViewsChart = {
         labels: ['G', 'F', 'M', 'A', 'M', 'G', 'L', 'A', 'S', 'O', 'N', 'D'],
         series: [
@@ -317,7 +258,6 @@ export class DashboardComponent implements OnInit {
     this.myTopSubscription = this.dashService.getTopSummary(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.topSummary = res as DashboardTopSummary;
 
-
     },
       error => {
         // console.log("getTopSummary");
@@ -326,97 +266,12 @@ export class DashboardComponent implements OnInit {
         this.common.sendUpdate("showAlertDanger", error.message);
       });
 
-    this.myBotCliSubscription = this.dashService.getListBottomClienti(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness).subscribe(res => {
-      this.listBottomClienti = res as Array<Cliente>;
-    },
-      error => {
-        
-        // console.log("getBotCli");
-        // console.log(error);
-
-        this.common.sendUpdate("showAlertDanger", error.message);
-      });
-
-    this.myBotProSubscription = this.dashService.getListBottomProspect(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness).subscribe(res => {
+    //SOSTITUIRE CON FATTURE
+    this.myBotProSubscription = this.dashService.getListBottomProspect(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.listBottomProspect = res as Array<Fatture>;
     },
       error => {
-        this.listBottomProspect = [
-          {
-            idFattura: 111111,
-            codiceCliente: 'cliente 1',
-            nomeCliente: 'cliente 1',
-            piva: '1234567899',
-            status: 'compile',
-            importo: 1000000
-          },
-          {
-            idFattura: 111112,
-            codiceCliente: 'cliente 2',
-            nomeCliente: 'cliente 2',
-            piva: '1234567899',
-            status: 'pending',
-            importo: 1000000
-          },
-
-          {
-            idFattura: 111113,
-            codiceCliente: 'cliente 2',
-            nomeCliente: 'cliente 2',
-            piva: '1234567899',
-            status: 'valid',
-            importo: 300000
-          },
-          {
-            idFattura: 111114,
-            codiceCliente: 'cliente 2',
-            nomeCliente: 'cliente 2',
-            piva: '1234567899',
-            status: 'not-valid',
-            importo: 1000
-          },
-
-          {
-            idFattura: 111115,
-            codiceCliente: 'cliente 2',
-            nomeCliente: 'cliente 2',
-            piva: '1234567899',
-            status: 'pending',
-            importo: 200000
-          },
-          {
-            idFattura: 111116,
-            codiceCliente: 'cliente 1',
-            nomeCliente: 'cliente 1',
-            piva: '1234567899',
-            status: 'compile',
-            importo: 100000
-          },
-          {
-            idFattura: 111117,
-            codiceCliente: 'cliente 2',
-            nomeCliente: 'cliente 2',
-            piva: '1234567899',
-            status: 'valid',
-            importo: 1000000
-          },
-          {
-            idFattura: 111118,
-            codiceCliente: 'cliente 2',
-            nomeCliente: 'cliente 2',
-            piva: '1234567899',
-            status: 'not-valid',
-            importo: 1000000
-          },
-          {
-            idFattura: 111119,
-            codiceCliente: 'cliente 2',
-            nomeCliente: 'cliente 2',
-            piva: '1234567899',
-            status: 'not-valid',
-            importo: 1000000
-          },
-        ]
+     
         // console.log("getBotPro");
         // console.log(error);
 
@@ -458,78 +313,18 @@ export class DashboardComponent implements OnInit {
     var year = dt.getFullYear();
     var daysInMonth = new Date(year, month, 0).getDate();
 
-    this.myDashGaranzieSubscription = this.dashService.getDashboardGaranzieScadenze(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness).subscribe(res => {
+    this.myDashGaranzieSubscription = this.dashService.getDashboardGaranzieScadenze(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.dashClientiGaranziaScadenza = res as DashboardGaranzieScadenzaChart;
       let labelsArray = ['1', '2', '3', '4', '5', '6'];
-
-      let value_1 = this.dashClientiGaranziaScadenza.giorno_1 +
-        this.dashClientiGaranziaScadenza.giorno_2 +
-        this.dashClientiGaranziaScadenza.giorno_3 +
-        this.dashClientiGaranziaScadenza.giorno_4 +
-        this.dashClientiGaranziaScadenza.giorno_5;
-
-      let value_2 = this.dashClientiGaranziaScadenza.giorno_6 +
-        this.dashClientiGaranziaScadenza.giorno_7 +
-        this.dashClientiGaranziaScadenza.giorno_8 +
-        this.dashClientiGaranziaScadenza.giorno_9 +
-        this.dashClientiGaranziaScadenza.giorno_10;
-
-      let value_3 = this.dashClientiGaranziaScadenza.giorno_11 +
-        this.dashClientiGaranziaScadenza.giorno_12 +
-        this.dashClientiGaranziaScadenza.giorno_13 +
-        this.dashClientiGaranziaScadenza.giorno_14 +
-        this.dashClientiGaranziaScadenza.giorno_15;
-
-      let value_4 = this.dashClientiGaranziaScadenza.giorno_16 +
-        this.dashClientiGaranziaScadenza.giorno_17 +
-        this.dashClientiGaranziaScadenza.giorno_18 +
-        this.dashClientiGaranziaScadenza.giorno_19 +
-        this.dashClientiGaranziaScadenza.giorno_20;
-
-      let value_5 = this.dashClientiGaranziaScadenza.giorno_21 +
-        this.dashClientiGaranziaScadenza.giorno_22 +
-        this.dashClientiGaranziaScadenza.giorno_23 +
-        this.dashClientiGaranziaScadenza.giorno_24 +
-        this.dashClientiGaranziaScadenza.giorno_25;
-
-      let value_6 = this.dashClientiGaranziaScadenza.giorno_26 +
-        this.dashClientiGaranziaScadenza.giorno_27 +
-        this.dashClientiGaranziaScadenza.giorno_28;
-
-      switch (daysInMonth) {
-        case 29:
-          value_6 += this.dashClientiGaranziaScadenza.giorno_29;
-          break;
-        case 30:
-          value_6 += this.dashClientiGaranziaScadenza.giorno_29;
-          value_6 += this.dashClientiGaranziaScadenza.giorno_30;
-          break;
-        case 31:
-          value_6 += this.dashClientiGaranziaScadenza.giorno_29;
-          value_6 += this.dashClientiGaranziaScadenza.giorno_30;
-          value_6 += this.dashClientiGaranziaScadenza.giorno_31;
-          break;
-      }
-
-      let maxValue = 50;
-      if (this.dashClientiGaranziaScadenza.maxValue) {
-        maxValue = this.dashClientiGaranziaScadenza.maxValue;
-      }
-
-      let valueArray = [
-        value_1,
-        value_2,
-        value_3,
-        value_4,
-        value_5,
-        value_6
-      ];
-
+      let seriesX = [];
+      this.dashClientiGaranziaScadenza.settimane.forEach(element => {
+        seriesX.push(element.numero);
+      });
       const dataCompletedTasksChart: any =
       {
         labels: labelsArray,
         series: [
-          valueArray
+          seriesX
         ]
       };
 
@@ -542,7 +337,6 @@ export class DashboardComponent implements OnInit {
           tension: 0
         }),
         low: 0,
-        high: maxValue, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
       }
 
@@ -552,80 +346,6 @@ export class DashboardComponent implements OnInit {
       this.startAnimationForLineChart(completedTasksChart);
     },
       error => {
-
-        // console.log("getTopSummary");
-        // console.log(error);
-
-        //MOCK REMOVE
-        let labelsArray = ['1', '2', '3', '4', '5', '6'];
-
-        let value_1 = 1;
-
-        let value_2 = 2
-
-        let value_3 = 4
-
-        let value_4 = 8
-
-        let value_5 = 5
-
-        let value_6 = 10
-
-        switch (daysInMonth) {
-          case 29:
-            value_6 += 10
-            break;
-          case 30:
-            value_6 += 20
-            value_6 += 33;
-            break;
-          case 31:
-            value_6 += 44;
-            value_6 += 22;
-            value_6 += 10;
-            break;
-        }
-
-        let maxValue = 50;
-        if (this.dashClientiGaranziaScadenza.maxValue) {
-          maxValue = this.dashClientiGaranziaScadenza.maxValue;
-        }
-
-        let valueArray = [
-          value_1,
-          value_2,
-          value_3,
-          value_4,
-          value_5,
-          value_6
-        ];
-
-        const dataCompletedTasksChart: any =
-        {
-          labels: labelsArray,
-          series: [
-            valueArray
-          ]
-        };
-
-        if (this.dashClientiGaranziaScadenza.lastDate) {
-          this.garanzieScadenzaDate = this.dashClientiGaranziaScadenza.lastDate;
-        }
-
-        const optionsCompletedTasksChart: any = {
-          lineSmooth: Chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: maxValue, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-        }
-
-        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-
-        // start animation for the Completed Tasks Chart - Line Chart
-        this.startAnimationForLineChart(completedTasksChart);
-
         this.common.sendUpdate("showAlertDanger", error.message);
       });
   }

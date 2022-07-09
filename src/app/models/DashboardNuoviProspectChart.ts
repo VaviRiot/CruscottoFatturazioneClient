@@ -1,4 +1,6 @@
 export class DashboardNuoviProspectChart {
+    giorni: any;
+  settimane: any;
     constructor(
         public id?: number,
         public anno?: number,
@@ -16,6 +18,7 @@ export class DashboardNuoviProspectChart {
         public createUser?: string,
         public createDate?: Date,
         public lastModUser?: string,
-        public lastModDate?: Date
+        public lastModDate?: Date,
+        public incrementoSettimana?: any
     ) { }
 }
