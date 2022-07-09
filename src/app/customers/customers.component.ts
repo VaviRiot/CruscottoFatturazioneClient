@@ -28,6 +28,7 @@ import { ProspectListOverview } from 'app/models/Response/ProspectListOverview'
 import { User } from 'app/models/User'
 import { DatePipe } from '@angular/common'
 import { PresaInCaricoRequest } from 'app/models/Request/PresaInCaricoRequest'
+import { ConfirmMessageComponent } from 'app/modals/confirm_message/confirm_message.component'
 
 @Component({
   selector: 'app-customers',
@@ -35,46 +36,25 @@ import { PresaInCaricoRequest } from 'app/models/Request/PresaInCaricoRequest'
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
-  
+
   public clientiListOverview = new ProspectListOverview(0, null);
-  
+
   public userLogged: User;
   public defIsAdmin: boolean = false;
-  
+
   todayDate = new Date();
 
   ///Lista dei filtri di tipo data da utilizzare nel makeAdditionalsFilter
-  dateFilters: string[] = ['lastMod']; 
+  dateFilters: string[] = ['lastMod'];
 
   listFilters: Array<Array<string>> = [
     ['codiceCliente', 'lke'],
-    ['nomeCliente', 'lke'],
-    ['business', 'lke'],
-    ['nomeStep', 'lke'],
-    ['lastMod', 'lke']
+    ['ragioneSociale', 'lke'],
+    ['partitaIva', 'lke'],
+    ['codiceFiscale', 'lke'],
   ]
 
   listInFilters: string[] = ['codiceCliente'];
-
-/* Esempio filtro dropdown
-  statusListFilter: any = [
-    {
-      text: 'Confermato',
-      value: ['status', 'in', 'Confermato'],
-    },
-    {
-      text: 'Da Confermare',
-      value: ['status', 'in', 'Da Confermare'],
-    },
-  ]
-*/
-
-  /* SERVER SIDE FILTERS*/ 
-  codiceClienteFilter: string;
-  nomeClienteFilter: string;
-  businessFilter: string;
-  nomeStepFilter: string;
-  lastModFilter: string;
 
   /* SERVER SORT CLAUSES */
   orderClause: OrderClause[]
@@ -93,160 +73,26 @@ export class CustomersComponent implements OnInit {
     private common: CommonService,
     private authService: AuthService) {
 
-      // this.dataSource.reload()
-  
-      this.dataSource = new DataSource(new Array<Cliente>());
-    }
+    // this.dataSource.reload()
 
-  ngOnInit(): void 
-  {
-    let pipe = new DatePipe('it-IT');
-
-    this.userLogged = this.authService.getUser();
-
-    this.dataSource = new DataSource({
-      key: 'codiceCliente',
-      load: (loadOptions) => {
-
-        let sorts = new Array<Sort>();
-
-        if(loadOptions.sort)
-        {
-          (loadOptions.sort as any).forEach(element => {
-
-            if(element.selector == 'lastModString')
-            {
-              element.selector = 'lastMod';
-            }
-
-            sorts.push(new Sort(element.selector, element.desc ? 'DESC' : 'ASC'));
-          });
-          
-        }
-
-        this.common.sendUpdate("refreshNotify");
-        this.common.sendUpdate("showSpinner");
-    
-        let authToken: string = this.authService.getAuthToken();
-
-        let preFilter: string = this.authService.getCustomerPreFilter();
-        let preFilterArray: Array<string> = null;
-        if(preFilter)
-        {
-          if(preFilter != "")
-          {
-            this.resetGrid(false);
-
-            if(preFilter != "state_eq_reset")
-            {
-              preFilterArray = preFilter.split("_");
-            }
-
-            this.authService.setCustomerPreFilter("");
-          }
-        }
-
-        let filterPost = new FilterPayload(
-                                            this.dataGrid.instance.pageIndex(),
-                                            this.dataGrid.instance.pageSize(),
-                                            Helper.makeAdditionalsFilters(loadOptions, this.dateFilters),
-                                            sorts);
-
-
-        let filtRole = new Filter("role.filter", "eq", this.userLogged.ruoloUtente.id.toString(), null);
-        filterPost.filters.push(filtRole);
-
-        if(preFilterArray != null)
-        {
-          let preFilt = new Filter(preFilterArray[0], preFilterArray[1], preFilterArray[2], null);
-          filterPost.filters.push(preFilt);
-        }
-
-        if(this.userLogged.ruoloUtente)
-        {
-          if(this.userLogged.ruoloUtente.isAdmin)
-          {
-            this.defIsAdmin = this.userLogged.ruoloUtente.isAdmin;
-          }
-        }
-
-        let filtAdmin = new Filter("role.admin", "eq", this.defIsAdmin.toString(), null);
-        filterPost.filters.push(filtAdmin);
-
-        return this.prospectService
-          .getClientiDataTable(authToken, filterPost)
-          .toPromise()
-          .then((res) => {
-              res.lines.forEach(prospectApp =>
-              {
-                if(prospectApp.lastMod)
-                {
-                  prospectApp.lastModString = pipe.transform(prospectApp.lastMod, 'dd/MM/yyyy HH:mm');
-                }
-              });
-
-              this.clientiListOverview = res;
-
-              // console.log(this.clientiListOverview);
-
-              this.common.sendUpdate("hideSpinner");
-
-              return {
-                data: res.lines,
-                totalCount: res.totalCount,
-              }
-
-        })
-      },
-      onLoadError: (error) => {
-          //gestione errore
-          this.common.sendUpdate("hideSpinner");
-      }
-    });
+    this.dataSource = new DataSource(new Array<Cliente>());
   }
 
-  resetGrid(reload: boolean = true)
-  {
+  ngOnInit(): void {
+    this.loadDataTable();
+  }
+
+  resetGrid(reload: boolean = true) {
     localStorage.removeItem(
-                          environment.gmtCliListFilter
-                        );
-    
+      environment.gmtCliListFilter
+    );
+
     this.dataGrid.instance.clearFilter();
     this.dataGrid.instance.clearSorting();
 
-    if(reload)
-    {
+    if (reload) {
       this.dataSource.reload();
     }
-  }
-
-  public presaInCarico(prospect: Cliente)
-  {
-    this.common.sendUpdate("showSpinner");
-    
-    let authToken: string = this.authService.getAuthToken();
-
-    let presaInCaricoRequest = new PresaInCaricoRequest(
-                                                          prospect.id,
-                                                          this.userLogged.id,
-                                                          this.userLogged.name
-                                                      );
-
-    // console.log(presaInCaricoRequest);
-
-    this.prospectService.savePresaInCarico(authToken, presaInCaricoRequest).subscribe(
-      res =>
-      {
-        prospect.workUserId = this.userLogged.id;
-
-        this.common.sendUpdate("hideSpinner");
-      },
-      err => {
-          this.common.sendUpdate("hideSpinner");
-          this.common.sendUpdate("showAlertDanger", err.message);
-          console.log(err)
-      }
-    );
   }
 
   contentReady = (e) => {
@@ -285,12 +131,6 @@ export class CustomersComponent implements OnInit {
     e.cancel = true
   }
 
-  // getImage(brand: string) {
-  //   return brand.toLowerCase() == 'toyota'
-  //     ? 'toyota-logo-dark'
-  //     : 'Lexus-Logo-dark'
-  // }
-
   tableStateLoad = () => {
     var data = JSON.parse(
       localStorage.getItem(environment.gmtCliListFilter),
@@ -324,6 +164,114 @@ export class CustomersComponent implements OnInit {
     catch {
       return false;
     }
+  }
+
+  deleteCliente(idCliente) {
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.id = 'confirm-message-modal'
+    dialogConfig.height = 'fit-content'
+    dialogConfig.width = '25rem';
+
+    const modalDialog = this.dialog.open(ConfirmMessageComponent, dialogConfig);
+    modalDialog.componentInstance.messageText = "Sei sicuro di voler eliminare il cliente?";
+
+    modalDialog.afterClosed().subscribe(res => {
+      if (res == true) {
+        this.common.sendUpdate("showSpinner");
+        let auth_token: string = this.authService.getAuthToken();
+        this.prospectService.deleteCliente(auth_token, idCliente, this.userLogged.name).subscribe((res: boolean) => {
+          if (res) {
+            //console.log(res);
+            this.common.sendUpdate("showAlertInfo", "Cliente rimosso correttamente!");
+
+            // this.dataSource.reload();
+            this.loadDataTable();
+            this.common.sendUpdate("hideSpinner");
+          }
+          else {
+            this.common.sendUpdate("hideSpinner");
+            this.common.sendUpdate("showAlertDanger", "Impossibile rimuovere il cliente al momento.");
+          }
+        },
+          error => {
+            this.common.sendUpdate("hideSpinner");
+            this.common.sendUpdate("showAlertDanger", error.message);
+          });
+      }
+    });
+
+  }
+
+
+  loadDataTable() {
+    let pipe = new DatePipe('it-IT');
+
+    this.userLogged = this.authService.getUser();
+
+    this.dataSource = new DataSource({
+      key: 'codiceCliente',
+      load: (loadOptions) => {
+        let sorts = new Array<Sort>();
+        if (loadOptions.sort) {
+          (loadOptions.sort as any).forEach(element => {
+            if (element.selector == 'lastModString') {
+              element.selector = 'lastMod';
+            }
+            sorts.push(new Sort(element.selector, element.desc ? 'DESC' : 'ASC'));
+          });
+        }
+        this.common.sendUpdate("refreshNotify");
+        this.common.sendUpdate("showSpinner");
+        let authToken: string = this.authService.getAuthToken();
+        let preFilter: string = this.authService.getCustomerPreFilter();
+        let preFilterArray: Array<string> = null;
+        if (preFilter) {
+          if (preFilter != "") {
+            this.resetGrid(false);
+
+            if (preFilter != "state_eq_reset") {
+              preFilterArray = preFilter.split("_");
+            }
+
+            this.authService.setCustomerPreFilter("");
+          }
+        }
+        let filterPost = new FilterPayload(
+          this.dataGrid.instance.pageIndex(),
+          this.dataGrid.instance.pageSize(),
+          Helper.makeAdditionalsFilters(loadOptions, this.dateFilters),
+          sorts);
+
+        if (this.userLogged.ruoloUtente) {
+          if (this.userLogged.ruoloUtente.isAdmin) {
+            this.defIsAdmin = this.userLogged.ruoloUtente.isAdmin;
+          }
+        }
+        return this.prospectService
+          .getClientiDataTable(authToken, filterPost)
+          .toPromise()
+          .then((res) => {
+            res.lines.forEach(prospectApp => {
+              if (prospectApp.lastMod) {
+                prospectApp.lastModString = pipe.transform(prospectApp.lastMod, 'dd/MM/yyyy HH:mm');
+              }
+            });
+
+            this.clientiListOverview = res;
+            // console.log(this.clientiListOverview);
+            this.common.sendUpdate("hideSpinner");
+
+            return {
+              data: res.lines,
+              totalCount: res.totalCount,
+            }
+          })
+      },
+      onLoadError: (error) => {
+        //gestione errore
+        this.common.sendUpdate("hideSpinner");
+      }
+    });
   }
 
 }

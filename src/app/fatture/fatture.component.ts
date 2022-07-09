@@ -293,16 +293,20 @@ export class FattureComponent implements OnInit {
   }
 
   editFattura(state) {
-    switch (state) {
-      case 'Rifiutata':
-        return true
-      case 'compilazione':
-        return true;
-      case 'G':
-        return true;
-      default:
-        return false
+    if (this.userLogged.ruoloUtente.name != 'Admin') {
+      switch (state) {
+        case 'Rifiutata':
+        case 'G':
+          return true
+        case 'compilazione':
+          return true;
+        case 'G':
+          return true;
+        default:
+          return false
+      }
     }
+    return false;
   }
 
   openLogFattura(idFattura): void {

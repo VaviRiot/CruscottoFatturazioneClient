@@ -21,6 +21,35 @@
     height: 65vh !important;
 }
 
+.new-user-toggle
+{
+  float: right;
+  color: #fff;
+}
+
+.new-user-toggle span
+{
+  font-size: 1.4rem;
+}
+
+h4.card-title {
+    width: 100%;
+}
+
+p.card-category {
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+    opacity: 1;
+}
+
+
+.card-header.card-header-primary {
+    display: flex;
+    align-items: center;
+}
+
+
 #scrollview {
     height: 65vh !important;
 }

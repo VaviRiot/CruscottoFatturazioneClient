@@ -44,7 +44,7 @@ export class ListaDettaglioFattura {
 
 export class Cliente {
     constructor(
-        public codiceCliente: string,
+        public codiceCliente: any,
         public societa: string,
         public ragioneSociale: string,
         public codiceFiscale: string,

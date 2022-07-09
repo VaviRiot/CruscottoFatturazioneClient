@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./view-log-fattura.component.css']
 })
 export class ViewLogFatturaComponent implements OnInit {
-  displayedColumns: string[] = ['idFattura', 'statoFattura', 'date'];
+  displayedColumns: string[] = ['utente', 'statoFattura', 'date'];
 
   constructor(
     public dialogRef: MatDialogRef<ViewLogFatturaComponent>,

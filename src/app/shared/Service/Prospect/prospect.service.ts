@@ -11,7 +11,6 @@ import { ValutazioneStep2Request } from 'app/models/Request/ValutazioneStep2Requ
 import { ValutazioneStep4Request } from 'app/models/Request/ValutazioneStep4Request';
 import { ValutazioneStep5Request } from 'app/models/Request/ValutazioneStep5Request';
 import { Observable } from 'rxjs';
-import { Cliente } from 'app/models/Cliente';
 import { FilterPayload } from 'app/models/FilterPayload';
 import { ProspectListOverview } from 'app/models/Response/ProspectListOverview';
 import { ValidazioneStepResponse } from 'app/models/Response/ValidazioneStepResponse';
@@ -24,7 +23,7 @@ import { ProspectAuthStepRequest } from 'app/models/Request/ProspectAuthStepRequ
 import { WorkflowStepRoleOverview } from 'app/models/Response/WorkflowStepRoleOverview';
 import { WorkflowStepRole } from 'app/models/WorkflowStepRole';
 import { WorkflowStepRoleSaveRequest } from 'app/models/Request/WorkflowStepRoleSaveRequest';
-import { DeleteRequest } from 'app/models/Request/DeleteRequest';
+import { DeleteRequest, DeleteRequestCliente } from 'app/models/Request/DeleteRequest';
 import { ScadenzeGiorniGaranzieListOverview } from 'app/models/Response/ScadenzeGiorniGaranzieListOverview';
 import { ScadenzeGiorniGaranzie } from 'app/models/ScadenzeGiorniGaranzie';
 import { ScadenzeGiorniGaranzieSaveRequest } from 'app/models/Request/ScadenzeGiorniGaranzieSaveRequest';
@@ -33,6 +32,8 @@ import { ExportGridRequest } from 'app/models/Request/ExportGridRequest';
 import { CanaleGaranzia } from 'app/models/CanaleGaranzia';
 import { PresaInCaricoRequest } from 'app/models/Request/PresaInCaricoRequest';
 import { DerogaMeritoResponse } from 'app/models/Response/DerogaMeritoResponse';
+import { ClienteSaveRequest } from 'app/models/Request/ClienteSaveRequest';
+import { Cliente } from 'app/models/Fatture';
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +70,7 @@ export class ProspectService {
 
   getClientiDataTable(authToken: string, filterPost: FilterPayload): Observable<ProspectListOverview>
   {
-    const endpoint = environment.serverUrl + "prospect/getClientiDataTableList";
+    const endpoint = environment.serverUrl + "cliente/getClientiDataTable";
 
     
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
@@ -78,6 +79,33 @@ export class ProspectService {
 
     return CustomHttpService.post(endpoint, filterPost, {headers: my_headers});
   }
+
+  deleteCliente(authToken: string, idCliente: string, utenteUpdate: string)
+  {
+    const endpoint = environment.serverUrl + "cliente/deleteCliente";
+
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+                      .append('Content-Type', 'application/json')
+                      .append('Accept', 'application/json');
+
+    let deleteReq = new DeleteRequestCliente(idCliente, utenteUpdate);
+
+    return CustomHttpService.post(endpoint, deleteReq, {headers: my_headers});
+  }
+
+  saveCliente(authToken: string, cliente: Cliente, utenteUpdate: string)
+  {
+    const endpoint = environment.serverUrl + "cliente/saveCliente";
+
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+                      .append('Content-Type', 'application/json')
+                      .append('Accept', 'application/json');
+
+    let saveReq = new ClienteSaveRequest(cliente, utenteUpdate);
+
+    return CustomHttpService.post(endpoint, saveReq, {headers: my_headers});
+  }
+
 
   // SALE TIR
   getSaleTirDataTable(authToken: string, filterPost: FilterPayload): Observable<SaleTirListOverview>

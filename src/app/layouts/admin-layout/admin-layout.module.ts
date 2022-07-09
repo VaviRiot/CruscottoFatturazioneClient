@@ -94,6 +94,7 @@ import { DetailCorrispettivoComponent } from 'app/detail_corrispettivo/detail-co
 import { FattureComponent } from 'app/fatture/fatture.component';
 import { DetailFatturaComponent } from 'app/detail-fattura/detail-fattura.component';
 import { ViewLogFatturaComponent } from 'app/modals/view_log_fattura/view-log-fattura.component';
+import { DetailClienteComponent } from 'app/detail-cliente/detail-cliente.component';
 
 @NgModule({
   exports: [
@@ -198,7 +199,8 @@ export class MaterialModule {
     DetailCorrispettivoComponent,
     FattureComponent,
     DetailFatturaComponent,
-    ViewLogFatturaComponent
+    ViewLogFatturaComponent,
+    DetailClienteComponent
   ],
   providers: [
     DatePipe,

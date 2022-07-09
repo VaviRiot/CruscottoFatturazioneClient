@@ -36,8 +36,8 @@ export class DetailFatturaComponent implements OnInit {
 
   public idFatturaCtrl = new FormControl('');
   public codiceClienteCtrl = new FormControl('', [Validators.required, Validators.maxLength(9)]);
-  public denominazioneCtrl = new FormControl('', [Validators.required]);
-  public pIvaCtrl = new FormControl('', [Validators.required, Validators.maxLength(9)]);
+  public denominazioneCtrl = new FormControl('', );
+  public pIvaCtrl = new FormControl('', [ Validators.maxLength(9)]);
   public tipoFatturaCtrl = new FormControl('', [Validators.required]);;
   options: string[] = [];
   filteredOptions: Observable<string[]>;

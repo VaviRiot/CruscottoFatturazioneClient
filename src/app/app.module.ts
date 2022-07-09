@@ -12,7 +12,6 @@ import { LoginComponent } from './login/login.component';
 
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AlertModule } from 'ngx-alerts';
-
 import { registerLocaleData } from '@angular/common';
 import localeIT from '@angular/common/locales/it';
 import { SharedModule } from './shared/shared.module';

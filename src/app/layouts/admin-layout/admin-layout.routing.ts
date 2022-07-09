@@ -29,6 +29,7 @@ import { DetailCorrispettivoComponent } from 'app/detail_corrispettivo/detail-co
 import { Fatture } from 'app/models/Cliente';
 import { DetailFatturaComponent } from 'app/detail-fattura/detail-fattura.component';
 import { FattureComponent } from 'app/fatture/fatture.component';
+import { DetailClienteComponent } from 'app/detail-cliente/detail-cliente.component';
 
 export const AdminLayoutRoutes: Routes = [
   {
@@ -63,6 +64,20 @@ export const AdminLayoutRoutes: Routes = [
     canActivate: [AuthGuardService],
     data: {
       title: 'Dettaglio Fattura',
+      role: [
+        UserRoleEnum.Admin,
+        UserRoleEnum.Approvatore,
+        UserRoleEnum.Base,
+      ]
+    }
+  },
+
+  {
+    path: 'detail_customers/:action/:id',
+    component: DetailClienteComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      title: 'Dettaglio Cliente',
       role: [
         UserRoleEnum.Admin,
         UserRoleEnum.Approvatore,

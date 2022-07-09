@@ -4,3 +4,9 @@ export class DeleteRequest {
         public utenteUpdate: string
     ) { }
 }
+export class DeleteRequestCliente {
+    constructor(
+        public codiceCliente: string,
+        public utenteUpdate: string
+    ) { }
+}
