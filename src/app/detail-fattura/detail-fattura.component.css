@@ -26,6 +26,22 @@ table.mat-table.custom input {
     border: none;
 }
 
+button.btn.btn-info.pull-right.inoltra {
+    background: orange;
+    border-color: orange;
+}
+
+button.btn.btn-info.pull-right.approva {
+    background: green;
+    border-color: green;
+}
+
+
+button.btn.btn-info.pull-right.rifiuta {
+    background: red;
+    border-color: red;
+}
+
 
 table {
     border-collapse: collapse;

@@ -28,7 +28,7 @@ export class DetailFatturaComponent implements OnInit {
   public buttonTitle: string = "Aggiorna Corrispettivo";
   public isEdit: boolean = false;
   public cliente = new Cliente(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-  public fattura = new Fattura(null, null, null, null, this.cliente, null, 'In Compilazione', null, null, null, null, null, null, null);
+  public fattura = new Fattura(null, null, null, null, this.cliente, null, '', null, null, null, null, null, null, null);
   public userLogged;
 
   private mySubscription: Subscription;
@@ -52,7 +52,8 @@ export class DetailFatturaComponent implements OnInit {
   itemForm: FormGroup;
   indexSelected = 0;
   searchCtrl = new FormControl();
-
+  isApproved = false;
+  disabledField: boolean;
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -81,6 +82,9 @@ export class DetailFatturaComponent implements OnInit {
   async initialRequest() {
     this.common.sendUpdate("showSpinner");
     this.userLogged = this.authService.getUser();
+    if (this.userLogged.ruoloUtente.name == 'Approvatore') {
+      this.isApproved = true;
+    }
     this.action = this.route.snapshot.paramMap.get('action');
     this.id = +this.route.snapshot.paramMap.get('id');
     this.addForm.addControl('rows', this.rows);
@@ -91,13 +95,19 @@ export class DetailFatturaComponent implements OnInit {
     if (this.action == "create") {
       this.isEdit = true;
       this.buttonTitle = "Crea Fattura";
+      this.disabledField = this.disabledFieldValue();
     }
     else if (this.action == "edit") {
       this.isEdit = true;
       await this.getFatturaById();
+      this.disabledField = this.disabledFieldValue();
+
     }
     else {
       this.isEdit = false;
+      await this.getFatturaById();
+      this.disabledField = this.disabledFieldValue();
+
     }
     this.common.sendUpdate("hideSpinner");
   }
@@ -132,6 +142,19 @@ export class DetailFatturaComponent implements OnInit {
     let authToken: string = this.authService.getAuthToken();
     await this.fattureService.getFatturaById(authToken, this.id).toPromise().then(res => {
       this.fattura = res as Fattura;
+      this.tipoFatturaCtrl.setValue(this.fattura.tipologiaFattura);
+      this.fattura.listaDettaglioFattura.forEach(el => {
+        let element = this.fb.group({
+          codiceArticolo: new FormControl(el.codiceArticolo, Validators.required),
+          descrizioneArticolo: new FormControl(el.descrizioneArticolo, Validators.required),
+          codiceCorrispettivo: new FormControl(el.descrizioneCorrispettivo, Validators.required),
+          importo: new FormControl(this.currencyPipe.transform(el.importo, 'EUR'), Validators.required),
+          note: new FormControl(el.note, Validators.required),
+          create_user: this.userLogged.createUser
+        });
+
+        this.rows.push(element);
+      });
     },
       error => {
         this.common.sendUpdate("showAlertDanger", error.message);
@@ -172,13 +195,38 @@ export class DetailFatturaComponent implements OnInit {
                 el.patchValue({ codiceCorrispettivo: idCorrispettivo.codiceCorrispettivo });
               }
             });
+
+            array.value.forEach(element => {
+              element.importo = element.importo.replace('.', '');
+              element.importo = element.importo.replace(',', '.');
+              element.importo = element.importo.replace('€', '');
+              element.importo = parseFloat(element.importo);
+            });
+
             this.fattura.importo = 0.0;
             this.fattura.listaDettaglioFattura = array.value;
             this.fattura.dataFattura = moment().toDate();
             this.fattura.societa = this.userLogged.selectedSocieta;
             this.fattura.statoFattura = '';
-            this.saveSubscription = this.fattureService.saveFattura(authToken, this.fattura, this.userLogged.name).subscribe((res: boolean) => {
+            this.saveSubscription = this.fattureService.saveFattura(authToken, this.fattura, this.userLogged.name).subscribe((res: Fattura) => {
               if (res) {
+                this.fattura = res;
+                this.tipoFatturaCtrl.setValue(this.fattura.tipologiaFattura);
+                this.rows.clear();
+                setTimeout(() => {
+                  this.fattura.listaDettaglioFattura.forEach(el => {
+                    let element = this.fb.group({
+                      codiceArticolo: new FormControl(el.codiceArticolo, Validators.required),
+                      descrizioneArticolo: new FormControl(el.descrizioneArticolo, Validators.required),
+                      codiceCorrispettivo: new FormControl(el.descrizioneCorrispettivo, Validators.required),
+                      importo: new FormControl(this.currencyPipe.transform(el.importo, 'EUR'), Validators.required),
+                      note: new FormControl(el.note, Validators.required),
+                      create_user: this.userLogged.createUser
+                    });
+                    this.rows.push(element);
+                  });
+                }, 200);
+
                 //console.log(res);
                 this.common.sendUpdate("showAlertInfo", "Fattura salvata correttamente!");
 
@@ -224,15 +272,15 @@ export class DetailFatturaComponent implements OnInit {
     let authToken: string = this.authService.getAuthToken();
     let value = this.articoliList.filter(x => x.codiceArticolo == event.source.value)[0];
     let array = this.addForm.get('rows') as FormArray;
-    let findIndex = array.controls.findIndex(x => x.value.codiceArticolo == event.source.value && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo);
+    let findIndex = array.controls.findIndex(x => x.value.codiceArticolo == event.source.value && (x.value.codiceCorrispettivo && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo));
     if (findIndex >= 0) {
       this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Combinazione è già esistente");
-      array.controls[index].patchValue({ codiceArticolo: null, codiceCorrispettivo: null })
+      array.controls[index].patchValue({ codiceArticolo: "", codiceCorrispettivo: "", descrizioneArticolo: "" })
     } else {
       this.articoloService.getArticoloById(authToken, value?.id).subscribe(res => {
         let result = res as Articoli;
         let array = this.addForm.get('rows') as FormArray;
-        array.controls[index].patchValue({ 'descrizioneArticolo': result.descrizione })
+        array.controls[index].patchValue({ 'descrizioneArticolo': result.descrizione, 'codiceArticolo': result.codiceArticolo })
       })
     }
   }
@@ -273,12 +321,13 @@ export class DetailFatturaComponent implements OnInit {
       startWith(''),
       map(value => this._filterArticoli(value || '')),
     );
-    this.filteredOptionsCorrispettivi = this.addForm.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterCorrispettivi(value || '')),
-    );
+    setTimeout(() => {
+      this.filteredOptionsCorrispettivi = this.addForm.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterCorrispettivi(value || '')),
+      );
+    }, 200);
     this.updateTable();
-
   }
 
   updateTable() {
@@ -322,20 +371,22 @@ export class DetailFatturaComponent implements OnInit {
 
   getCheckCorrispettivo(event: any, index) {
     let array = this.addForm.get('rows') as FormArray;
-    let findIndex = array.controls.findIndex(x => x.value.codiceCorrispettivo == event.source.value && x.value.codiceArticolo == array.controls[index].value.codiceArticolo);
+    let findIndex = array.controls.findIndex(x => x.value.codiceCorrispettivo == event.source.value && (x.value.codiceArticolo && x.value.codiceArticolo == array.controls[index].value.codiceArticolo));
     if (findIndex >= 0) {
       this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
-      array.controls[index].patchValue({ codiceArticolo: null, codiceCorrispettivo: null, descrizioneArticolo: null })
+      array.controls[index].patchValue({ codiceArticolo: "", codiceCorrispettivo: "", descrizioneArticolo: "" })
+    } else {
+      array.controls[index].patchValue({ codiceCorrispettivo: event.source.value })
     }
   }
 
   createItemFormGroup(): FormGroup {
     return this.fb.group({
-      codiceArticolo: "",
-      descrizioneArticolo: null,
-      codiceCorrispettivo: null,
-      importo: "",
-      note: null,
+      codiceArticolo: new FormControl('', Validators.required),
+      descrizioneArticolo: new FormControl('', Validators.required),
+      codiceCorrispettivo: new FormControl('', Validators.required),
+      importo: new FormControl('', Validators.required),
+      note: new FormControl('', Validators.required),
       create_user: this.userLogged.createUser
     });
   }
@@ -355,17 +406,126 @@ export class DetailFatturaComponent implements OnInit {
     let total = 0.0;
     let totalString = '';
     for (var i in array.controls) {
-      if (array.controls[i].value.importo != '') {
-        var value = array.controls[i].value.importo;
-        value = value.replace('.', '');
-        value = value.replace(',', '.');
-        value = value.replace('€', '');
-        value = parseFloat(value);
-        total += value
+      if (array.controls[i].value.importo != '' && array.controls[i].value.importo) {
+        var value = array.controls[i].value.importo.toString();
+        if (value) {
+          value = value.replace('.', '');
+          value = value.replace(',', '.');
+          value = value.replace('€', '');
+          value = parseFloat(value);
+          total += value
+        }
       }
     }
     totalString = total ? this.currencyPipe.transform(total, 'EUR') : '';
 
     return totalString;
   }
+
+
+  disabledFieldValue() {
+    if (this.action == 'create' || (this.fattura.statoFattura == '' || this.fattura.statoFattura == 'R' || this.fattura.statoFattura == 'G')) {
+      return false;
+    } else if (this.isApproved) {
+      return true;
+    } 
+    return true;
+  }
+
+  getFattureState(state) {
+    switch (state) {
+      case 'V':
+        return 'Validata';
+      case 'R':
+        return 'Rifiutata';
+      case 'D':
+        return 'Da Approvare';
+      case 'C':
+        return 'Contabilizzata';
+      case 'G':
+        return 'Rifiutata da SAP';
+      case 'S':
+        return 'Validata da SAP';
+      default:
+        return 'In Compilazione';
+    }
+  }
+
+  inoltraFattura() {
+    this.common.sendUpdate("showSpinner");
+    let authToken: string = this.authService.getAuthToken();
+
+    this.fattureService.inoltraFattura(authToken, this.fattura.id, this.userLogged.name).subscribe(res => {
+      if (res) {
+        this.common.sendUpdate("showAlertInfo", "Fattura inoltrata correttamente!");
+        this.common.sendUpdate("hideSpinner");
+        this.common.redirectToUrl('/fatture');
+
+      }
+      else {
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", "Impossibile inoltrare la fattura al momento.");
+      }
+    },
+      error => {
+        // console.log("getTopSummary");
+        // console.log(error);
+
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", error.message);
+      });
+  }
+
+
+  rifiutaFattura() {
+    this.common.sendUpdate("showSpinner");
+    let authToken: string = this.authService.getAuthToken();
+
+    this.fattureService.rifiutaFattura(authToken, this.fattura.id, this.userLogged.name).subscribe(res => {
+      if (res) {
+        this.common.sendUpdate("showAlertInfo", "Fattura rifiutata correttamente!");
+        this.common.sendUpdate("hideSpinner");
+        this.common.redirectToUrl('/fatture');
+
+      }
+      else {
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", "Impossibile rifiutare la fattura al momento.");
+      }
+    },
+      error => {
+        // console.log("getTopSummary");
+        // console.log(error);
+
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", error.message);
+      });
+  }
+
+
+  validaFattura() {
+    this.common.sendUpdate("showSpinner");
+    let authToken: string = this.authService.getAuthToken();
+
+    this.fattureService.validaFattura(authToken, this.fattura.id, this.userLogged.name).subscribe(res => {
+      if (res) {
+        this.common.sendUpdate("showAlertInfo", "Fattura approvata correttamente!");
+        this.common.sendUpdate("hideSpinner");
+        this.common.redirectToUrl('/fatture');
+
+      }
+      else {
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", "Impossibile approvare la fattura al momento.");
+      }
+    },
+      error => {
+        // console.log("getTopSummary");
+        // console.log(error);
+
+        this.common.sendUpdate("hideSpinner");
+        this.common.sendUpdate("showAlertDanger", error.message);
+      });
+  }
+
 }

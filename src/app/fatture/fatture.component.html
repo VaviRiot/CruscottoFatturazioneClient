@@ -9,7 +9,7 @@
                             <p class="date-subtitle">al {{todayDate}}</p>
 
                         </h4>
-                        <a href="javascript:;" [routerLink]="['/detail_fatture', 'create', -1]" class="new-user-toggle">
+                        <a *ngIf="userLogged.ruoloUtente.name === 'Base'" href="javascript:;" [routerLink]="['/detail_fatture', 'create', -1]" class="new-user-toggle">
                             <span class="fa fa-plus-circle"></span>
                         </a>
                     </div>

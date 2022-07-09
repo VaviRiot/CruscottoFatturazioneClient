@@ -5,7 +5,8 @@
                 <div class="card">
                     <div class="card-header card-header-info">
                         <h4 class="card-title">Dettaglio Fattura: {{userLogged.selectedSocieta}}</h4>
-                        <p class="card-category"> Stato: <span style="font-weight: bold;">{{fattura.statoFattura}}
+                        <p class="card-category"> Stato: <span
+                                style="font-weight: bold;">{{getFattureState(fattura.statoFattura)}}
                             </span></p>
                     </div>
                     <div class="card-body">
@@ -25,7 +26,8 @@
                                         <input type="text" [formControl]="codiceClienteCtrl" matInput
                                             placeholder="Codice Cliente" type="text"
                                             [(ngModel)]="fattura.cliente.codiceCliente"
-                                            (focusout)="getClientById($event)" [matAutocomplete]="auto">
+                                            (focusout)="getClientById($event)" [matAutocomplete]="auto"
+                                            [readonly]="disabledField">
                                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                                                 {{option}}
@@ -63,7 +65,8 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <mat-label> Tipologia di Fattura</mat-label>
-                                        <mat-select [(value)]="fattura.tipologiaFattura">
+                                        <mat-select [formControl]="tipoFatturaCtrl" [(value)]="fattura.tipologiaFattura"
+                                            [disabled]="disabledField">
                                             <mat-option value="FA">
                                                 FA - Fattura
                                             </mat-option>
@@ -88,7 +91,7 @@
                     <div class="card-header card-header-info list">
                         <h4 class="card-title">Lista Dettaglio Fattura</h4>
 
-                        <div class="new-user-toggle">
+                        <div class="new-user-toggle" *ngIf="fattura.statoFattura == '' && !isApproved">
                             <span (click)="onAddRow()" class="fa fa-plus-circle"></span>
                         </div>
                     </div>
@@ -114,7 +117,8 @@
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceArticolo')" matInput
-                                                type="text" [matAutocomplete]="auto" (click)="indexSelected = index">
+                                                type="text" [matAutocomplete]="auto" (click)="indexSelected = index"
+                                                [readonly]="disabledField">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
                                                     [value]="option"
@@ -131,7 +135,8 @@
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceCorrispettivo')" matInput
-                                                type="text" [matAutocomplete]="corr" (click)="indexSelected = index">
+                                                type="text" [matAutocomplete]="corr" (click)="indexSelected = index"
+                                                [readonly]="disabledField">
                                             <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsCorrispettivi | async"
                                                     [value]="option"
@@ -144,14 +149,14 @@
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" (blur)="transformAmount($event, index)"
-                                                [formControl]="row.get('importo')" matInput>
+                                                [formControl]="row.get('importo')" matInput [readonly]="disabledField">
                                         </mat-form-field>
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <input [formControl]="row.get('note')">
+                                        <input [formControl]="row.get('note')" [readonly]="disabledField">
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <i class="fa fa-trash" style="cursor:pointer" (click)="onRemoveRow(index)">
+                                        <i class="fa fa-trash" style="cursor:pointer" *ngIf="fattura.statoFattura == '' && !isApproved" (click)="onRemoveRow(index)">
                                         </i>
                                     </td>
                                 </tr>
@@ -171,8 +176,24 @@
                     </div>
 
                 </div>
-                <button *ngIf="isEdit" mat-raised-button type="submit" class="btn btn-info pull-right"
-                    (click)="salvaFattura()">Salva Fattura</button>
+
+                <button *ngIf="userLogged.ruoloUtente.name === 'Approvatore' " mat-raised-button type="submit"
+                    class="btn btn-info pull-right approva" [disabled]="fattura.statoFattura != 'D'"
+                    (click)="validaFattura()">Approva</button>
+                <button *ngIf="userLogged.ruoloUtente.name === 'Approvatore' " mat-raised-button type="submit"
+                    class="btn btn-info pull-right rifiuta" (click)="rifiutaFattura()"
+                    [disabled]="fattura.statoFattura != 'D'">Rifiuta</button>
+
+                <button *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base'" mat-raised-button type="submit"
+                    class="btn btn-info pull-right inoltra"
+                    [disabled]="!idFatturaCtrl.value || fattura.statoFattura != ''" (click)="inoltraFattura()">
+                    Inoltra Fattura</button>
+                <button *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base'" mat-raised-button type="submit"
+                    class="btn btn-info pull-right" (click)="salvaFattura()"
+                    [disabled]="!rows.valid || !codiceClienteCtrl.valid || !tipoFatturaCtrl.valid || (fattura.statoFattura != '' && fattura.statoFattura != 'R' && fattura.statoFattura != 'G' )">Salva
+                    Fattura</button>
+
+
             </div>
         </div>
     </div>
