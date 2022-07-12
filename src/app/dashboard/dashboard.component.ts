@@ -257,7 +257,6 @@ export class DashboardComponent implements OnInit {
 
     this.myTopSubscription = this.dashService.getTopSummary(authToken, this.defIdRole, this.defIsAdmin, this.defAdminView, this.defSelectedBusiness, this.userLogged.selectedSocieta).subscribe(res => {
       this.topSummary = res as DashboardTopSummary;
-
     },
       error => {
         // console.log("getTopSummary");
@@ -325,7 +324,8 @@ export class DashboardComponent implements OnInit {
         labels: labelsArray,
         series: [
           seriesX
-        ]
+        ],
+        
       };
 
       if (this.dashClientiGaranziaScadenza.lastDate) {

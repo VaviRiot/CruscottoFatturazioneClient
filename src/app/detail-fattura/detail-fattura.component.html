@@ -118,7 +118,7 @@
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceArticolo')" matInput
                                                 type="text" [matAutocomplete]="auto" (click)="indexSelected = index"
-                                                [readonly]="disabledField">
+                                                [readonly]="disabledField" (blur)="checkCodiceArticolo(index)">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
                                                     [value]="option"
@@ -130,13 +130,13 @@
 
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <input [formControl]="row.get('descrizioneArticolo')">
+                                        <input [formControl]="row.get('descrizioneArticolo')" readonly>
                                     </td>
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceCorrispettivo')" matInput
                                                 type="text" [matAutocomplete]="corr" (click)="indexSelected = index"
-                                                [readonly]="disabledField">
+                                                [readonly]="disabledField" (focusout)="checkCorrispettivo(index)">
                                             <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsCorrispettivi | async"
                                                     [value]="option"
@@ -156,7 +156,9 @@
                                         <input [formControl]="row.get('note')" [readonly]="disabledField">
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <i class="fa fa-trash" style="cursor:pointer" *ngIf="fattura.statoFattura == '' && !isApproved" (click)="onRemoveRow(index)">
+                                        <i class="fa fa-trash" style="cursor:pointer"
+                                            *ngIf="fattura.statoFattura == '' && !isApproved"
+                                            (click)="onRemoveRow(index)">
                                         </i>
                                     </td>
                                 </tr>

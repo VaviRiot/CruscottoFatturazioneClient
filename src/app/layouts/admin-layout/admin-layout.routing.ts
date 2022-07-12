@@ -4,14 +4,12 @@ import { DetailUserComponent } from '../../detail_user/detail_user.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
 import { DetailProspectComponent } from '../../detail_prospect/detail_prospect.component';
 import { AuthGuardService } from '../../shared/Service/AuthGuard/auth-guard.service';
 import { UserRoleEnum } from '../../models/Enum/UserRoleEnum';
 import { UsersComponent } from '../../users/users.component';
 import { RolesComponent } from '../../roles/roles.component';
 import { DetailRoleComponent } from '../../detail_role/detail_role.component';
-import { DetailNotificationComponent } from 'app/detail_notification/detail_notification.component';
 import { NotificationsComponent } from 'app/notifications/notifications.component';
 import { CustomersComponent } from 'app/customers/customers.component';
 import { TimelineComponent } from 'app/components/timeline/timeline.component';
@@ -19,14 +17,11 @@ import { RoleWorkflowstepComponent } from 'app/role_workflowstep/role_workflowst
 import { DetailRoleWorkflowstepComponent } from 'app/detail_role_workflowstep/detail_role_workflowstep.component';
 import { RoleVocimenuComponent } from 'app/role_vocimenu/role_vocimenu.component';
 import { DetailRoleVocimenuComponent } from 'app/detail_role_vocimenu/detail_role_vocimenu.component';
-import { ScadenzeGaranzieComponent } from 'app/scadenze_garanzie/scadenze_garanzie.component';
-import { DetailScadenzeGaranzieComponent } from 'app/detail_scadenze_garanzie/detail_scadenze_garanzie.component';
 import { ChangePasswordComponent } from 'app/change_password/change_password.component';
 import { ArticoliComponent } from 'app/articoli/articoli.component';
 import { DetailArticoloComponent } from 'app/detail_articolo/detail-articolo.component';
 import { CorrispettiviComponent } from 'app/corrispettivi/corrispettivi.component';
 import { DetailCorrispettivoComponent } from 'app/detail_corrispettivo/detail-corrispettivo.component';
-import { Fatture } from 'app/models/Cliente';
 import { DetailFatturaComponent } from 'app/detail-fattura/detail-fattura.component';
 import { FattureComponent } from 'app/fatture/fatture.component';
 import { DetailClienteComponent } from 'app/detail-cliente/detail-cliente.component';
@@ -289,7 +284,6 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: 'scadenze_garanzie',
-    component: ScadenzeGaranzieComponent,
     canActivate: [AuthGuardService],
     data: {
       title: 'Lista Scadenze Garanzie',
@@ -302,7 +296,6 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: 'detail_scadenze_garanzie/:action/:id',
-    component: DetailScadenzeGaranzieComponent,
     canActivate: [AuthGuardService],
     data: {
       title: 'Dettaglio Scadenze Garanzie',
@@ -328,7 +321,6 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: 'detail_notification/:action/:id',
-    component: DetailNotificationComponent,
     canActivate: [AuthGuardService],
     data: {
       title: 'Dettaglio Notifica',
@@ -345,6 +337,5 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'table-list', component: TableListComponent },
   { path: 'typography', component: TypographyComponent },
   { path: 'icons', component: IconsComponent },
-  { path: 'maps', component: MapsComponent }
 
 ];

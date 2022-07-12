@@ -36,8 +36,8 @@ export class DetailFatturaComponent implements OnInit {
 
   public idFatturaCtrl = new FormControl('');
   public codiceClienteCtrl = new FormControl('', [Validators.required, Validators.maxLength(9)]);
-  public denominazioneCtrl = new FormControl('', );
-  public pIvaCtrl = new FormControl('', [ Validators.maxLength(9)]);
+  public denominazioneCtrl = new FormControl('',);
+  public pIvaCtrl = new FormControl('', [Validators.maxLength(9)]);
   public tipoFatturaCtrl = new FormControl('', [Validators.required]);;
   options: string[] = [];
   filteredOptions: Observable<string[]>;
@@ -272,9 +272,9 @@ export class DetailFatturaComponent implements OnInit {
     let authToken: string = this.authService.getAuthToken();
     let value = this.articoliList.filter(x => x.codiceArticolo == event.source.value)[0];
     let array = this.addForm.get('rows') as FormArray;
-    let findIndex = array.controls.findIndex(x => x.value.codiceArticolo == event.source.value && (x.value.codiceCorrispettivo && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo));
+    let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceArticolo == event.source.value && (x.value.codiceCorrispettivo && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo));
     if (findIndex >= 0) {
-      this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Combinazione è già esistente");
+      this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
       array.controls[index].patchValue({ codiceArticolo: "", codiceCorrispettivo: "", descrizioneArticolo: "" })
     } else {
       this.articoloService.getArticoloById(authToken, value?.id).subscribe(res => {
@@ -371,7 +371,7 @@ export class DetailFatturaComponent implements OnInit {
 
   getCheckCorrispettivo(event: any, index) {
     let array = this.addForm.get('rows') as FormArray;
-    let findIndex = array.controls.findIndex(x => x.value.codiceCorrispettivo == event.source.value && (x.value.codiceArticolo && x.value.codiceArticolo == array.controls[index].value.codiceArticolo));
+    let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceCorrispettivo == event.source.value && (x.value.codiceArticolo && x.value.codiceArticolo == array.controls[index].value.codiceArticolo));
     if (findIndex >= 0) {
       this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
       array.controls[index].patchValue({ codiceArticolo: "", codiceCorrispettivo: "", descrizioneArticolo: "" })
@@ -428,7 +428,7 @@ export class DetailFatturaComponent implements OnInit {
       return false;
     } else if (this.isApproved) {
       return true;
-    } 
+    }
     return true;
   }
 
@@ -526,6 +526,24 @@ export class DetailFatturaComponent implements OnInit {
         this.common.sendUpdate("hideSpinner");
         this.common.sendUpdate("showAlertDanger", error.message);
       });
+  }
+
+
+  checkCodiceArticolo(index) {
+    let value = this.formArr;
+    let findIndex = this.articoliListString.findIndex(x => x == value[index].value.codiceArticolo);
+    if (findIndex < 0) {
+      value[index].patchValue({ codiceArticolo: '' });
+    }
+  }
+
+
+  checkCorrispettivo(index) {
+    let value = this.formArr;
+    let findIndex = this.corrispettiviListString.findIndex(x => x == value[index].value.codiceCorrispettivo);
+    if (findIndex < 0) {
+      value[index].patchValue({ codiceCorrispettivo: '' });
+    }
   }
 
 }

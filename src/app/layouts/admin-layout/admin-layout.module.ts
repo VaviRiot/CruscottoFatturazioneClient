@@ -4,10 +4,7 @@ import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { dashboard_garanzieComponent } from '../../dashboard_garanzie/dashboard_garanzie.component';
 import { DetailProspectComponent } from '../../detail_prospect/detail_prospect.component';
-import { InsolutiComponent } from '../../insoluti/insoluti.component';
-import { DetailInsolutiComponent } from '../../detail_insoluti/detail_insoluti.component';
 import { DetailUserComponent } from '../../detail_user/detail_user.component';
 import { DetailRoleComponent } from '../../detail_role/detail_role.component';
 import { ProspectComponent } from '../../prospect/prospect.component';
@@ -15,15 +12,11 @@ import { RoleWorkflowstepComponent } from '../../role_workflowstep/role_workflow
 import { DetailRoleWorkflowstepComponent } from '../../detail_role_workflowstep/detail_role_workflowstep.component';
 import { RoleVocimenuComponent } from '../../role_vocimenu/role_vocimenu.component';
 import { DetailRoleVocimenuComponent } from '../../detail_role_vocimenu/detail_role_vocimenu.component';
-import { ScadenzeGaranzieComponent } from '../../scadenze_garanzie/scadenze_garanzie.component';
-import { DetailScadenzeGaranzieComponent } from '../../detail_scadenze_garanzie/detail_scadenze_garanzie.component';
 import { ChangePasswordComponent } from '../../change_password/change_password.component';
 
-import { DetailNotificationComponent } from '../../detail_notification/detail_notification.component';
 import { WorkflowsComponent } from '../../workflows/workflows.component';
 import { DetailWorkflowComponent } from '../../detail_workflow/detail_workflow.component';
 import { TypologicalsComponent } from '../../typologicals/typologicals.component';
-import { DetailTypologicalComponent } from '../../detail_typological/detail_typological.component';
 import { UsersComponent } from '../../users/users.component';
 import { RolesComponent } from '../../roles/roles.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
@@ -33,7 +26,6 @@ import { TimelineComponent } from '../../components/timeline/timeline.component'
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -154,31 +146,26 @@ export class MaterialModule {
 
     // BrowserAnimationsModule,
     MglTimelineModule,
-    PipesModule///Nicolò mura => tutti i componenti dichiarati avranno accesso a tutto il modulo material    
+    PipesModule
   ],
   declarations: [
     DashboardComponent,
-    dashboard_garanzieComponent,
     DetailUserComponent,
     DetailRoleComponent,
     TableListComponent,
     TypographyComponent,
     IconsComponent,
-    MapsComponent,
     UpgradeComponent,
     DetailProspectComponent,
-    InsolutiComponent,
-    DetailInsolutiComponent,
     DocumentUploadComponent,
     ViewPdfComponent,
     ViewMessageComponent,
     ViewMailComponent,
     ViewSaleTirComponent,
-    DetailNotificationComponent,
+
     WorkflowsComponent,
     DetailWorkflowComponent,
     TypologicalsComponent,
-    DetailTypologicalComponent,
     UsersComponent,
     ProspectComponent,
     RolesComponent,
@@ -190,8 +177,6 @@ export class MaterialModule {
     DetailRoleWorkflowstepComponent,
     RoleVocimenuComponent,
     DetailRoleVocimenuComponent,
-    ScadenzeGaranzieComponent,
-    DetailScadenzeGaranzieComponent,
     ChangePasswordComponent,
     ArticoliComponent,
     DetailArticoloComponent,
