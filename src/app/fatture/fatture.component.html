@@ -9,7 +9,9 @@
                             <p class="date-subtitle">al {{todayDate}}</p>
 
                         </h4>
-                        <a *ngIf="userLogged.ruoloUtente.name === 'Base'" href="javascript:;" [routerLink]="['/detail_fatture', 'create', -1]" class="new-user-toggle">
+                        <a *ngIf="userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin' "
+                            href="javascript:;" [routerLink]="['/detail_fatture', 'create', -1]"
+                            class="new-user-toggle">
                             <span class="fa fa-plus-circle"></span>
                         </a>
                     </div>
@@ -44,6 +46,12 @@
                                 [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
                                 [visibleIndex]="2"
                                 [cssClass]="hasFilter('cliente.codiceFiscale') == true ? 'cell-highlight' : ''">
+                            </dxi-column>
+
+                            <dxi-column dataField="cliente.partitaIva" caption="Partita Iva" alignment="center"
+                                [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
+                                [visibleIndex]="2"
+                                [cssClass]="hasFilter('cliente.partitaIva') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
                             <dxi-column dataField="cliente.ragioneSociale" caption="Denominazione" alignment="center"
@@ -94,13 +102,21 @@
                                 <div *dxTemplate="let row of 'tool'" class="app-comandi" style="text-align: center;">
                                     <a href="javascript:;" *ngIf="editFattura(row.data.statoFattura)"
                                         [routerLink]="['/detail_fatture', 'edit', row.data.id]">
-                                        <span class="fa fa-pencil"></span>
+                                        <span *ngIf="userLogged.ruoloUtente.name != 'Approvatore' "
+                                            class="fa fa-pencil"></span>
+                             
+                                    </a>
+
+                                    <a href="javascript:;" *ngIf="userLogged.ruoloUtente.name == 'Approvatore'"
+                                        [routerLink]="['/detail_fatture', 'edit', row.data.id]">
+
+                                        <span class="fa fa-check"></span>
                                     </a>
 
                                     <a href="javascript:;" [routerLink]="['/detail_fatture', 'view', row.data.id]">
                                         <span class="fa fa-binoculars"></span>
                                     </a>
-                                    <a href="javascript:;" >
+                                    <a href="javascript:;">
                                         <span (click)="openLogFattura(row.data.id)" class="fa fa-history"></span>
                                     </a>
                                 </div>

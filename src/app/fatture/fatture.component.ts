@@ -36,31 +36,31 @@ export class FattureComponent implements OnInit {
   public validToListFilter: any = [
     {
       text: 'Rifiutata',
-      value: ['statoFattura', '=', 'R'],
+      value: ['statoFattura', 'in', 'R'],
     },
     {
       text: 'Rigettata da SAP',
-      value: ['statoFattura', '=', 'G'],
+      value: ['statoFattura', 'in', 'G'],
     },
     {
       text: 'Da approvare',
-      value: ['statoFattura', '=', 'D'],
+      value: ['statoFattura', 'in', 'D'],
     },
     {
       text: 'Contabilizzata',
-      value: ['statoFattura', '=', 'c'],
+      value: ['statoFattura', 'in', 'c'],
     },
     {
       text: 'In compilazione',
-      value: ['statoFattura', '=', ''],
+      value: ['statoFattura', 'in', ''],
     },
     {
       text: 'Validata',
-      value: ['statoFattura', '=', 'V'],
+      value: ['statoFattura', 'in', 'V'],
     },
     {
       text: 'Validata da SAP',
-      value: ['statoFattura', '=', 'V'],
+      value: ['statoFattura', 'in', 'V'],
     }
 
   ];
@@ -74,7 +74,7 @@ export class FattureComponent implements OnInit {
   listFilters: Array<Array<string>> = [
     ['codiceCliente', 'lke'],
     ['codiceFiscale', 'lke'],
-    ['pIva', 'lke'],
+    ['partitaIva', 'lke'],
     ['denominazione', 'lke'],
     ['tipo', 'lke'],
     ['importo', 'lke'],
@@ -142,10 +142,12 @@ export class FattureComponent implements OnInit {
           Helper.makeAdditionalsFilters(loadOptions, this.dateFilters),
           sorts);
 
+        this.dataGrid.noDataText = this.userLogged.ruoloUtente.name == 'Approvatore' ? ' Non sono presenti fatture da approvare' : 'Non sono presenti fatture';
+
         // console.log(filterPost);
 
         return this.fattureService
-          .getFattureDataTable(authToken, filterPost)
+          .getFattureDataTable(authToken, filterPost, this.userLogged.selectedSocieta)
           .toPromise()
           .then((res) => {
             res.lines.forEach(fattura => {
@@ -293,20 +295,18 @@ export class FattureComponent implements OnInit {
   }
 
   editFattura(state) {
-    if (this.userLogged.ruoloUtente.name != 'Admin') {
-      switch (state) {
-        case 'Rifiutata':
-        case 'G':
-          return true
-        case 'compilazione':
-          return true;
-        case 'G':
-          return true;
-        default:
-          return false
-      }
+    switch (state) {
+      case 'Rifiutata':
+      case 'G':
+        return true
+      case 'compilazione':
+        return true;
+      case 'G':
+        return true;
+      default:
+        return false
     }
-    return false;
+
   }
 
   openLogFattura(idFattura): void {

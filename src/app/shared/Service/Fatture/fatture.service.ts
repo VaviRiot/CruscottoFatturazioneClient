@@ -17,8 +17,8 @@ export class FattureService {
 
   constructor() { }
 
-  getFattureDataTable(authToken: string, filterPost: FilterPayload): Observable<FatturaListOverview> {
-    const endpoint = environment.serverUrl + "fattura/getFattureDataTable";
+  getFattureDataTable(authToken: string, filterPost: FilterPayload, societa): Observable<FatturaListOverview> {
+    const endpoint = environment.serverUrl + "fattura/getFattureDataTable?codiceSocieta=" + societa;
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
       .append('Content-Type', 'application/json')
       .append('Accept', 'application/json');
@@ -82,6 +82,15 @@ export class FattureService {
 
   getListClienti(authToken: string, societa: number) {
     const endpoint = environment.serverUrl + "cliente/getClientiList?codiceSocieta=" + societa;
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'application/json');
+
+    return CustomHttpService.get(endpoint,  my_headers );
+  }
+
+  getClienti(authToken: string, societa: number) {
+    const endpoint = environment.serverUrl + "cliente/getClienti?codiceSocieta=" + societa;
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
       .append('Content-Type', 'application/json')
       .append('Accept', 'application/json');

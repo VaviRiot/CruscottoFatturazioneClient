@@ -4,6 +4,7 @@ h4.card-title {
 
 .card [class*=card-header-] .card-title+.card-category {
     color: white;
+    font-size: 18px;
 }
 
 .card-header.card-header-info .new-user-toggle {
@@ -21,6 +22,16 @@ table.mat-table.custom {
     width: 100%;
 }
 
+table .mat-form-field-invalid {
+    border-bottom: 1px solid red;
+    color: red;
+}
+
+
+.mat-error {
+    display: block;
+    padding-top: 14px;
+}
 
 table.mat-table.custom input {
     border: none;
@@ -42,6 +53,10 @@ button.btn.btn-info.pull-right.rifiuta {
     border-color: red;
 }
 
+button.btn.btn-info.pull-right.rifiuta.mat-button-disabled, button.btn.btn-info.pull-right.approva.mat-button-disabled {
+    opacity: 0.3;
+}
+
 
 table {
     border-collapse: collapse;
@@ -51,7 +66,7 @@ table {
   td, th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 16px 10px;
     font-weight: bold;
     font-size: 14px;
   }
@@ -65,4 +80,5 @@ table {
 mat-form-field.mat-form-field.search {
     width: 30%;
     margin-bottom: 1em;
+    margin-left: auto;
 }

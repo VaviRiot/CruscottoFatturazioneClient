@@ -25,17 +25,17 @@
                                     <mat-form-field class="example-full-width">
                                         <input type="text" [formControl]="codiceClienteCtrl" matInput
                                             placeholder="Codice Cliente" type="text"
-                                            [(ngModel)]="fattura.cliente.codiceCliente"
-                                            (focusout)="getClientById($event)" [matAutocomplete]="auto"
-                                            [readonly]="disabledField">
+                                            [(ngModel)]="fattura.cliente.codiceCliente" [matAutocomplete]="auto"
+                                            [readonly]="disabledField"
+                                            (focusout)="getClientById($event, 'codiceCliente')">
                                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                            <mat-option
+                                                *ngFor="let option of filteredOptions | async; let index = index;"
+                                                [value]="option">
                                                 {{option}}
                                             </mat-option>
                                         </mat-autocomplete>
                                     </mat-form-field>
-
-
                                 </div>
                             </div>
 
@@ -44,7 +44,17 @@
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="denominazioneCtrl" matInput placeholder="Denominazione"
                                             type="text" id="denominazione" name="denominazione"
-                                            [(ngModel)]="fattura.cliente.ragioneSociale" readonly>
+                                            [(ngModel)]="fattura.cliente.ragioneSociale"
+                                            [matAutocomplete]="denominazione"
+                                            (focusout)="getClientById($event, 'ragioneSociale')"
+                                            [readonly]="disabledField">
+                                        <mat-autocomplete autoActiveFirstOption #denominazione="matAutocomplete">
+                                            <mat-option
+                                                *ngFor="let option of filteredOptionsDenominazione | async; let index = index;"
+                                                [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-autocomplete>
                                         <!-- <mat-error *ngIf="codiceCorrispettivoCtrl.invalid">
                                             {{getCodiceCorispettivoErrorMessage()}}</mat-error> -->
                                     </mat-form-field>
@@ -52,7 +62,15 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="pIvaCtrl" matInput placeholder="P.IVA" type="text"
-                                            [(ngModel)]="fattura.cliente.partitaIva" readonly>
+                                            [(ngModel)]="fattura.cliente.partitaIva" [matAutocomplete]="piva"
+                                            [readonly]="disabledField" (focusout)="getClientById($event, 'partitaIva')">
+                                        <mat-autocomplete autoActiveFirstOption #piva="matAutocomplete">
+                                            <mat-option
+                                                *ngFor="let option of filteredOptionsPiva | async; let index = index;"
+                                                [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-autocomplete>
                                         <!-- <mat-error *ngIf="descrizioneCtrl.invalid">{{getDescrizioneErrorMessage()}}
                                         </mat-error> -->
                                     </mat-form-field>
@@ -118,25 +136,42 @@
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceArticolo')" matInput
                                                 type="text" [matAutocomplete]="auto" (click)="indexSelected = index"
-                                                [readonly]="disabledField" (blur)="checkCodiceArticolo(index)">
+                                                [readonly]="disabledField" (focusout)="checkCodiceArticolo(index)">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
                                                     [value]="option"
-                                                    (onSelectionChange)="getArticoloById($event, index)">
+                                                    (onSelectionChange)="getArticoloById($event, index, 'codiceArticolo')">
                                                     {{option}}
                                                 </mat-option>
                                             </mat-autocomplete>
+                                            <mat-error *ngIf="row.get('codiceArticolo').invalid">
+                                                {{getValidFromErrorMessage(row.get('codiceArticolo'))}}</mat-error>
                                         </mat-form-field>
 
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <input [formControl]="row.get('descrizioneArticolo')" readonly>
+                                        <mat-form-field class="example-full-width" appearance="none">
+                                            <input [formControl]="row.get('descrizioneArticolo')" matInput type="text"
+                                                [matAutocomplete]="descrizione" (click)="indexSelected = index"
+                                                [readonly]="disabledField" (focusout)="checkCodiceArticolo(index)">
+                                            <mat-autocomplete autoActiveFirstOption #descrizione="matAutocomplete">
+                                                <mat-option
+                                                    *ngFor="let option of filteredOptionsDescrizioneArticoli | async"
+                                                    [value]="option"
+                                                    (onSelectionChange)="getArticoloById($event, index, 'descrizione')">
+                                                    {{option}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                            <mat-error *ngIf="row.get('descrizioneArticolo').invalid">
+                                                {{getValidFromErrorMessage(row.get('descrizioneArticolo'))}}</mat-error>
+                                        </mat-form-field>
                                     </td>
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceCorrispettivo')" matInput
                                                 type="text" [matAutocomplete]="corr" (click)="indexSelected = index"
-                                                [readonly]="disabledField" (focusout)="checkCorrispettivo(index)">
+                                                [readonly]="disabledField"
+                                                (focusout)="checkCorrispettivo(index, $event)">
                                             <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsCorrispettivi | async"
                                                     [value]="option"
@@ -144,20 +179,31 @@
                                                     {{option}}
                                                 </mat-option>
                                             </mat-autocomplete>
+                                            <mat-error *ngIf="row.get('codiceCorrispettivo').invalid">
+                                                {{getValidFromErrorMessage(row.get('codiceCorrispettivo')) }}
+                                            </mat-error>
                                         </mat-form-field>
                                     </td>
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" (blur)="transformAmount($event, index)"
                                                 [formControl]="row.get('importo')" matInput [readonly]="disabledField">
+                                            <mat-error *ngIf="row.get('importo').invalid">
+                                                {{getValidFromErrorMessage(row.get('importo'))}}</mat-error>
+                                        </mat-form-field>
+
+                                    </td>
+                                    <td class="mat-cell mat-column-position">
+                                        <mat-form-field class="example-full-width" appearance="none">
+
+                                            <input matInput [formControl]="row.get('note')" [readonly]="disabledField">
+                                            <mat-error *ngIf="row.get('note').invalid">
+                                                {{getValidFromErrorMessage(row.get('note'))}}</mat-error>
                                         </mat-form-field>
                                     </td>
                                     <td class="mat-cell mat-column-position">
-                                        <input [formControl]="row.get('note')" [readonly]="disabledField">
-                                    </td>
-                                    <td class="mat-cell mat-column-position">
                                         <i class="fa fa-trash" style="cursor:pointer"
-                                            *ngIf="fattura.statoFattura == '' && !isApproved"
+                                            *ngIf="fattura.statoFattura == '' && !isApproved && action != 'view'"
                                             (click)="onRemoveRow(index)">
                                         </i>
                                     </td>
@@ -179,20 +225,27 @@
 
                 </div>
 
-                <button *ngIf="userLogged.ruoloUtente.name === 'Approvatore' " mat-raised-button type="submit"
-                    class="btn btn-info pull-right approva" [disabled]="fattura.statoFattura != 'D'"
+                <button
+                    *ngIf="isEdit && userLogged.ruoloUtente.name === 'Approvatore' || userLogged.ruoloUtente.name === 'Admin' "
+                    mat-raised-button type="
+                    submit" class="btn btn-info pull-right approva" [disabled]="fattura.statoFattura != 'D'"
                     (click)="validaFattura()">Approva</button>
-                <button *ngIf="userLogged.ruoloUtente.name === 'Approvatore' " mat-raised-button type="submit"
-                    class="btn btn-info pull-right rifiuta" (click)="rifiutaFattura()"
+                <button
+                    *ngIf="isEdit && userLogged.ruoloUtente.name === 'Approvatore' || userLogged.ruoloUtente.name === 'Admin' "
+                    mat-raised-button type="
+                    submit" class="btn btn-info pull-right rifiuta" (click)="rifiutaFattura()"
                     [disabled]="fattura.statoFattura != 'D'">Rifiuta</button>
 
-                <button *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base'" mat-raised-button type="submit"
-                    class="btn btn-info pull-right inoltra"
+                <button
+                    *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin' "
+                    mat-raised-button type="submit" class="btn btn-info pull-right inoltra"
                     [disabled]="!idFatturaCtrl.value || fattura.statoFattura != ''" (click)="inoltraFattura()">
                     Inoltra Fattura</button>
-                <button *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base'" mat-raised-button type="submit"
-                    class="btn btn-info pull-right" (click)="salvaFattura()"
-                    [disabled]="!rows.valid || !codiceClienteCtrl.valid || !tipoFatturaCtrl.valid || (fattura.statoFattura != '' && fattura.statoFattura != 'R' && fattura.statoFattura != 'G' )">Salva
+                <button
+                    *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin'  "
+                    mat-raised-button type="
+                    submit" class="btn btn-info pull-right" (click)="salvaFattura()"
+                    [disabled]="!rows.valid || rows.length <= 0 || !codiceClienteCtrl.valid || !tipoFatturaCtrl.valid || (fattura.statoFattura != '' && fattura.statoFattura != 'R' && fattura.statoFattura != 'G' )">Salva
                     Fattura</button>
 
 
