@@ -274,4 +274,13 @@ export class CustomersComponent implements OnInit {
     });
   }
 
+
+  enabledDelete(element) {
+    if (element.partitaIva || element.ragioneSociale) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }

@@ -68,7 +68,7 @@
                                 <div *dxTemplate="let row of 'tool'" class="app-comandi" style="text-align: center;">
 
 
-                                    <a href="javascript:;" (click)="deleteCliente(row.data.codiceCliente)">
+                                    <a href="javascript:;" *ngIf="enabledDelete(row.data)" (click)="deleteCliente(row.data.codiceCliente)">
                                         <span class="fa fa-trash-o"></span>
                                     </a>
                                     <a href="javascript:;"

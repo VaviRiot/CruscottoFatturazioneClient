@@ -93,7 +93,7 @@ export class DetailArticoloComponent implements OnInit {
           if (this.validToCtrl.valid == true) {
             let authToken: string = this.authService.getAuthToken();
             this.saveSubscription = this.articoliService.saveArticolo(authToken, this.articolo, this.userLogged.name).subscribe((res: boolean) => {
-              if (res) {
+              if (!res['errore']) {
                 //console.log(res);
                 this.common.sendUpdate("showAlertInfo", "Articolo salvato correttamente!");
 
@@ -101,8 +101,9 @@ export class DetailArticoloComponent implements OnInit {
                 this.common.sendUpdate("hideSpinner");
               }
               else {
+                this.codiceArticoloCtrl.setErrors({ codice: true })
                 this.common.sendUpdate("hideSpinner");
-                this.common.sendUpdate("showAlertDanger", "Impossibile salvare l'articolo al momento.");
+                this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare l'articolo al momento." : res['errore']);
               }
             },
               error => {
@@ -144,6 +145,8 @@ export class DetailArticoloComponent implements OnInit {
     }
     else if (this.descrizioneCtrl.hasError('required')) {
       return "Descrizione non valida";
+    } else if (this.codiceArticoloCtrl.hasError('codice')) {
+      return "Codice cliente già esistente";
     }
     else {
       return "";

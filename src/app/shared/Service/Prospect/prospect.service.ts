@@ -107,6 +107,22 @@ export class ProspectService {
   }
 
 
+  updateCliente(authToken: string, cliente: Cliente, utenteUpdate: string)
+  {
+    const endpoint = environment.serverUrl + "cliente/updateCliente";
+
+    let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
+                      .append('Content-Type', 'application/json')
+                      .append('Accept', 'application/json');
+
+    let saveReq = new ClienteSaveRequest(cliente, utenteUpdate);
+
+    return CustomHttpService.put(endpoint, saveReq, {headers: my_headers});
+  }
+
+
+
+
   // SALE TIR
   getSaleTirDataTable(authToken: string, filterPost: FilterPayload): Observable<SaleTirListOverview>
   {

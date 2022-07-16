@@ -69,7 +69,7 @@
                                     <a href="javascript:;" [routerLink]="['/detail_corrispettivi', 'edit', row.data.id]">
                                         <span class="fa fa-pencil"></span>
                                     </a>
-                                    <a href="javascript:;" (click)="deleteCorr(row.data.id)">
+                                    <a href="javascript:;" *ngIf="corrispettivoAttivo(row.data.dataValidita)" (click)="deleteCorr(row.data.id)">
                                         <span class="fa fa-trash"></span>
                                     </a>
                                     <a href="javascript:;" [routerLink]="['/detail_corrispettivi', 'view', row.data.id]">

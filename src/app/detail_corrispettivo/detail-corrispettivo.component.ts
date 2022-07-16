@@ -93,7 +93,7 @@ export class DetailCorrispettivoComponent implements OnInit {
           if (this.validToCtrl.valid == true) {
             let authToken: string = this.authService.getAuthToken();
             this.saveSubscription = this.corrispettivoService.saveCorrispettivo(authToken, this.corrispettivo, this.userLogged.name).subscribe((res: boolean) => {
-              if (res) {
+              if (!res['errore']) {
                 //console.log(res);
                 this.common.sendUpdate("showAlertInfo", "Corrispettivo salvato correttamente!");
 
@@ -102,7 +102,7 @@ export class DetailCorrispettivoComponent implements OnInit {
               }
               else {
                 this.common.sendUpdate("hideSpinner");
-                this.common.sendUpdate("showAlertDanger", "Impossibile salvare il corrispettivo al momento.");
+                this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare il corrispettivo al momento." : res['errore']);
               }
             },
               error => {
@@ -132,6 +132,8 @@ export class DetailCorrispettivoComponent implements OnInit {
     }
     else if (this.codiceCorrispettivoCtrl.hasError('required')) {
       return "Codice non valido";
+    } else if (this.codiceCorrispettivoCtrl.hasError('codice')) {
+      return "Codice corrispettivo già esistente";
     }
     else {
       return "";

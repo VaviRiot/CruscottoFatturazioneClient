@@ -60,6 +60,49 @@ export abstract class CustomHttpService {
       
   }
 
+  public static put<T>(endpoint: string, object: any, headers?: any): Observable<T>{
+    const http = InjectorInstance.get<HttpClient>(HttpClient);
+
+    // console.log(headers);
+
+    return from(this.verifyToken<VerifyTokenResponse>()).pipe(switchMap((value) => 
+    {
+      // console.log(value);
+      if(value.isValid == true)
+        {
+          if(value.isRefresh == true)
+          {
+              sessionStorage.setItem(environment.keyToken, value.token);
+
+              headers = new HttpHeaders(
+                  {
+                    'Authorization': 'Bearer ' + value.token,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                  }
+              );
+          }
+      }
+      else
+      {
+        // redirect to login            
+        this.logout();
+
+        headers = new HttpHeaders(
+              {
+              'Authorization': 'Bearer ',
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+              }
+          );
+      }
+
+      return http.put<T>(endpoint, object, {headers: headers.headers});
+    }));
+    
+}
+
+
   public static blobWitHeaders(endpoint: string, object: any, headers?: any): Observable<ArrayBuffer>
   {
     const http = InjectorInstance.get<HttpClient>(HttpClient);

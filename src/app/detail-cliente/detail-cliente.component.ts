@@ -86,13 +86,35 @@ export class DetailClienteComponent implements OnInit {
 
   salvaCliente() {
     this.common.sendUpdate("showSpinner");
+    let authToken: string = this.authService.getAuthToken();
     if (this.codiceClienteCtrl.valid == true) {
-      let authToken: string = this.authService.getAuthToken();
-      //MOCK
-
       this.cliente.societa = this.userLogged.selectedSocieta;
-      this.cliente.codiceCliente = parseInt(this.cliente.codiceCliente);
-      this.saveSubscription = this.prospectService.saveCliente(authToken, this.cliente, this.userLogged.name).subscribe((res: boolean) => {
+      this.cliente.codiceCliente = this.cliente.codiceCliente;
+      if (this.action == "create") {
+        this.saveSubscription = this.prospectService.saveCliente(authToken, this.cliente, this.userLogged.name).subscribe((res) => {
+          if (!res['errore']) {
+            //console.log(res);
+            this.common.sendUpdate("showAlertInfo", "Cliente salvato correttamente!");
+
+            this.common.redirectToUrl('/customers');
+            this.common.sendUpdate("hideSpinner");
+          }
+          else {
+            this.codiceClienteCtrl.setErrors({ codice: true })
+            this.common.sendUpdate("hideSpinner");
+            this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare il cliente al momento." : res['errore']);
+          }
+        },
+          error => {
+            // console.log("getTopSummary");
+            // console.log(error);
+
+            this.common.sendUpdate("hideSpinner");
+            this.common.sendUpdate("showAlertDanger", error.message);
+          });
+      }
+    } else {
+      this.saveSubscription = this.prospectService.updateCliente(authToken, this.cliente, this.userLogged.name).subscribe((res: boolean) => {
         if (res) {
           //console.log(res);
           this.common.sendUpdate("showAlertInfo", "Cliente salvato correttamente!");
@@ -106,14 +128,10 @@ export class DetailClienteComponent implements OnInit {
         }
       },
         error => {
-          // console.log("getTopSummary");
-          // console.log(error);
-
           this.common.sendUpdate("hideSpinner");
           this.common.sendUpdate("showAlertDanger", error.message);
         });
     }
-
     this.common.sendUpdate("hideSpinner");
   }
 
@@ -128,12 +146,13 @@ export class DetailClienteComponent implements OnInit {
     }
     else if (this.codiceClienteCtrl.hasError('required')) {
       return "Codice non valido";
+    } else if (this.codiceClienteCtrl.hasError('codice')) {
+      return "Codice cliente già esistente";
     }
     else {
       return "";
     }
   }
-
 
 
   ngOnDestroy(): void {

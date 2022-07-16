@@ -67,7 +67,7 @@
                                     <a href="javascript:;" [routerLink]="['/detail_articoli', 'edit', row.data.id]">
                                         <span class="fa fa-pencil"></span>
                                     </a>
-                                    <a href="javascript:;" (click)="deleteArticolo(row.data.id)">
+                                    <a href="javascript:;"  *ngIf="societaAttiva(row.data.dataValidita)" (click)="deleteArticolo(row.data.id)">
                                         <span class="fa fa-trash"></span>
                                     </a>
                                     <a href="javascript:;" [routerLink]="['/detail_articoli', 'view', row.data.id]">
