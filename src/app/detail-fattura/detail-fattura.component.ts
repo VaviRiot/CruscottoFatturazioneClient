@@ -29,7 +29,7 @@ export class DetailFatturaComponent implements OnInit {
 
   public buttonTitle: string = "Aggiorna Corrispettivo";
   public isEdit: boolean = false;
-  public cliente = new Cliente(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+  public cliente = new Cliente('', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
   public fattura = new Fattura(null, null, null, null, this.cliente, null, '', null, null, null, null, null, null, null);
   public userLogged;
 
@@ -334,13 +334,13 @@ export class DetailFatturaComponent implements OnInit {
 
 
   private _filterDenominazione(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.optionsDenominazione.filter(option => option.toLowerCase().includes(filterValue));
+    const filterValue = value ? value.toLowerCase() : value;
+    return this.optionsDenominazione.filter(option => option ? option.toLowerCase().includes(filterValue) : '');
   }
 
   private _filterPiva(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.optionsPiva.filter(option => option.toLowerCase().includes(filterValue));
+    const filterValue = value ? value.toLowerCase() : value;
+    return this.optionsPiva.filter(option => option ? option.toLowerCase().includes(filterValue) : '');
   }
 
   private _filterArticoli(object: any): string[] {
