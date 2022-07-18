@@ -172,10 +172,10 @@
                                                 type="text" [matAutocomplete]="corr" (click)="indexSelected = index"
                                                 [readonly]="disabledField"
                                                 (focusout)="checkCorrispettivo(index, $event)">
-                                            <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete">
+                                            <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete"
+                                                (optionSelected)="getCheckCorrispettivo($event, index) ">
                                                 <mat-option *ngFor="let option of filteredOptionsCorrispettivi | async"
-                                                    [value]="option"
-                                                    (onSelectionChange)="getCheckCorrispettivo($event, index)">
+                                                    [value]="option">
                                                     {{option}}
                                                 </mat-option>
                                             </mat-autocomplete>

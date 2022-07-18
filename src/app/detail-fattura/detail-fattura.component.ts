@@ -455,7 +455,7 @@ export class DetailFatturaComponent implements OnInit {
 
   getCheckCorrispettivo(event: any, index) {
     let array = this.addForm.get('rows') as any;
-    let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceCorrispettivo == event.source.value && (x.value.codiceArticolo && x.value.codiceArticolo == array.controls[index].value.codiceArticolo));
+    let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceCorrispettivo == event.option.value && (x.value.codiceArticolo && x.value.codiceArticolo == array.controls[index].value.codiceArticolo));
     if (findIndex >= 0) {
       this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
       array.controls[index].controls.codiceArticolo.setErrors({ 'corrispettivo': true });
@@ -466,7 +466,7 @@ export class DetailFatturaComponent implements OnInit {
       }, 222);
 
     } else {
-      array.controls[index].patchValue({ codiceCorrispettivo: event.source.value })
+      // array.controls[index].controls.codiceCorrispettivo.setValue(array.controls[index].value.codiceCorrispettivo);
     }
   }
 
