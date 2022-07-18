@@ -279,6 +279,33 @@ export class DetailFatturaComponent implements OnInit {
   }
 
 
+
+  clearFilterDescription(index) {
+    this.indexSelected = index;
+    this.filteredOptionsDescrizioneArticoli = this.addForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticoliDescrizione(value || '')),
+    );
+  }
+
+
+  clearFilterCodiceArticolo(index) {
+    this.indexSelected = index;
+    this.filteredOptionsArticoli = this.addForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticoli(value || '')),
+    );
+  }
+
+
+  clearFilterCorrispettivo(index) {
+    this.indexSelected = index;
+    this.filteredOptionsCorrispettivi = this.addForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterCorrispettivi(value || '')),
+    );
+  }
+
   getClientById(event: any, type: any) {
     let authToken: string = this.authService.getAuthToken();
     let findIndex = this.listClient.findIndex(x => x[type] == event.target.value)

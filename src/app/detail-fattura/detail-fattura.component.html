@@ -132,11 +132,11 @@
 
                             <tbody>
                                 <tr class="mat-row" *ngFor="let row of formArr$ | async;let index = index;">
-                                    <td class="mat-cell mat-column-position">
+                                    <td class="mat-cell mat-column-position" (click)="clearFilterCodiceArticolo(index)">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceArticolo')" matInput
-                                                type="text" [matAutocomplete]="auto" (click)="indexSelected = index"
-                                                [readonly]="disabledField" (focusout)="checkCodiceArticolo(index)">
+                                                type="text" [matAutocomplete]="auto" [readonly]="disabledField"
+                                                (focusout)="checkCodiceArticolo(index)">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
                                                     [value]="option"
@@ -149,11 +149,11 @@
                                         </mat-form-field>
 
                                     </td>
-                                    <td class="mat-cell mat-column-position">
+                                    <td class="mat-cell mat-column-position" (click)="clearFilterDescription(index)">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input [formControl]="row.get('descrizioneArticolo')" matInput type="text"
-                                                [matAutocomplete]="descrizione" (click)="indexSelected = index"
-                                                [readonly]="disabledField" (focusout)="checkCodiceArticolo(index)">
+                                                [matAutocomplete]="descrizione" [readonly]="disabledField"
+                                                (focusout)="checkCodiceArticolo(index)">
                                             <mat-autocomplete autoActiveFirstOption #descrizione="matAutocomplete">
                                                 <mat-option
                                                     *ngFor="let option of filteredOptionsDescrizioneArticoli | async"
@@ -166,11 +166,10 @@
                                                 {{getValidFromErrorMessage(row.get('descrizioneArticolo'))}}</mat-error>
                                         </mat-form-field>
                                     </td>
-                                    <td class="mat-cell mat-column-position">
+                                    <td class="mat-cell mat-column-position" (click)="clearFilterCorrispettivo(index)">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceCorrispettivo')" matInput
-                                                type="text" [matAutocomplete]="corr" (click)="indexSelected = index"
-                                                [readonly]="disabledField"
+                                                type="text" [matAutocomplete]="corr" [readonly]="disabledField"
                                                 (focusout)="checkCorrispettivo(index, $event)">
                                             <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete"
                                                 (optionSelected)="getCheckCorrispettivo($event, index) ">
