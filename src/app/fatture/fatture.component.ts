@@ -48,7 +48,7 @@ export class FattureComponent implements OnInit {
     },
     {
       text: 'Contabilizzata',
-      value: ['statoFattura', 'in', 'c'],
+      value: ['statoFattura', 'in', 'C'],
     },
     {
       text: 'In compilazione',
@@ -60,7 +60,7 @@ export class FattureComponent implements OnInit {
     },
     {
       text: 'Validata da SAP',
-      value: ['statoFattura', 'in', 'V'],
+      value: ['statoFattura', 'in', 'S'],
     }
 
   ];

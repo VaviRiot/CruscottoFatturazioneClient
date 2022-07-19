@@ -27,7 +27,7 @@
                                             placeholder="Codice Cliente" type="text"
                                             [(ngModel)]="fattura.cliente.codiceCliente" [matAutocomplete]="auto"
                                             [readonly]="disabledField"
-                                            (focusout)="getClientById($event, 'codiceCliente')">
+                                            (focusout)="getClientById($event, 'codiceCliente')" (keyup.enter)="getClientById($event, 'codiceCliente')"> 
                                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                             <mat-option
                                                 *ngFor="let option of filteredOptions | async; let index = index;"
@@ -47,7 +47,7 @@
                                             [(ngModel)]="fattura.cliente.ragioneSociale"
                                             [matAutocomplete]="denominazione"
                                             (focusout)="getClientById($event, 'ragioneSociale')"
-                                            [readonly]="disabledField">
+                                            [readonly]="disabledField" (keyup.enter)="getClientById($event, 'ragioneSociale')">
                                         <mat-autocomplete autoActiveFirstOption #denominazione="matAutocomplete">
                                             <mat-option
                                                 *ngFor="let option of filteredOptionsDenominazione | async; let index = index;"
@@ -63,7 +63,7 @@
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="pIvaCtrl" matInput placeholder="P.IVA" type="text"
                                             [(ngModel)]="fattura.cliente.partitaIva" [matAutocomplete]="piva"
-                                            [readonly]="disabledField" (focusout)="getClientById($event, 'partitaIva')">
+                                            [readonly]="disabledField" (focusout)="getClientById($event, 'partitaIva')" (keyup.enter)="getClientById($event, 'partitaIva')">
                                         <mat-autocomplete autoActiveFirstOption #piva="matAutocomplete">
                                             <mat-option
                                                 *ngFor="let option of filteredOptionsPiva | async; let index = index;"
@@ -136,7 +136,7 @@
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceArticolo')" matInput
                                                 type="text" [matAutocomplete]="auto" [readonly]="disabledField"
-                                                (focusout)="checkCodiceArticolo(index)">
+                                                (focusout)="checkCodiceArticolo(index, 'codiceArticolo', $event)">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
                                                     [value]="option"
@@ -153,7 +153,7 @@
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input [formControl]="row.get('descrizioneArticolo')" matInput type="text"
                                                 [matAutocomplete]="descrizione" [readonly]="disabledField"
-                                                (focusout)="checkCodiceArticolo(index)">
+                                                (focusout)="checkCodiceArticolo(index, 'descrizione', $event)">
                                             <mat-autocomplete autoActiveFirstOption #descrizione="matAutocomplete">
                                                 <mat-option
                                                     *ngFor="let option of filteredOptionsDescrizioneArticoli | async"

@@ -12,7 +12,6 @@ import { AuthService } from 'app/shared/Service/AuthService/auth.service';
 import { CommonService } from 'app/shared/Service/Common/common.service';
 import { CorrispettiviService } from 'app/shared/Service/Corrispettivi/corrispettivi.service';
 import { FattureService } from 'app/shared/Service/Fatture/fatture.service';
-import { UserService } from 'app/shared/Service/User/user.service';
 import * as moment from 'moment';
 import { Observable, of, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -234,7 +233,7 @@ export class DetailFatturaComponent implements OnInit {
             this.fattura.societa = this.userLogged.selectedSocieta;
             this.fattura.statoFattura = '';
             this.saveSubscription = this.fattureService.saveFattura(authToken, this.fattura, this.userLogged.name).subscribe((res: Fattura) => {
-              if (res) {
+              if (!res['errore']) {
                 this.fattura = res;
                 this.tipoFatturaCtrl.setValue(this.fattura.tipologiaFattura);
                 this.rows.clear();
@@ -259,7 +258,7 @@ export class DetailFatturaComponent implements OnInit {
               }
               else {
                 this.common.sendUpdate("hideSpinner");
-                this.common.sendUpdate("showAlertDanger", "Impossibile salvare la fattura al momento.");
+                this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare la fattura al momento." : res['errore']);
               }
             },
               error => {
@@ -336,21 +335,44 @@ export class DetailFatturaComponent implements OnInit {
 
   getArticoloById(event: any, index, type) {
     let authToken: string = this.authService.getAuthToken();
-    let value = this.articoliList.filter(x => x[type] == event.source.value)[0];
+    let value = this.articoliList.filter(x => x[type] == (event?.source ? event.source.value : event.target.value))[0];
     let array = this.addForm.get('rows') as any;
-    let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceArticolo == event.source.value && (x.value.codiceCorrispettivo && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo));
-    if (findIndex >= 0) {
-      this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
-      array.controls[index].controls.codiceArticolo.setErrors({ 'corrispettivo': true });
-      array.controls[index].controls.descrizioneArticolo.setErrors({ 'corrispettivo': true });
-      array.controls[index].controls.codiceCorrispettivo.setErrors({ 'corrispettivo': true });
-    } else {
+    if (type == 'descrizione') {
       this.articoloService.getArticoloById(authToken, value?.id).subscribe(res => {
         let result = res as Articoli;
-        let array = this.addForm.get('rows') as FormArray;
+        let array = this.addForm.get('rows') as any;
         array.controls[index].patchValue({ 'descrizioneArticolo': result.descrizione, 'codiceArticolo': result.codiceArticolo })
+        let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceArticolo == (type == 'descrizione' ? array.controls[index].value.codiceArticolo : (event.source ? event.source.value : event.target.value)) && (x.value.codiceCorrispettivo && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo));
+        if (findIndex >= 0) {
+          this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
+          array.controls[index].controls.codiceArticolo.setErrors({ 'corrispettivo': true });
+          array.controls[index].controls.descrizioneArticolo.setErrors({ 'corrispettivo': true });
+          array.controls[index].controls.codiceCorrispettivo.setErrors({ 'corrispettivo': true });
+        } else {
+          array.controls[index].controls.codiceArticolo.setErrors(null);
+          array.controls[index].controls.descrizioneArticolo.setErrors(null);
+          array.controls[index].controls.codiceCorrispettivo.setErrors(null);
+        }
       })
+    } else {
+      let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceArticolo == (event.source ? event.source.value : event.target.value) && (x.value.codiceCorrispettivo && x.value.codiceCorrispettivo == array.controls[index].value.codiceCorrispettivo));
+      if (findIndex >= 0) {
+        this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
+        array.controls[index].controls.codiceArticolo.setErrors({ 'corrispettivo': true });
+        array.controls[index].controls.descrizioneArticolo.setErrors({ 'corrispettivo': true });
+        array.controls[index].controls.codiceCorrispettivo.setErrors({ 'corrispettivo': true });
+      } else {
+        this.articoloService.getArticoloById(authToken, value?.id).subscribe(res => {
+          let result = res as Articoli;
+          let array = this.addForm.get('rows') as any;
+          array.controls[index].patchValue({ 'descrizioneArticolo': result.descrizione, 'codiceArticolo': result.codiceArticolo })
+          array.controls[index].controls.codiceArticolo.setErrors(null);
+          array.controls[index].controls.descrizioneArticolo.setErrors(null);
+          array.controls[index].controls.codiceCorrispettivo.setErrors(null);
+        })
+      }
     }
+
   }
 
   private _filter(value: string): string[] {
@@ -467,7 +489,7 @@ export class DetailFatturaComponent implements OnInit {
     dialogConfig.height = 'fit-content'
     dialogConfig.width = '25rem';
     const modalDialog = this.dialog.open(ConfirmMessageComponent, dialogConfig);
-    modalDialog.componentInstance.messageText = "Sei sicuro di voler eliminare il dettaglio fattura?";
+    modalDialog.componentInstance.messageText = "Sei sicuro di voler eliminare la riga di dettaglio fattura?";
     modalDialog.afterClosed().subscribe(res => {
       if (res == true) {
         this.common.sendUpdate("showSpinner");
@@ -487,13 +509,11 @@ export class DetailFatturaComponent implements OnInit {
       this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
       array.controls[index].controls.codiceArticolo.setErrors({ 'corrispettivo': true });
       array.controls[index].controls.descrizioneArticolo.setErrors({ 'corrispettivo': true });
-      setTimeout(() => {
-        array.controls[index].controls.codiceCorrispettivo.setErrors({ 'corrispettivo': true });
-
-      }, 222);
-
+      array.controls[index].controls.codiceCorrispettivo.setErrors({ 'corrispettivo': true });
     } else {
-      // array.controls[index].controls.codiceCorrispettivo.setValue(array.controls[index].value.codiceCorrispettivo);
+      array.controls[index].controls.codiceArticolo.setErrors(null);
+      array.controls[index].controls.descrizioneArticolo.setErrors(null);
+      array.controls[index].controls.codiceCorrispettivo.setErrors(null);
     }
   }
 
@@ -646,12 +666,14 @@ export class DetailFatturaComponent implements OnInit {
   }
 
 
-  checkCodiceArticolo(index) {
+  checkCodiceArticolo(index, type, event) {
     let value = this.formArr as any;
     let findIndex = this.articoliListString.findIndex(x => x == value[index].value.codiceArticolo);
     if (findIndex < 0) {
       value[index].controls.descrizioneArticolo.setErrors({ 'invalid': true });
       value[index].controls.codiceArticolo.setErrors({ 'invalid': true });
+    } else {
+      this.getArticoloById(event, index, type);
     }
   }
 
