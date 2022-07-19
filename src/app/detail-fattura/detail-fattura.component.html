@@ -27,7 +27,8 @@
                                             placeholder="Codice Cliente" type="text"
                                             [(ngModel)]="fattura.cliente.codiceCliente" [matAutocomplete]="auto"
                                             [readonly]="disabledField"
-                                            (focusout)="getClientById($event, 'codiceCliente')" (keyup.enter)="getClientById($event, 'codiceCliente')"> 
+                                            (focusout)="getClientById($event, 'codiceCliente')"
+                                            (keyup.enter)="getClientById($event, 'codiceCliente')">
                                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                             <mat-option
                                                 *ngFor="let option of filteredOptions | async; let index = index;"
@@ -47,7 +48,8 @@
                                             [(ngModel)]="fattura.cliente.ragioneSociale"
                                             [matAutocomplete]="denominazione"
                                             (focusout)="getClientById($event, 'ragioneSociale')"
-                                            [readonly]="disabledField" (keyup.enter)="getClientById($event, 'ragioneSociale')">
+                                            [readonly]="disabledField"
+                                            (keyup.enter)="getClientById($event, 'ragioneSociale')">
                                         <mat-autocomplete autoActiveFirstOption #denominazione="matAutocomplete">
                                             <mat-option
                                                 *ngFor="let option of filteredOptionsDenominazione | async; let index = index;"
@@ -63,7 +65,8 @@
                                     <mat-form-field class="example-full-width">
                                         <input [formControl]="pIvaCtrl" matInput placeholder="P.IVA" type="text"
                                             [(ngModel)]="fattura.cliente.partitaIva" [matAutocomplete]="piva"
-                                            [readonly]="disabledField" (focusout)="getClientById($event, 'partitaIva')" (keyup.enter)="getClientById($event, 'partitaIva')">
+                                            [readonly]="disabledField" (focusout)="getClientById($event, 'partitaIva')"
+                                            (keyup.enter)="getClientById($event, 'partitaIva')">
                                         <mat-autocomplete autoActiveFirstOption #piva="matAutocomplete">
                                             <mat-option
                                                 *ngFor="let option of filteredOptionsPiva | async; let index = index;"
@@ -134,13 +137,13 @@
                                 <tr class="mat-row" *ngFor="let row of formArr$ | async;let index = index;">
                                     <td class="mat-cell mat-column-position" (click)="clearFilterCodiceArticolo(index)">
                                         <mat-form-field class="example-full-width" appearance="none">
-                                            <input type="text" [formControl]="row.get('codiceArticolo')" matInput
-                                                type="text" [matAutocomplete]="auto" [readonly]="disabledField"
-                                                (focusout)="checkCodiceArticolo(index, 'codiceArticolo', $event)">
+                                            <input #stateInput type="text" [formControl]="row.get('codiceArticolo')"
+                                                matInput type="text" [matAutocomplete]="auto" [readonly]="disabledField"
+                                                 (keyup)="checkCodiceArticolo(index, 'codiceArticolo', $event)">
                                             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                                 <mat-option *ngFor="let option of filteredOptionsArticoli | async"
                                                     [value]="option"
-                                                    (onSelectionChange)="getArticoloById($event, index, 'codiceArticolo')">
+                                                    (onSelectionChange)="getArticoloById($event, index, 'codiceArticolo', stateInput.value)">
                                                     {{option}}
                                                 </mat-option>
                                             </mat-autocomplete>
@@ -151,9 +154,9 @@
                                     </td>
                                     <td class="mat-cell mat-column-position" (click)="clearFilterDescription(index)">
                                         <mat-form-field class="example-full-width" appearance="none">
-                                            <input [formControl]="row.get('descrizioneArticolo')" matInput type="text"
-                                                [matAutocomplete]="descrizione" [readonly]="disabledField"
-                                                (focusout)="checkCodiceArticolo(index, 'descrizione', $event)">
+                                            <input #stateInput [formControl]="row.get('descrizioneArticolo')" matInput
+                                                type="text" [matAutocomplete]="descrizione" [readonly]="disabledField"
+                                                (keyup)="checkCodiceArticolo(index, 'descrizione', $event)">
                                             <mat-autocomplete autoActiveFirstOption #descrizione="matAutocomplete">
                                                 <mat-option
                                                     *ngFor="let option of filteredOptionsDescrizioneArticoli | async"
@@ -170,7 +173,7 @@
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" [formControl]="row.get('codiceCorrispettivo')" matInput
                                                 type="text" [matAutocomplete]="corr" [readonly]="disabledField"
-                                                (focusout)="checkCorrispettivo(index, $event)">
+                                                (keyup)="checkCorrispettivo(index, $event)">
                                             <mat-autocomplete autoActiveFirstOption #corr="matAutocomplete"
                                                 (optionSelected)="getCheckCorrispettivo($event, index) ">
                                                 <mat-option *ngFor="let option of filteredOptionsCorrispettivi | async"

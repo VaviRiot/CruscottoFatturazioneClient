@@ -215,7 +215,7 @@ export class DetailFatturaComponent implements OnInit {
             let array = this.addForm.get('rows') as FormArray;
             array.controls.forEach(el => {
               let idCorrispettivo = this.corrispettiviList.filter(x => x.descrizione == el.value.codiceCorrispettivo)[0];
-              if (el.value.codiceCorrispettivo == idCorrispettivo.descrizione) {
+              if (idCorrispettivo && el.value.codiceCorrispettivo == idCorrispettivo.descrizione) {
                 el.patchValue({ codiceCorrispettivo: idCorrispettivo.codiceCorrispettivo });
               }
             });
@@ -232,9 +232,9 @@ export class DetailFatturaComponent implements OnInit {
             this.fattura.dataFattura = moment().toDate();
             this.fattura.societa = this.userLogged.selectedSocieta;
             this.fattura.statoFattura = '';
-            this.saveSubscription = this.fattureService.saveFattura(authToken, this.fattura, this.userLogged.name).subscribe((res: Fattura) => {
+            this.saveSubscription = this.fattureService.saveFattura(authToken, this.fattura, this.userLogged.name).subscribe((res: any) => {
               if (!res['errore']) {
-                this.fattura = res;
+                this.fattura = res.fattura;
                 this.tipoFatturaCtrl.setValue(this.fattura.tipologiaFattura);
                 this.rows.clear();
                 setTimeout(() => {
@@ -258,6 +258,14 @@ export class DetailFatturaComponent implements OnInit {
               }
               else {
                 this.common.sendUpdate("hideSpinner");
+                let array = this.addForm.get('rows') as FormArray;
+                array.controls.forEach(el => {
+                  let idCorrispettivo = this.corrispettiviList.filter(x => x.codiceCorrispettivo == el.value.codiceCorrispettivo)[0];
+                  if (idCorrispettivo && el.value.codiceCorrispettivo == idCorrispettivo.codiceCorrispettivo) {
+                    el.patchValue({ codiceCorrispettivo: idCorrispettivo.descrizione });
+                  }
+                });
+
                 this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare la fattura al momento." : res['errore']);
               }
             },
@@ -333,7 +341,8 @@ export class DetailFatturaComponent implements OnInit {
     return (this.addForm.get('rows') as FormArray).controls;
   }
 
-  getArticoloById(event: any, index, type) {
+  getArticoloById(event: any, index, type, selectedValue?) {
+    console.log(selectedValue);
     let authToken: string = this.authService.getAuthToken();
     let value = this.articoliList.filter(x => x[type] == (event?.source ? event.source.value : event.target.value))[0];
     let array = this.addForm.get('rows') as any;
@@ -666,14 +675,19 @@ export class DetailFatturaComponent implements OnInit {
   }
 
 
-  checkCodiceArticolo(index, type, event) {
+  checkCodiceArticolo(index, type, event, selectedValue?) {
     let value = this.formArr as any;
-    let findIndex = this.articoliListString.findIndex(x => x == value[index].value.codiceArticolo);
+    let findIndex;
+    if (type == 'descrizione') {
+      findIndex = this.articoliDecrizioneListString.findIndex(x => x == value[index].value.descrizioneArticolo);
+    } else {
+      findIndex = this.articoliListString.findIndex(x => x == value[index].value.codiceArticolo);
+    }
     if (findIndex < 0) {
       value[index].controls.descrizioneArticolo.setErrors({ 'invalid': true });
       value[index].controls.codiceArticolo.setErrors({ 'invalid': true });
     } else {
-      this.getArticoloById(event, index, type);
+      this.getArticoloById(event, index, type, selectedValue);
     }
   }
 
@@ -684,6 +698,9 @@ export class DetailFatturaComponent implements OnInit {
       let findIndex = this.corrispettiviListString.findIndex(x => x == value[index].value.codiceCorrispettivo);
       if (findIndex < 0) {
         value[index].controls.codiceCorrispettivo.setErrors({ 'invalid': true });
+      } else {
+        value[index].controls.descrizioneArticolo.setErrors(null);
+        value[index].controls.codiceArticolo.setErrors(null);
       }
     }, 500);
 
