@@ -92,8 +92,9 @@
                             </dxi-column>
                             f
                             <dxi-column dataField="importo" caption="Importo" alignment="center"
-                                [allowHeaderFiltering]="false" [allowFiltering]="true" [allowSorting]="true"
-                                [visibleIndex]="6" [cssClass]="hasFilter('importo') == true ? 'cell-highlight' : ''">
+                                [allowHeaderFiltering]="false" [filterOperations]="['=']" [allowFiltering]="true"
+                                [allowSorting]="true" [visibleIndex]="6"
+                                [cssClass]="hasFilter('importo') == true ? 'cell-highlight' : ''">
                             </dxi-column>
 
                             <dxi-column caption="" alignment="center" [allowHeaderFiltering]="false"
@@ -104,7 +105,7 @@
                                         [routerLink]="['/detail_fatture', 'edit', row.data.id]">
                                         <span *ngIf="userLogged.ruoloUtente.name != 'Approvatore' "
                                             class="fa fa-pencil"></span>
-                             
+
                                     </a>
 
                                     <a href="javascript:;" *ngIf="userLogged.ruoloUtente.name == 'Approvatore'"
