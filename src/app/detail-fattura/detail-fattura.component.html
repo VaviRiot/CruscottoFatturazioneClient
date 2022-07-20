@@ -241,7 +241,7 @@
                 <button
                     *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin' "
                     mat-raised-button type="submit" class="btn btn-info pull-right inoltra"
-                    [disabled]="!idFatturaCtrl.value || fattura.statoFattura != ''" (click)="inoltraFattura()">
+                    [disabled]="!rows.valid || !idFatturaCtrl.value || fattura.statoFattura != ''" (click)="inoltraFattura()">
                     Inoltra Fattura</button>
                 <button
                     *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin'  "

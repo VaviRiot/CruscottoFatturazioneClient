@@ -265,7 +265,7 @@ export class DetailFatturaComponent implements OnInit {
                     el.patchValue({ codiceCorrispettivo: idCorrispettivo.descrizione });
                   }
                 });
-
+      
                 this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare la fattura al momento." : res['errore']);
               }
             },
@@ -377,7 +377,7 @@ export class DetailFatturaComponent implements OnInit {
           array.controls[index].patchValue({ 'descrizioneArticolo': result.descrizione, 'codiceArticolo': result.codiceArticolo })
           array.controls[index].controls.codiceArticolo.setErrors(null);
           array.controls[index].controls.descrizioneArticolo.setErrors(null);
-          array.controls[index].controls.codiceCorrispettivo.setErrors(null);
+
         })
       }
     }
@@ -513,7 +513,7 @@ export class DetailFatturaComponent implements OnInit {
 
   getCheckCorrispettivo(event: any, index) {
     let array = this.addForm.get('rows') as any;
-    let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceCorrispettivo == event.option.value && (x.value.codiceArticolo && x.value.codiceArticolo == array.controls[index].value.codiceArticolo));
+    let findIndex = array.controls.findIndex((x, j) => j != index && x.value.codiceCorrispettivo == (event.option ? event.option.value : event.target.value) && (x.value.codiceArticolo && x.value.codiceArticolo == array.controls[index].value.codiceArticolo));
     if (findIndex >= 0) {
       this.common.sendUpdate("showAlertDanger", "La combinazione tra Articolo e Corrispettivo è già esistente");
       array.controls[index].controls.codiceArticolo.setErrors({ 'corrispettivo': true });
@@ -540,6 +540,7 @@ export class DetailFatturaComponent implements OnInit {
   transformAmount(element, index) {
     let array = this.addForm.get('rows') as FormArray;
     let value = array.controls[index].value.importo;
+    value = value.replace('.', '');
     value = value.replace(',', '.');
     value = value.replace('€', '');
     value = parseFloat(value);
@@ -701,8 +702,9 @@ export class DetailFatturaComponent implements OnInit {
       } else {
         value[index].controls.descrizioneArticolo.setErrors(null);
         value[index].controls.codiceArticolo.setErrors(null);
+        this.getCheckCorrispettivo(event,index);
       }
-    }, 500);
+    }, 200);
 
   }
 
