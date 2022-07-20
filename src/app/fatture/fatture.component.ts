@@ -77,7 +77,7 @@ export class FattureComponent implements OnInit {
     ['partitaIva', 'lke'],
     ['denominazione', 'lke'],
     ['tipo', 'lke'],
-    ['importo', 'lke'],
+    ['importo', 'eq'],
 
   ]
 
