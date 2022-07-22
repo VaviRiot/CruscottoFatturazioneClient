@@ -265,7 +265,7 @@ export class DetailFatturaComponent implements OnInit {
                     el.patchValue({ codiceCorrispettivo: idCorrispettivo.descrizione });
                   }
                 });
-      
+
                 this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare la fattura al momento." : res['errore']);
               }
             },
@@ -531,21 +531,27 @@ export class DetailFatturaComponent implements OnInit {
       codiceArticolo: new FormControl('', Validators.required),
       descrizioneArticolo: new FormControl('', Validators.required),
       codiceCorrispettivo: new FormControl('', Validators.required),
-      importo: new FormControl('', Validators.required),
+      importo: new FormControl('', [Validators.required, Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,3})?$')],),
       note: new FormControl('', Validators.required),
       create_user: this.userLogged.createUser
     });
   }
 
   transformAmount(element, index) {
-    let array = this.addForm.get('rows') as FormArray;
+    let array = this.addForm.get('rows') as any;
     let value = array.controls[index].value.importo;
+    value = value.replace('-', '');
     value = value.replace('.', '');
     value = value.replace(',', '.');
     value = value.replace('€', '');
     value = parseFloat(value);
-    array.controls[index].value.importo = this.currencyPipe.transform(value, 'EUR', true);
-    return element.target.value = array.controls[index].value.importo;
+    if (value > 0) {
+      array.controls[index].value.importo = this.currencyPipe.transform(value, 'EUR', true);
+      return element.target.value = array.controls[index].value.importo;
+    } else {
+      array.controls[index].controls.importo.setErrors({ 'import': true })
+    }
+
   }
 
   getSumTotal() {
@@ -556,6 +562,7 @@ export class DetailFatturaComponent implements OnInit {
       if (array.controls[i].value.importo != '' && array.controls[i].value.importo) {
         var value = array.controls[i].value.importo.toString();
         if (value) {
+          value = value.replace('-', '');
           value = value.replace('.', '');
           value = value.replace(',', '.');
           value = value.replace('€', '');
@@ -702,7 +709,7 @@ export class DetailFatturaComponent implements OnInit {
       } else {
         value[index].controls.descrizioneArticolo.setErrors(null);
         value[index].controls.codiceArticolo.setErrors(null);
-        this.getCheckCorrispettivo(event,index);
+        this.getCheckCorrispettivo(event, index);
       }
     }, 200);
 
@@ -714,6 +721,9 @@ export class DetailFatturaComponent implements OnInit {
     }
     if (element.hasError('corrispettivo')) {
       return "La combinazione già esistente";
+    }
+    if (element.hasError('import')) {
+      return "l'importo deve essere maggiore di 0";
     }
     else {
       return "";

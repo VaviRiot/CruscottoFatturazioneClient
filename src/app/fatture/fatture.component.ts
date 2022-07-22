@@ -123,11 +123,13 @@ export class FattureComponent implements OnInit {
         let sorts = new Array<Sort>();
 
         if (loadOptions.sort) {
+
           (loadOptions.sort as any).forEach(element => {
+          
             if (element.selector == 'lastModString') {
               element.selector = 'lastModDate';
             }
-            sorts.push(new Sort(element.selector, element.desc ? 'DESC' : 'ASC'));
+            sorts.push(new Sort(element.selector, element.asc ? 'ASC' : 'DESC'));
           });
         }
 

@@ -40,6 +40,7 @@ table.mat-table.custom input {
 button.btn.btn-info.pull-right.inoltra {
     background: orange;
     border-color: orange;
+    margin-right: 22px;
 }
 
 button.btn.btn-info.pull-right.approva {
@@ -51,7 +52,14 @@ button.btn.btn-info.pull-right.approva {
 button.btn.btn-info.pull-right.rifiuta {
     background: red;
     border-color: red;
+    margin-right: 22px;
+
 }
+
+button.salva {
+    margin-right: 22px !important;
+}
+
 
 button.btn.btn-info.pull-right.rifiuta.mat-button-disabled, button.btn.btn-info.pull-right.approva.mat-button-disabled {
     opacity: 0.3;

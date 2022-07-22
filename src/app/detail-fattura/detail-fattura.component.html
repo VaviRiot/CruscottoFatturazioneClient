@@ -189,7 +189,7 @@
                                     <td class="mat-cell mat-column-position">
                                         <mat-form-field class="example-full-width" appearance="none">
                                             <input type="text" (blur)="transformAmount($event, index)"
-                                                [formControl]="row.get('importo')" matInput [readonly]="disabledField">
+                                                [formControl]="row.get('importo')" min="0" matInput [readonly]="disabledField">
                                             <mat-error *ngIf="row.get('importo').invalid">
                                                 {{getValidFromErrorMessage(row.get('importo'))}}</mat-error>
                                         </mat-form-field>
@@ -230,13 +230,13 @@
                 <button
                     *ngIf="isEdit && userLogged.ruoloUtente.name === 'Approvatore' || userLogged.ruoloUtente.name === 'Admin' "
                     mat-raised-button type="
-                    submit" class="btn btn-info pull-right approva" [disabled]="fattura.statoFattura != 'D'"
+                    submit" class="btn btn-info pull-right approva" [hidden]="fattura.statoFattura != 'D'"
                     (click)="validaFattura()">Approva</button>
                 <button
                     *ngIf="isEdit && userLogged.ruoloUtente.name === 'Approvatore' || userLogged.ruoloUtente.name === 'Admin' "
                     mat-raised-button type="
                     submit" class="btn btn-info pull-right rifiuta" (click)="rifiutaFattura()"
-                    [disabled]="fattura.statoFattura != 'D'">Rifiuta</button>
+                    [hidden]="fattura.statoFattura != 'D'">Rifiuta</button>
 
                 <button
                     *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin' "
@@ -246,7 +246,7 @@
                 <button
                     *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin'  "
                     mat-raised-button type="
-                    submit" class="btn btn-info pull-right" (click)="salvaFattura()"
+                    submit" class="btn btn-info pull-right salva" (click)="salvaFattura()"
                     [disabled]="!rows.valid || rows.length <= 0 || !codiceClienteCtrl.valid || !tipoFatturaCtrl.valid || (fattura.statoFattura != '' && fattura.statoFattura != 'R' && fattura.statoFattura != 'G' )">Salva
                     Fattura</button>
 
