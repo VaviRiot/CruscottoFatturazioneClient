@@ -610,7 +610,7 @@ export class DetailFatturaComponent implements OnInit {
     let authToken: string = this.authService.getAuthToken();
 
     this.fattureService.inoltraFattura(authToken, this.fattura.id, this.userLogged.name).subscribe(res => {
-      if (res) {
+      if (!res['errore']) {
         this.common.sendUpdate("showAlertInfo", "Fattura inoltrata correttamente!");
         this.common.sendUpdate("hideSpinner");
         this.common.redirectToUrl('/fatture');
@@ -618,7 +618,7 @@ export class DetailFatturaComponent implements OnInit {
       }
       else {
         this.common.sendUpdate("hideSpinner");
-        this.common.sendUpdate("showAlertDanger", "Impossibile inoltrare la fattura al momento.");
+        this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile inoltrare la fattura al momento." : res['errore']);
       }
     },
       error => {
@@ -636,7 +636,7 @@ export class DetailFatturaComponent implements OnInit {
     let authToken: string = this.authService.getAuthToken();
 
     this.fattureService.rifiutaFattura(authToken, this.fattura.id, this.userLogged.name).subscribe(res => {
-      if (res) {
+      if (!res['errore']) {
         this.common.sendUpdate("showAlertInfo", "Fattura rifiutata correttamente!");
         this.common.sendUpdate("hideSpinner");
         this.common.redirectToUrl('/fatture');
@@ -644,7 +644,7 @@ export class DetailFatturaComponent implements OnInit {
       }
       else {
         this.common.sendUpdate("hideSpinner");
-        this.common.sendUpdate("showAlertDanger", "Impossibile rifiutare la fattura al momento.");
+        this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile rifiutare la fattura al momento." : res['errore']);
       }
     },
       error => {
@@ -662,7 +662,7 @@ export class DetailFatturaComponent implements OnInit {
     let authToken: string = this.authService.getAuthToken();
 
     this.fattureService.validaFattura(authToken, this.fattura.id, this.userLogged.name).subscribe(res => {
-      if (res) {
+      if (!res['errore']) {
         this.common.sendUpdate("showAlertInfo", "Fattura approvata correttamente!");
         this.common.sendUpdate("hideSpinner");
         this.common.redirectToUrl('/fatture');
@@ -670,7 +670,7 @@ export class DetailFatturaComponent implements OnInit {
       }
       else {
         this.common.sendUpdate("hideSpinner");
-        this.common.sendUpdate("showAlertDanger", "Impossibile approvare la fattura al momento.");
+        this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile validare la fattura al momento." : res['errore']);
       }
     },
       error => {
