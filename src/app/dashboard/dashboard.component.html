@@ -148,6 +148,8 @@
                                     <span *ngSwitchCase="'R'" class="label label-danger">Rifiutata</span>
                                     <span *ngSwitchCase="'D'" class="label label-warning">Da approvare</span>
                                     <span *ngSwitchCase="'V'" class="label label-success">Validata</span>
+                                    <span *ngSwitchCase="'S'" class="label label-warning">Validata da SAP</span>
+                                    <span *ngSwitchCase="'G'" class="label label-success">Rigettata da SAP</span>
                                 </td>
                                 <td>{{item.importo |currency:'EUR':true}}</td>
                        
