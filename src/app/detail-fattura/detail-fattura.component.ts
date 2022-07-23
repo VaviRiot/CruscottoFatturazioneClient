@@ -466,7 +466,7 @@ export class DetailFatturaComponent implements OnInit {
         return of(this.formArr as AbstractControl[]).pipe(
           map((formArr: AbstractControl[]) =>
             formArr.filter((group: AbstractControl) => {
-              return group.get('codiceArticolo').value
+              return group.get('descrizioneArticolo').value
                 .toLowerCase()
                 .includes(val.toLowerCase());
             })

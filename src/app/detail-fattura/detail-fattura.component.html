@@ -239,16 +239,14 @@
                     [hidden]="fattura.statoFattura != 'D'">Rifiuta</button>
 
                 <button
-                    *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin' "
+                    *ngIf=" (isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin') && !(!rows.valid || !idFatturaCtrl.value || fattura.statoFattura != '')"
                     mat-raised-button type="submit" class="btn btn-info pull-right inoltra"
-                    [disabled]="!rows.valid || !idFatturaCtrl.value || fattura.statoFattura != ''" (click)="inoltraFattura()">
+                    (click)="inoltraFattura()">
                     Inoltra Fattura</button>
                 <button
-                    *ngIf="isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin'  "
+                    *ngIf=" (isEdit && userLogged.ruoloUtente.name === 'Base' || userLogged.ruoloUtente.name === 'Admin') && !(!rows.valid || rows.length <= 0 || !codiceClienteCtrl.valid || !tipoFatturaCtrl.valid || (fattura.statoFattura != '' && fattura.statoFattura != 'R' && fattura.statoFattura != 'G' ))"
                     mat-raised-button type="
-                    submit" class="btn btn-info pull-right salva" (click)="salvaFattura()"
-                    [disabled]="!rows.valid || rows.length <= 0 || !codiceClienteCtrl.valid || !tipoFatturaCtrl.valid || (fattura.statoFattura != '' && fattura.statoFattura != 'R' && fattura.statoFattura != 'G' )">Salva
-                    Fattura</button>
+                    submit" class="btn btn-info pull-right salva" (click)="salvaFattura()">Salva Fattura</button>
 
 
             </div>
