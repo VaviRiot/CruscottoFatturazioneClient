@@ -100,7 +100,6 @@ export class DetailClienteComponent implements OnInit {
             this.common.sendUpdate("hideSpinner");
           }
           else {
-            this.codiceClienteCtrl.setErrors({ codice: true })
             this.common.sendUpdate("hideSpinner");
             this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile salvare il cliente al momento." : res['errore']);
           }
