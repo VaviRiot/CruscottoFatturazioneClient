@@ -1,172 +1,179 @@
 <div class="main-content">
-  <div class="container-fluid">
-      <div class="row">
+    <div class="container-fluid">
+        <div class="row">
 
-        <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('inScadGar')">
-            <div class="card card-stats" style="min-height: 11rem;">
-                <div class="card-header card-header-warning card-header-icon" style="min-height: 6rem;">
-                    <div class="card-icon">
-                        <i class="material-icons">content_copy</i>
+            <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('inScadGar')">
+                <div class="card card-stats" style="min-height: 11rem;">
+                    <div class="card-header card-header-warning card-header-icon" style="min-height: 6rem;">
+                        <div class="card-icon">
+                            <i class="material-icons">content_copy</i>
+                        </div>
+                        <p class="card-category">Fatture Emesse</p>
+                        <h3 class="card-title">{{topSummary.fattureEmesse}}</h3>
                     </div>
-                    <p class="card-category">Fatture Emesse</p>
-                    <h3 class="card-title">{{topSummary.fattureEmesse}}</h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">update</i> aggiornato al {{topSummary.dataFattureEmesse | date:'dd/MM/YYYY hh:mm'}}
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">update</i> aggiornato al {{topSummary.dataFattureEmesse |
+                            date:'dd/MM/YYYY hh:mm'}}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-          <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('cleanCust')">
-              <div class="card card-stats" style="min-height: 11rem;">
-                  <div class="card-header card-header-success card-header-icon" style="min-height: 6rem;">
-                      <div class="card-icon">
-                          <i class="material-icons">store</i>
-                      </div>
-                      <p class="card-category">Fatture Convalidate</p>
-                      <h3 class="card-title">{{topSummary.fattureConvalidate}}</h3>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">date_range</i> aggiornato al {{topSummary.dataFattureConvalidate | date:'dd/MM/YYYY hh:mm'}}
-                      </div>
-                  </div>
-              </div>
-          </div>
+            <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('cleanCust')">
+                <div class="card card-stats" style="min-height: 11rem;">
+                    <div class="card-header card-header-success card-header-icon" style="min-height: 6rem;">
+                        <div class="card-icon">
+                            <i class="material-icons">store</i>
+                        </div>
+                        <p class="card-category">Fatture Convalidate</p>
+                        <h3 class="card-title">{{topSummary.fattureConvalidate}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i> aggiornato al {{topSummary.dataFattureConvalidate |
+                            date:'dd/MM/YYYY hh:mm'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-          <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('scadGar')">
-              <div class="card card-stats" style="min-height: 11rem;">
-                  <div class="card-header card-header-danger card-header-icon" style="min-height: 6rem;">
-                      <div class="card-icon">
-                          <i class="material-icons">info</i>
-                      </div>
-                      <p class="card-category">Fatture Rifiutate</p>
-                      <h3 class="card-title">{{topSummary.fattureRifiutate ? topSummary.fattureRifiutate : 0}}</h3>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                        <i class="material-icons">money</i> Totale {{topSummary.importoFattureRifiutate | currency:'EUR':true}}
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('rinGar')">
-              <div class="card card-stats" style="min-height: 11rem;">
-                  <div class="card-header card-header-info card-header-icon" style="min-height: 6rem;">
-                      <div class="card-icon">
+            <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('scadGar')">
+                <div class="card card-stats" style="min-height: 11rem;">
+                    <div class="card-header card-header-danger card-header-icon" style="min-height: 6rem;">
+                        <div class="card-icon">
+                            <i class="material-icons">info</i>
+                        </div>
+                        <p class="card-category">Fatture Rifiutate</p>
+                        <h3 class="card-title">{{topSummary.fattureRifiutate ? topSummary.fattureRifiutate : 0}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            su totale di {{topSummary.totaleFatture ? topSummary.totaleFatture : 0}} fatture
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 topBlockItem" (click)="openPreFilterCustomer('rinGar')">
+                <div class="card card-stats" style="min-height: 11rem;">
+                    <div class="card-header card-header-info card-header-icon" style="min-height: 6rem;">
+                        <div class="card-icon">
                             <i class="material-icons">announcement</i>
-                      </div>
-                      <p class="card-category">Totale importo fatture</p>
-                      <h3 class="card-title">{{topSummary.totaleImportoFatture | currency:'EUR':true }}</h3>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">update</i> aggiornato al {{topSummary.dataImportoFatture | date:'dd/MM/YYYY'}}
-                      </div>
-                  </div>
-              </div>              
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-success">
-                      <div class="ct-chart" id="dailySalesChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">Fatture emmese ultima settimana</h4>
-                      <p class="card-category">
-                          <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{dashNuoviProspect.incrementoSettimana}}% </span> incremento questa settimana</p> 
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> aggiornato {{nuoviProspectDate | timeAgo}}
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-warning">
-                      <div class="ct-chart" id="websiteViewsChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">Fatture emmese andamento annuo </h4>
-                      <p class="card-category">andamento annuo</p>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> aggiornato {{clientiAttiviDate | timeAgo}}
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-danger">
-                      <div class="ct-chart" id="completedTasksChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">Fatture rifiutate</h4>
-                      <p class="card-category">ultimo mese</p>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> aggiornato {{garanzieScadenzaDate | timeAgo}}
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Fatture</h4>
-                    <p class="card-category">Top 10 fatture al  {{ todayDate | date : 'dd MMMM yyyy' | titlecase }}</p>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                        <thead class="text-warning">
-                            <th>ID Fattura</th>
-                            <th>Cliente</th>
-                            <th>P.IVA</th>
-                            <th>Stato</th>
-                            <th>Importo</th>
-
-                            <th></th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of listBottomProspect">
-                                <td>{{item.id}}</td>
-                                <td>{{item.cliente.ragioneSociale ? item.cliente.ragioneSociale : item.cliente.codiceCliente}}</td>
-                                <td>{{item.cliente.partitaIva ? item.cliente.partitaIva : 'N/D'}}</td>
-                                <td [ngSwitch]="item.statoFattura">
-                                    <span *ngSwitchCase="''" class="label label-default">In Compilazione</span>
-                                    <span *ngSwitchCase="'R'" class="label label-danger">Rifiutata</span>
-                                    <span *ngSwitchCase="'D'" class="label label-warning">Da approvare</span>
-                                    <span *ngSwitchCase="'V'" class="label label-success">Validata</span>
-                                    <span *ngSwitchCase="'S'" class="label label-warning">Validata da SAP</span>
-                                    <span *ngSwitchCase="'G'" class="label label-success">Rigettata da SAP</span>
-                                </td>
-                                <td>{{item.importo |currency:'EUR':true}}</td>
-                       
-                                <td class="app-comandi" style="text-align: center;">
-                                    <a href="javascript:;" [routerLink]="['/detail_fatture', 'edit', item.id]">
-                                        <span class="fa fa-pencil"></span>
-                                    </a>
-                                    <a href="javascript:;" [routerLink]="['/detail_fatture', 'view', item.id]">
-                                        <span class="fa fa-binoculars"></span>
-                                    </a>
-                                </td>
-                          </tr>
-                        </tbody>
-                    </table>
+                        </div>
+                        <p class="card-category">Totale importo fatture</p>
+                        <h3 class="card-title">{{topSummary.totaleImportoFatture | currency:'EUR':true }}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">update</i> aggiornato al {{topSummary.dataImportoFatture |
+                            date:'dd/MM/YYYY'}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
-  </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-success">
+                        <div class="ct-chart" id="dailySalesChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Fatture emmese ultima settimana</h4>
+                        <p class="card-category">
+                            <span class="text-success"><i class="fa fa-long-arrow-up"></i>
+                                {{dashNuoviProspect.incrementoSettimana}}% </span> incremento questa settimana
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> aggiornato {{nuoviProspectDate | timeAgo}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-warning">
+                        <div class="ct-chart" id="websiteViewsChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Fatture emmese andamento annuo </h4>
+                        <p class="card-category">andamento annuo</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> aggiornato {{clientiAttiviDate | timeAgo}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-danger">
+                        <div class="ct-chart" id="completedTasksChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Fatture rifiutate</h4>
+                        <p class="card-category">ultimo mese</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> aggiornato {{garanzieScadenzaDate | timeAgo}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Fatture</h4>
+                        <p class="card-category">Top 10 fatture al {{ todayDate | date : 'dd MMMM yyyy' | titlecase }}
+                        </p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <th>ID Fattura</th>
+                                <th>Cliente</th>
+                                <th>P.IVA</th>
+                                <th>Stato</th>
+                                <th>Importo</th>
+
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of listBottomProspect">
+                                    <td>{{item.id}}</td>
+                                    <td>{{item.cliente.ragioneSociale ? item.cliente.ragioneSociale :
+                                        item.cliente.codiceCliente}}</td>
+                                    <td>{{item.cliente.partitaIva ? item.cliente.partitaIva : 'N/D'}}</td>
+                                    <td [ngSwitch]="item.statoFattura">
+                                        <span *ngSwitchCase="''" class="label label-default">In Compilazione</span>
+                                        <span *ngSwitchCase="'R'" class="label label-danger">Rifiutata</span>
+                                        <span *ngSwitchCase="'D'" class="label label-warning">Da approvare</span>
+                                        <span *ngSwitchCase="'V'" class="label label-success">Validata</span>
+                                        <span *ngSwitchCase="'S'" class="label label-warning">Validata da SAP</span>
+                                        <span *ngSwitchCase="'G'" class="label label-success">Rigettata da SAP</span>
+                                    </td>
+                                    <td>{{item.importo |currency:'EUR':true}}</td>
+
+                                    <td class="app-comandi" style="text-align: center;">
+                                        <a href="javascript:;" [routerLink]="['/detail_fatture', 'edit', item.id]">
+                                            <span class="fa fa-pencil"></span>
+                                        </a>
+                                        <a href="javascript:;" [routerLink]="['/detail_fatture', 'view', item.id]">
+                                            <span class="fa fa-binoculars"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

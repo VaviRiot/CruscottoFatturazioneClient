@@ -8,5 +8,6 @@ export class DashboardTopSummary {
         public importoFattureRifiutate?: number,
         public totaleImportoFatture?: number,
         public dataImportoFatture?: Date,
+        public totaleFatture?: any
     ) { }
 }
