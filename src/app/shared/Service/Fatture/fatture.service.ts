@@ -70,14 +70,14 @@ export class FattureService {
     return CustomHttpService.post(endpoint, saveReq, { headers: my_headers });
   }
 
-  getClienteById(authToken: string, idCliente: number) {
+  getClienteById(authToken: string, codCliente: string) {
     const endpoint = environment.serverUrl + "cliente/getClienteByCodiceCliente";
 
     let my_headers = new HttpHeaders().set('Authorization', 'Bearer ' + authToken)
       .append('Content-Type', 'application/json')
       .append('Accept', 'application/json');
 
-    return CustomHttpService.post(endpoint, idCliente, { headers: my_headers });
+    return CustomHttpService.post(endpoint, codCliente, { headers: my_headers });
   }
 
   getListClienti(authToken: string, societa: number) {

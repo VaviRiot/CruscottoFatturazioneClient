@@ -16,10 +16,9 @@ import { Cliente } from 'app/models/Cliente';
 import { ProspectService } from 'app/shared/Service/Prospect/prospect.service';
 
 import { AuthService } from 'app/shared/Service/AuthService/auth.service'
-import { Subscription } from 'rxjs'
 import { CommonService } from 'app/shared/Service/Common/common.service'
 
-import { Filter, FilterPayload, Sort } from 'app/models/FilterPayload';
+import { FilterPayload, Sort } from 'app/models/FilterPayload';
 import { environment } from 'environments/environment'
 import { Helper } from 'app/utils/helper'
 import { OrderClause } from 'app/models/OrderClause'
@@ -27,7 +26,6 @@ import { Dictionary } from 'app/models/Dictionary'
 import { ProspectListOverview } from 'app/models/Response/ProspectListOverview'
 import { User } from 'app/models/User'
 import { DatePipe } from '@angular/common'
-import { PresaInCaricoRequest } from 'app/models/Request/PresaInCaricoRequest'
 import { ConfirmMessageComponent } from 'app/modals/confirm_message/confirm_message.component'
 
 @Component({
@@ -276,7 +274,7 @@ export class CustomersComponent implements OnInit {
 
 
   enabledDelete(element) {
-    if (element.partitaIva || element.ragioneSociale) {
+    if (element.partitaIva || element.ragioneSociale || element.codiceFiscale) {
       return false;
     } else {
       return true;

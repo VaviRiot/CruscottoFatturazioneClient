@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Articoli } from 'app/models/Articoli';
-import { ArticoliService } from 'app/shared/Service/Articoli/articoli.service';
 import { AuthService } from 'app/shared/Service/AuthService/auth.service';
 import { CommonService } from 'app/shared/Service/Common/common.service';
-import { UserService } from 'app/shared/Service/User/user.service';
 import { Subscription } from 'rxjs';
-import * as moment from 'moment';
 import { Cliente } from 'app/models/Fatture';
 import { ProspectService } from 'app/shared/Service/Prospect/prospect.service';
 import { FattureService } from 'app/shared/Service/Fatture/fatture.service';
@@ -21,10 +17,11 @@ export class DetailClienteComponent implements OnInit {
 
   // Init Param
   public action: string = "";
-  public id: number = -1;
+  public id: string = '';
 
   public buttonTitle: string = "Aggiorna Cliente";
   public isEdit: boolean = false;
+  public isView: boolean = false;
 
   public cliente = new Cliente('', null, null, null, null, null, null, null, null, null, null, null, null, null, null);
   public userLogged;
@@ -33,6 +30,15 @@ export class DetailClienteComponent implements OnInit {
   private saveSubscription: Subscription;
 
   public codiceClienteCtrl = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]);
+  public ragioneSocialeCtrl = new FormControl('');
+  public partitaIvaCtrl = new FormControl('');
+  public codiceFiscaleCtrl = new FormControl('');
+  public nazionalitaCtrl = new FormControl('');
+  public sedeLegaleCtrl = new FormControl('');
+  public appartieneGruppoIvaCtrl = new FormControl('');
+  public codiceDestinatarioFatturazioneCtrl = new FormControl('');
+  public modalitaPagamentoCtrl = new FormControl('');
+  public condizioniPagamentoCtrl = new FormControl('');
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +55,7 @@ export class DetailClienteComponent implements OnInit {
     this.userLogged = this.authService.getUser();
 
     this.action = this.route.snapshot.paramMap.get('action');
-    this.id = +this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.action == "create") {
       this.isEdit = true;
@@ -62,7 +68,7 @@ export class DetailClienteComponent implements OnInit {
 
     }
     else {
-      this.isEdit = false;
+      this.isView = true;
       this.getDetail();
 
     }

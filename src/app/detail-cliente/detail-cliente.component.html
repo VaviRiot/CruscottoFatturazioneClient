@@ -15,11 +15,78 @@
                                         <input [formControl]="codiceClienteCtrl" matInput placeholder="Codice Cliente"
                                             type="text" id="codiceCliente" name="codiceCliente"
                                             [(ngModel)]="cliente.codiceCliente"
-                                            [readonly]="action == 'create' ? false : true">
+                                            [readonly]="isView">
                                         <mat-error *ngIf="codiceClienteCtrl.invalid">
                                             {{getCodiceArticoloErrorMessage()}}</mat-error>
                                     </mat-form-field>
                                 </div>
+                                <div class="col-md-6" >
+                                    <mat-form-field class="example-full-width" *ngIf="isView">
+                                        <input [formControl]="ragioneSocialeCtrl" matInput placeholder="Ragione Sociale"
+                                            type="text" id="ragioneSociale" name="ragioneSociale"
+                                            [(ngModel)]="cliente.ragioneSociale" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="partitaIvaCtrl" matInput placeholder="Partita Iva"
+                                            type="text" id="partitaIva" name="partitaIva"
+                                            [(ngModel)]="cliente.partitaIva" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="codiceFiscaleCtrl" matInput placeholder="Codice Fiscale"
+                                            type="text" id="codiceFiscale" name="codiceFiscale"
+                                            [(ngModel)]="cliente.codiceFiscale" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="nazionalitaCtrl" matInput placeholder="Nazionalita"
+                                            type="text" id="nazionalita" name="nazionalita"
+                                            [(ngModel)]="cliente.nazionalita" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="sedeLegaleCtrl" matInput placeholder="Sede Legale"
+                                            type="text" id="sedeLegale" name="sedeLegale"
+                                            [(ngModel)]="cliente.sedeLegale" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="appartieneGruppoIvaCtrl" matInput placeholder="Appartenenza Gruppo"
+                                            type="text" id="appartieneGruppoIva" name="appartieneGruppoIva"
+                                            [(ngModel)]="cliente.appartieneGruppoIva" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="codiceDestinatarioFatturazioneCtrl" matInput placeholder="Codice Destinatario"
+                                            type="text" id="codiceDestinatarioFatturazione" name="codiceDestinatarioFatturazione"
+                                            [(ngModel)]="cliente.codiceDestinatarioFatturazione" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="modalitaPagamentoCtrl" matInput placeholder="Modalita Pagamento"
+                                            type="text" id="modalitaPagamento" name="modalitaPagamento"
+                                            [(ngModel)]="cliente.modalitaPagamento" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" *ngIf="isView">
+                                    <mat-form-field class="example-full-width">
+                                        <input [formControl]="condizioniPagamentoCtrl" matInput placeholder="Condizioni Pagamento"
+                                            type="text" id="condizioniPagamento" name="condizioniPagamento"
+                                            [(ngModel)]="cliente.condizioniPagamento" [readonly]="isView">
+                                    </mat-form-field>
+                                </div>
+                              
+                            
+
+
 
 
                             </div>
