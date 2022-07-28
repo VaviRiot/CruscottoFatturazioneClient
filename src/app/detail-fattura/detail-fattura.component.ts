@@ -619,6 +619,10 @@ export class DetailFatturaComponent implements OnInit {
         this.common.sendUpdate("hideSpinner");
         this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile inoltrare la fattura al momento." : res['errore']);
       }
+      if (res['message']) {
+        this.common.sendUpdate("showAlertDanger", res['message']);
+        this.common.redirectToUrl('/fatture');
+      }
     },
       error => {
         // console.log("getTopSummary");
@@ -645,6 +649,10 @@ export class DetailFatturaComponent implements OnInit {
         this.common.sendUpdate("hideSpinner");
         this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile rifiutare la fattura al momento." : res['errore']);
       }
+      if (res['message']) {
+        this.common.sendUpdate("showAlertDanger", res['message']);
+        this.common.redirectToUrl('/fatture');
+      }
     },
       error => {
         // console.log("getTopSummary");
@@ -661,15 +669,22 @@ export class DetailFatturaComponent implements OnInit {
     let authToken: string = this.authService.getAuthToken();
 
     this.fattureService.validaFattura(authToken, this.fattura.id, this.userLogged.name).subscribe(res => {
+
       if (!res['errore']) {
         this.common.sendUpdate("showAlertInfo", "Fattura approvata correttamente!");
         this.common.sendUpdate("hideSpinner");
         this.common.redirectToUrl('/fatture');
 
       }
+
       else {
         this.common.sendUpdate("hideSpinner");
         this.common.sendUpdate("showAlertDanger", !res['errore'] ? "Impossibile validare la fattura al momento." : res['errore']);
+      }
+
+      if (res['message']) {
+        this.common.sendUpdate("showAlertDanger", res['message']);
+        this.common.redirectToUrl('/fatture');
       }
     },
       error => {
