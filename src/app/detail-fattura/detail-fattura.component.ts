@@ -531,7 +531,7 @@ export class DetailFatturaComponent implements OnInit {
       codiceArticolo: new FormControl('', Validators.required),
       descrizioneArticolo: new FormControl('', Validators.required),
       codiceCorrispettivo: new FormControl('', Validators.required),
-      importo: new FormControl('', [Validators.required, Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,3})?$')],),
+      importo: new FormControl('', [Validators.required, Validators.pattern('^-?[0-9]\\d*(\\.\\,\\d{1,3})?$')],),
       note: new FormControl('', Validators.required),
       create_user: this.userLogged.createUser
     });
@@ -597,7 +597,7 @@ export class DetailFatturaComponent implements OnInit {
       case 'C':
         return 'Contabilizzata';
       case 'G':
-        return 'Rifiutata da SAP';
+        return 'Rigettata da SAP';
       case 'S':
         return 'Validata da SAP';
       default:
