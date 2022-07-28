@@ -589,7 +589,6 @@ export class DetailFatturaComponent implements OnInit {
   getFattureState(state) {
     switch (state) {
       case 'V':
-        return 'Validata';
       case 'R':
         return 'Rifiutata';
       case 'D':
@@ -597,7 +596,7 @@ export class DetailFatturaComponent implements OnInit {
       case 'C':
         return 'Contabilizzata';
       case 'G':
-        return 'Rifiutata da SAP';
+        return 'Rigettata da SAP';
       case 'S':
         return 'Validata da SAP';
       default:
