@@ -205,7 +205,7 @@
                                     </td>
                                     <td class="mat-cell mat-column-position">
                                         <i class="fa fa-trash" style="cursor:pointer"
-                                            *ngIf="!disabledField == '' && !isApproved && action != 'view'"
+                                            *ngIf="!disabledField && !isApproved && action != 'view'"
                                             (click)="onRemoveRow(index)">
                                         </i>
                                     </td>
