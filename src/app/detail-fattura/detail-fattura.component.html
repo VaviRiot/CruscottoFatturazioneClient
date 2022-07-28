@@ -112,7 +112,7 @@
                     <div class="card-header card-header-info list">
                         <h4 class="card-title">Lista Dettaglio Fattura</h4>
 
-                        <div class="new-user-toggle" *ngIf="fattura.statoFattura == '' && !isApproved">
+                        <div class="new-user-toggle" *ngIf="!disabledField && !isApproved">
                             <span (click)="onAddRow()" class="fa fa-plus-circle"></span>
                         </div>
                     </div>
@@ -205,7 +205,7 @@
                                     </td>
                                     <td class="mat-cell mat-column-position">
                                         <i class="fa fa-trash" style="cursor:pointer"
-                                            *ngIf="fattura.statoFattura == '' && !isApproved && action != 'view'"
+                                            *ngIf="!disabledField == '' && !isApproved && action != 'view'"
                                             (click)="onRemoveRow(index)">
                                         </i>
                                     </td>
